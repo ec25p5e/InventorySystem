@@ -11,7 +11,7 @@
                 </a>
             </div>
 
-            <form action="{{ route('auth.authenticate') }}" method="post" class="form-login">
+            <form action="{{ route('login') }}" method="post" class="form-login">
                 @csrf
                 <div class="form-group has-feedback @error('email') has-error @enderror">
                     <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}" autofocus>
@@ -35,7 +35,7 @@
                     <div class="col-xs-8">
                         <div class="checkbox icheck">
                             <label>
-                                <input type="checkbox"> Remember Me
+                                <input type="checkbox"> Ricordami
                             </label>
                         </div>
                     </div>

@@ -15,18 +15,14 @@ use \App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return redirect()->route('auth.login');
+Route::get('/', function () { return redirect()->route('login'); });
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+
+// Proteggi le route che necessitano di login
+Route::middleware(['auth'])->group(function() {
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 });
-
-Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
-
-
-
-
-// Frontend
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
 // Backend
 Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.authenticate');
