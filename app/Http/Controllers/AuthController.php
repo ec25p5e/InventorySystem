@@ -10,8 +10,6 @@ class AuthController extends Controller
 {
 
     public function login() {
-        $hashedPassword = bcrypt('123');
-        echo $hashedPassword;
         return view('auth.login');
     }
 

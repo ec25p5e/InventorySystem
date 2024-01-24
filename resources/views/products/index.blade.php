@@ -1,89 +1,64 @@
-<!-- resources/views/index.blade.php -->
-
 @extends('layouts.app')
 
-@section('content')
-    <div class="container">
-        @if(Session::has('success'))
-            <div class="alert alert-success">
-                {{ Session::get('success') }}
+@section('content-header')
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Dashboard</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Elenco prodotti</li>
+                    </ol>
+                </div>
             </div>
-        @endif
-
-        <h1>Elenco Prodotti</h1>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>
-                        <a href="#" data-bs-toggle="popover" title="Filtra per numero CEAP" data-bs-placement="top">
-                            Numero CEAP <span class="material-symbols-outlined">
-                                tune
-                            </span>
-                        </a>
-                        <div class="popover-content">
-                            <form action="{{ route('products.index') }}" method="get">
-                                <input name="filter__product_num_ceap" value="{{ $filters[0] }}" type="text" class="form-control" placeholder="Filtra">
-                                <button class="btn btn-primary btn-sm mt-2">Applica</button>
-                                <button class="btn btn-secondary btn-sm mt-2" onclick="clearFilter(this)">Svuota</button>
-                            </form>
-                        </div>
-                    </th>
-
-                    <th>
-                        <a href="#" data-bs-toggle="popover" title="Filtra per numero interno" data-bs-placement="top">
-                            Numero interno  <span class="material-symbols-outlined">
-                                tune
-                            </span>
-                        </a>
-                        <div class="popover-content">
-                            <form action="{{ route('products.index') }}" method="get">
-                                <input name="filter__product_num_intern" value="{{ $filters[1] }}" type="text" class="form-control" placeholder="Filtra">
-                                <button class="btn btn-primary btn-sm mt-2">Applica</button>
-                                <button class="btn btn-secondary btn-sm mt-2" onclick="clearFilter(this)">Svuota</button>
-                            </form>
-                        </div>
-                    </th>
-
-                    <th>
-                        <a href="#" data-bs-toggle="popover" title="Filtra per nome" data-bs-placement="top">
-                            Nome  <span class="material-symbols-outlined">
-                                tune
-                            </span>
-                        </a>
-                        <div class="popover-content">
-                            <form action="{{ route('products.index') }}" method="get">
-                                <input name="filter__product_name" value="{{ $filters[2] }}" type="text" class="form-control" placeholder="Filtra">
-                                <button class="btn btn-primary btn-sm mt-2">Applica</button>
-                                <button class="btn btn-secondary btn-sm mt-2" onclick="clearFilter(this)">Svuota</button>
-                            </form>
-                        </div>
-                    </th>
-
-                    <th>
-                        <a href="#" data-bs-toggle="popover" title="Filtra per stato" data-bs-placement="top">
-                            Stato
-                        </a>
-                    </th>
-
-                    <th>Azioni</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($products as $product)
-                    <tr>
-                        <td>{{ $product->product_image }}</td>
-                        <td>{{ $product->product_num_ceap }}</td>
-                        <td>{{ $product->product_num_intern }}</td>
-                        <td>{{ $product->product_name }}</td>
-                        <td>{{ ($product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
-                    </tr>
-                @endforeach
-
-            </tbody>
-        </table>
+        </div>
     </div>
+@endsection
+
+@section('body')
+    <section class="content">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Elenco dei prodotti</h3>
+                <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
+            </div>
+            <div class="box-body">
+                <table class="table table-bordered">
+                    <tr>
+                        <th style="width: 10px">#</th>
+                        <th>Numero CEAP</th>
+                        <th>Numero interno</th>
+                        <th>Nome</th>
+                        <th>Stato</th>
+                        <th style="width: 40px">Azioni</th>
+                    </tr>
+
+                    @foreach($products as $product)
+                        <tr>
+                            <td>{{ $product->product_image }}</td>
+                            <td>{{ $product->product_num_ceap }}</td>
+                            <td>{{ $product->product_num_intern }}</td>
+                            <td>{{ $product->product_name }}</td>
+                            <td>{{ ($product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
+                            <td></td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+            <div class="box-footer clearfix">
+                <ul class="pagination pagination-sm no-margin pull-right">
+                    <li><a href="#">&laquo;</a></li>
+                    <li><a href="#">1</a></li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">&raquo;</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
 
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {

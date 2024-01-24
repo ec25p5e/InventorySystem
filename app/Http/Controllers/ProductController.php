@@ -58,6 +58,6 @@ class ProductController extends Controller
         Session::flash('success', 'Prodotto creato con successo!');
 
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.create');
     }
 }

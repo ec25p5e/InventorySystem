@@ -17,6 +17,7 @@ use \App\Http\Controllers\AuthController;
 
 Route::get('/', function () { return redirect()->route('login'); });
 Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Proteggi le route che necessitano di login
 Route::middleware(['auth'])->group(function() {
