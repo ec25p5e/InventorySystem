@@ -4,18 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class AuthController extends Controller
 {
 
     public function login() {
+        $hashedPassword = bcrypt('123');
+        echo $hashedPassword;
         return view('auth.login');
     }
 
     public function authenticate(Request $request) {
         $credentials = $request->only('email', 'password');
 
-        if(Auth::attemp($credentials)) {
+        if(Auth::attempt($credentials)) {
             // Auth riuscita
             return redirect()->intended('/products');
         }

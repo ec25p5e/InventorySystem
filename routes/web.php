@@ -25,5 +25,5 @@ Route::middleware(['auth'])->group(function() {
 });
 
 // Backend
-Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.authenticate');
+Route::post('/login', [AuthController::class, 'authenticate']);
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
