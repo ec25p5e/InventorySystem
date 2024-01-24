@@ -8,4 +8,12 @@ export default defineConfig({
             refresh: true,
         }),
     ],
+    build: {
+        outDir: 'public/dist',
+        assetsDir: 'assets',
+        manifest: true,
+        rollupOptions: {
+            input: 'resources/js/app.js',
+        },
+    },
 });
