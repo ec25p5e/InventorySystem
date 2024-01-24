@@ -90,7 +90,6 @@
                                 <thead>
                                     <tr>
                                         <th scope="col">Codice attributo</th>
-                                        <th scope="col">Nome da mostrare</th>
                                         <th scope="col">Valore</th>
                                         <th scope="col">Azioni</th>
                                     </tr>
@@ -102,10 +101,13 @@
 
                                             <td>
                                                 <div class="form-group has-feedback @error('attribute_code') has-error @enderror">
-                                                    <input type="text" name="attribute_code" class="form-control" placeholder="Codice identificativo" required value="{{ old('attribute_code') }}" autofocus>
+                                                    <select class="form-control" id="attribute_code" name="attribute_code">
+                                                        @foreach($attributeDefinitions as $def)
+                                                           <option value="{{ $def->def_code }}">{{ $def->def_name }}</option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </td>
-                                            <td></td>
                                             <td>
                                                 <div class="form-group has-feedback @error('attribute_value') has-error @enderror">
                                                     <input type="text" name="attribute_value" class="form-control" placeholder="Immettere un valore per l'attributo" required value="{{ old('attribute_value') }}" autofocus>
@@ -129,5 +131,25 @@
         </div>
     </section>
 
-    <script src="{{ asset('/js/create_product.js.js') }}"></script>
+    <script>
+        $(document).ready(() => {
+            $('#attribute_code').change(() => {
+                let selectedValue = $('#attribute_code').val();
+
+                if (selectedValue !== undefined && selectedValue !== "") {
+                    $.ajax({
+                        url: '/api/loadProductDefinitionName',
+                        type: 'GET',
+                        data: { option: selectedValue },
+                        success: function (response) {
+                            console.log(response);
+                        },
+                        error: function (error) {
+                            console.error(error);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

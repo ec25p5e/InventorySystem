@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ProductAttributesDef;
 use Illuminate\Http\Request;
 use App\Models\Products;
 use Illuminate\Support\Facades\Session;
@@ -31,7 +32,10 @@ class ProductController extends Controller
 
     // Aggiungi un nuovo prodotto
     public function create() {
-        return view('products.create');
+        $getDefinitionsOfProducts = ProductAttributesDef::all();
+        return view('products.create', [
+            'attributeDefinitions' => $getDefinitionsOfProducts
+        ]);
     }
 
     // Metodo per gestire l'inserimento di un nuovo prodotto

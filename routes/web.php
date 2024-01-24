@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use \App\Http\Controllers\AuthController;
+use \App\Http\Controllers\ProductAttrDefController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,16 +16,21 @@ use \App\Http\Controllers\AuthController;
 |
 */
 
-Route::get('/', function () { return redirect()->route('login'); });
-Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Proteggi le route che necessitano di login
-Route::middleware(['auth'])->group(function() {
-    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+/* Route::middleware(['auth'])->group(function() {
+
+}); */
+
+Route::middleware('throttle:60,1')->group(function() {
+
 });
 
-// Backend
-Route::post('/login', [AuthController::class, 'authenticate']);
+
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
