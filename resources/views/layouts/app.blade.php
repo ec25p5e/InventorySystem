@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('/AdminLTE-2/dist/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/AdminLTE-2/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') }}">
 </head>
-<body class="hold-transition skin-green sidebar-mini">
+<body class="hold-transition skin-green sidebar-min">
 <div class="wrapper">
     <header class="main-header">
         <!-- Logo -->
@@ -280,6 +280,7 @@
             </div>
         </nav>
     </header>
+
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
@@ -413,11 +414,28 @@
         </section>
         <!-- /.sidebar -->
     </aside>
+
+
     <div class="container mt-4">
         @yield('content')
     </div>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script src="{{ asset('AdminLTE-2/bower_components/jquery/dist/jquery.min.js') }}"></script>
+<script src="{{ asset('AdminLTE-2/bower_components/bootstrap/dist/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('AdminLTE-2/bower_components/moment/min/moment.min.js') }}"></script>
+<script src="{{ asset('AdminLTE-2/bower_components/datatables.net/js/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('AdminLTE-2/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') }}"></script>
+<script src="{{ asset('AdminLTE-2/dist/js/adminlte.min.js') }}"></script>
+<script src="{{ asset('js/validator.min.js') }}"></script>
+
+<script>
+    function preview(selector, temporaryFile, width = 200)  {
+        $(selector).empty();
+        $(selector).append(`<img src="${window.URL.createObjectURL(temporaryFile)}" width="${width}">`);
+    }
+</script>
+
+@stack('scripts')
 </body>
 </html>
