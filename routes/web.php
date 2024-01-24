@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use \App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +16,18 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('auth.login');
 });
+
+Route::get('/login', [AuthController::class, 'login'])->name('auth.login');
+
+
+
 
 // Frontend
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
 
 // Backend
+Route::post('/authenticate', [AuthController::class, 'authenticate'])->name('auth.authenticate');
 Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
