@@ -43,7 +43,11 @@
                             <td>{{ $product->product_num_intern }}</td>
                             <td>{{ $product->product_name }}</td>
                             <td>{{ ($product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
-                            <td></td>
+                            <td>
+                                <button class="btn btn-warning">
+                                    <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
+                                </button>
+                            </td>
                         </tr>
                     @endforeach
                 </table>
@@ -59,35 +63,4 @@
             </div>
         </div>
     </section>
-
-    <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', function() {
-            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
-
-            var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
-                return new bootstrap.Popover(popoverTriggerEl);
-            });
-
-            popoverList.forEach(function (popover) {
-                popover.hide();
-            });
-
-            document.addEventListener('click', function (event) {
-                popoverTriggerList.forEach(function (popoverTriggerEl) {
-                    var isClickInside = popoverTriggerEl.contains(event.target) || (popoverTriggerEl.nextElementSibling && popoverTriggerEl.nextElementSibling.contains(event.target));
-                    if (!isClickInside) {
-                        var popover = bootstrap.Popover.getInstance(popoverTriggerEl);
-                        if (popover) {
-                            popover.hide();
-                        }
-                    }
-                });
-            });
-        });
-
-        function clearFilter(button) {
-            var form = button.closest('.popover-content').querySelector('form');
-            form.reset();
-        }
-    </script>
 @endsection

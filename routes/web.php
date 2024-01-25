@@ -18,19 +18,18 @@ use \App\Http\Controllers\ProductAttrDefController;
 
 Route::get('/', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 
-/* Route::middleware(['auth'])->group(function() {
+Route::middleware(['auth'])->group(function() {
+    // GET
+    Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+    Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+    Route::get('/products/update/{product_id}', [ProductController::class, 'update'])->name('products.update');
+    Route::get('/products/update/{product_id}/showHistory/{product_attr_id}', [ProductController::class, 'showHistory'])->name('products.update.showHistory');
 
-}); */
-
-Route::middleware('throttle:60,1')->group(function() {
-
+    // POST
+    Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
 });
 
 
-Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-
-Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
-Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
