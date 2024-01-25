@@ -22,17 +22,16 @@
     <link rel="stylesheet" href="{{asset('admin-assets/plugins/daterangepicker/daterangepicker.css')}}">
     <link rel="stylesheet" href="{{asset('admin-assets/plugins/summernote/summernote-bs4.min.css')}}">
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
-
-    <!-- Preloader
-    <div class="preloader flex-column justify-content-center align-items-center">
-        <img class="animation__shake" src="{{asset('https://www.sdk-csd.ch/admin/data/files/member/image/64/logo@3x_logo_big.png?lm=1572338395')}}" alt="AdminLTELogo" height="60" width="60">
-    </div>  -->
+    <!-- <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="" src="{{asset('https://www.sdk-csd.ch/admin/data/files/member/image/64/logo@3x_logo_big.png?lm=1572338395')}}" alt="AdminLTELogo" height="60" width="60">
+    </div> -->
 
     <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <!-- Left navbar links -->
         <ul class="navbar-nav">
             <li class="nav-item">
                 <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -40,10 +39,7 @@
 
         </ul>
 
-        <!-- Right navbar links -->
         <ul class="navbar-nav ml-auto">
-
-            <!-- Messages Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#">
                     <i class="far fa-user"></i>
@@ -74,10 +70,10 @@
     </div>
 
     <footer class="main-footer">
-        <strong>Copyright &copy; 2024 <a href="#">CPT Locarno</a>.</strong>
+        <strong>Copyright &copy; 2024 <a href="{{ route('products.index') }}">CPT Locarno</a>.</strong>
         All rights reserved.
         <div class="float-right d-none d-sm-inline-block">
-            <b>Version</b> 3.1.0
+            <b>Version</b> 1.0.0-beta
         </div>
     </footer>
 
@@ -86,13 +82,8 @@
         <!-- Control sidebar content goes here -->
     </aside>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.1/dist/js/adminlte.min.js"></script>
     <script src="{{asset('admin-assets/plugins/jquery/jquery.min.js')}}"></script>
     <script src="{{asset('admin-assets/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
-    <script>
-        $.widget.bridge('uibutton', $.ui.button)
-    </script>
     <script src="{{asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
     <script src="{{asset('admin-assets/plugins/chart.js/Chart.min.js')}}"></script>
     <script src="{{asset('admin-assets/plugins/sparklines/sparkline.js')}}"></script>
@@ -109,7 +100,6 @@
 
     <script>
         $(document).ready(function () {
-            // Inizializza AdminLTE
             $.AdminLTE.layout.activate();
             $.AdminLTE.layout.fix();
         });

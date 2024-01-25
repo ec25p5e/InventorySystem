@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\SettingsHelper;
 use App\Models\ProductAttributes;
 use App\Models\ProductAttributesDef;
+use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Products;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
+
     // Visualizzazione di tutti i prodotti
     public function index(Request $request) {
         $filters = array();
@@ -24,7 +26,8 @@ class ProductController extends Controller
             return $query->where('product_num_intern', 'like', '%' . $filters[1] . '%');
         })->when($filters[2], function ($query) use ($filters) {
             return $query->where('product_name', 'like', '%' . $filters[2] . '%');
-        })-> get();
+        })
+            ->paginate(SettingsHelper::getSetting('MAX_ROW_PER_PAR'));
 
         return view('products.index', [
             'products' => $products,
@@ -51,37 +54,40 @@ class ProductController extends Controller
         return view('products.create', [
             'productDetails' => $productDetails,
             'productAttributes' => $getProductAttr,
-            'attributeDefinitions' => $getDefinitionsOfProducts
+            'attributeDefinitions' => $getDefinitionsOfProducts,
+            'product_id' => $product_id
         ]);
     }
 
     public function showHistory($product_id, $product_attr_id) {
+        $attributeName = ProductAttributes::find($product_attr_id);
         $productAttributes = ProductAttributes::
-            where(function ($query) use ($product_attr_id, $product_id) {
-                $query->where('product_ref_id', '=', $product_id);
+            where(function ($query) use ($attributeName, $product_id) {
+                $query->where('product_ref_id', '=', $product_id)
+                      ->where('attribute_code', '=', $attributeName->attribute_code);
             })
             ->orderBy('attribute_date_end', 'asc')
             ->get();
-        $attributeName = ProductAttributes::find($product_attr_id);
+
 
         return view('products.showHistory', [
             'attributeDetails' => $productAttributes,
-            'attributeName' => $attributeName,
-            'findUserById' =>  $this->findUserById()
+            'attributeName' => $attributeName
         ]);
     }
 
     public function store(Request $request) {
-        /* $request->validate([
-            'product_num_ceap' => 'required|int|max:20',
-            'product_num_intern' => 'required|string|max:20',
-            'product_name' => 'required|string|max:255',
+        $request->validate([
+            'product_num_ceap' => 'required|int|',
+            'product_num_intern' => 'required|string|',
+            'product_name' => 'required|string|',
             'product_start' => [
                 'required',
                 'date'
             ],
-        ]); */
+        ]);
 
+        $getDefinitionsOfProducts = ProductAttributesDef::all();
         $product = new Products;
         $product->product_num_ceap = $request->input('product_num_ceap');
         $product->product_num_intern = $request->input('product_num_intern');
@@ -92,15 +98,13 @@ class ProductController extends Controller
         $product->save();
 
         Session::flash('success', 'Prodotto creato con successo!');
-
-
-        return redirect()->route('products.create');
+        return view('products.create', [
+            'productDetails' => $product,
+            'attributeDefinitions' => $getDefinitionsOfProducts
+        ]);
     }
 
-
-
-    // Funzioni utili
-    public function findUserById($id = null) {
-        return User::find($id);
+    public function movements() {
+        return view('products.movements');
     }
 }

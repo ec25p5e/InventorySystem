@@ -23,6 +23,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Elenco dei prodotti</h3>
+                <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
                 <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
             </div>
             <div class="box-body">
@@ -33,7 +34,7 @@
                         <th>Numero interno</th>
                         <th>Nome</th>
                         <th>Stato</th>
-                        <th style="width: 40px">Azioni</th>
+                        <th style="width: 16%">Azioni</th>
                     </tr>
 
                     @foreach($products as $product)
@@ -47,19 +48,19 @@
                                 <button class="btn btn-warning">
                                     <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
                                 </button>
+                                <button class="btn btn-danger">
+                                    <i class="fas fa-trash"></i> <a href="{{ route('products.delete', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Elimina</a>
+                                </button>
                             </td>
                         </tr>
                     @endforeach
                 </table>
             </div>
-            <div class="box-footer clearfix">
-                <ul class="pagination pagination-sm no-margin pull-right">
-                    <li><a href="#">&laquo;</a></li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">&raquo;</a></li>
-                </ul>
+
+            <div class="col-md-12">
+                <div class="pagination justify-content-center">
+                    {{ $products->links() }}
+                </div>
             </div>
         </div>
     </section>

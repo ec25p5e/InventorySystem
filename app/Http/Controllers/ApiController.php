@@ -9,6 +9,6 @@ class ApiController extends Controller
     protected $middleware = ['auth:api'];
 
     public function deleteProductAttribute(Request $request) {
-        return response()->view('errors.500', [], 500);
+        dd($request->input('product_attribute_id'));
     }
 }

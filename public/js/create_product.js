@@ -6,6 +6,9 @@ function deleteProductAttribute(productAttrId) {
     $.ajax({
         url: apiUrl,
         type: 'POST',
+        headers: {
+            'X-CSRF-Token': '{{ csrf_token() }}',
+        },
         data: {
             'product_attribute_id': productAttrId
         },
@@ -19,6 +22,6 @@ function deleteProductAttribute(productAttrId) {
 }
 
 
-function editFieldValue() {
+function editFieldValue(productAttrId) {
 
 }
