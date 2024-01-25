@@ -45,7 +45,15 @@
                 </li>
             </ul>
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Gestione di sistema
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{route('roles.index')}}">Gestione ruoli</a>
+                        <a class="dropdown-item" href="{{route('roles.user_roles')}}">Associazione ruoli</a>
+                    </div>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
