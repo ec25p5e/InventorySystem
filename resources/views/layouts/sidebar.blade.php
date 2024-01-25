@@ -39,7 +39,6 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{route('products.index')}}">Elenco dei prodotti</a>
-                        <a class="dropdown-item" href="{{route('products.movements')}}">Movimenti</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('products.create') }}">Crea un prodotto</a>
                     </div>

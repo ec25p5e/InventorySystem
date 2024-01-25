@@ -15,23 +15,11 @@ class ProductController extends Controller
 
     // Visualizzazione di tutti i prodotti
     public function index(Request $request) {
-        $filters = array();
-        $filters[0] = $request->input('filter__product_num_ceap');
-        $filters[1] = $request->input('filter__product_num_intern');
-        $filters[2] = $request->input('filter__product_name');
-
-        $products = Products::when($filters[0], function($query) use ($filters) {
-            return $query->where('product_num_ceap', 'like', '%' . $filters[0] . '%');
-        })->when($filters[1], function ($query) use ($filters) {
-            return $query->where('product_num_intern', 'like', '%' . $filters[1] . '%');
-        })->when($filters[2], function ($query) use ($filters) {
-            return $query->where('product_name', 'like', '%' . $filters[2] . '%');
-        })
-            ->paginate(SettingsHelper::getSetting('MAX_ROW_PER_PAR'));
+        $products = Products::all();
+            // ->paginate(SettingsHelper::getSetting('MAX_ROW_PER_PAR'));
 
         return view('products.index', [
-            'products' => $products,
-            'filters' => $filters
+            'products' => $products
         ]);
     }
 
@@ -102,9 +90,5 @@ class ProductController extends Controller
             'productDetails' => $product,
             'attributeDefinitions' => $getDefinitionsOfProducts
         ]);
-    }
-
-    public function movements() {
-        return view('products.movements');
     }
 }

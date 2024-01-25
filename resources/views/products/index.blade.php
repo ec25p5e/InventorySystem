@@ -49,7 +49,7 @@
                                     <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
                                 </button>
                                 <button class="btn btn-danger">
-                                    <i class="fas fa-trash"></i> <a href="{{ route('products.delete', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Elimina</a>
+                                    
                                 </button>
                             </td>
                         </tr>
@@ -59,7 +59,7 @@
 
             <div class="col-md-12">
                 <div class="pagination justify-content-center">
-                    {{ $products->links() }}
+
                 </div>
             </div>
         </div>

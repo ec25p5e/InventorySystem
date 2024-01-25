@@ -37,7 +37,6 @@ Route::middleware(['auth'])->group(function() {
     // POST
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
     Route::post('/products/attributes/store', [ProuctAttributesController::class, 'storeAttribute'])->name('products.attribute.store');
-    Route::post('/products/delete/{product_id}', [ProductController::class, 'deleteProduct'])->name('products.delete');
 });
 
 
