@@ -23,7 +23,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function create() {
+    public function create(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    {
         $getDefinitionsOfProducts = ProductAttributesDef::all();
         return view('products.create', ['attributeDefinitions' => $getDefinitionsOfProducts]);
     }
