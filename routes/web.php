@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ProuctAttributesController;
 use App\Http\Controllers\RolesController;
@@ -24,16 +25,17 @@ Route::get('/', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
-
 Route::middleware(['auth'])->group(function() {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
+});
+
+Route::middleware(['role:CUSTODE_SPAI, CUSTODE_SSMT'])->group(function() {
     // GET
     Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
     Route::get('/products/', [ProductController::class, 'index'])->name('products.index');
     Route::get('/products/update/{product_id}', [ProductController::class, 'update'])->name('products.update');
     Route::get('/products/update/{product_id}/showHistory/{product_attr_id}', [ProductController::class, 'showHistory'])->name('products.update.showHistory');
     Route::get('/products/movements', [ProductController::class, 'movements'])->name('products.movements');
-    Route::get('/roles/', [RolesController::class, 'index'])->name('roles.index');
-    Route::get('/roles/user', [RolesController::class, 'userRoles'])->name('roles.user_roles');
 
 
     // Route per l'esportazione delle liste (GET)
@@ -45,3 +47,7 @@ Route::middleware(['auth'])->group(function() {
 });
 
 
+Route::middleware(['role:ADMIN'])->group(function () {
+    Route::get('/roles/', [RolesController::class, 'index'])->name('roles.index')->middleware('role:ADMIN');
+    Route::get('/roles/user', [RolesController::class, 'userRoles'])->name('roles.user_roles');
+});

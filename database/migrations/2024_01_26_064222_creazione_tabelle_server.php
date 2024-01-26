@@ -13,10 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('key')->unique();
-            $table->string('value');
+            $table->string('role_code')->unique();
+            $table->string('role_name');
+            $table->timestamps();
+        });
+
+        Schema::create('user_roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('role_id');
+            $table->string('user_id');
+            $table->string('unity_id');
             $table->timestamps();
         });
     }

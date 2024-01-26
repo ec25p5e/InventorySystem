@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/deleteProductAttribute', [ApiController::class, 'deleteProductAttribute'])->name('api.deleteProductAttribute');
+Route::get('/updateUserRoles', [ApiController::class, 'updateUserRoles'])->name('api.updateUserRoles');

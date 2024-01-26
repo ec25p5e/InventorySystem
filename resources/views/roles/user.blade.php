@@ -28,7 +28,8 @@
                 <div class="mb-3 ml-3">
                     <button type="submit" class="btn btn-primary">Salva modifiche</button>
                     <button type="button" class="btn btn-danger">Annulla modifiche</button>
-                    <button type="button" class="btn btn-info">Aggiorna la vista</button>
+                    <button type="button" id="reloadPageButton" class="btn btn-info">Aggiorna la vista</button>
+                    <button type="button" id="setUnityRole" class="btn btn-primary">Imposta unità</button>
                 </div>
             </div>
         </div>
@@ -85,7 +86,7 @@
                                     <td>{{ $user->first_name }}</td>
                                     <td>{{ $user->last_name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td></td>
+                                    <td id="drop-box" style="text-align: center; padding: 20px;">Drop Here</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -111,7 +112,41 @@
                     $("#tableUsersBox").removeClass("box-border-highlight");
                 }
             }).disableSelection();
+
+            $("#tableUsers tbody").sortable({
+                connectWith: "#tableRoles tbody",
+                receive: function(event, ui) {
+                    let rowData = ui.item.data('row-data');
+                    updateUserRoles(rowData)
+                }
+            }).disableSelection();
+
+
+            $('#reloadPageButton').click(() => {
+                location.reload();
+            });
         });
+
+
+        function updateUserRoles(data) {
+            let csrfToken = "{{ csrf_token() }}";
+
+            $.ajax({
+                url: '/api/updateUserRoles',
+                type: 'POST',
+                dataType: 'json',
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                success: function (risposta) {
+                    console.log('Chiamata API riuscita:', risposta);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Errore nella chiamata API:', error);
+                }
+            });
+        }
     </script>
 @endsection
 

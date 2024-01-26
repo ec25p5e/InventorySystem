@@ -11,4 +11,8 @@ class ApiController extends Controller
     public function deleteProductAttribute(Request $request) {
         dd($request->input('product_attribute_id'));
     }
+
+    public function updateUserRoles(Request $request) {
+
+    }
 }
