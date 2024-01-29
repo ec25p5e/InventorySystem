@@ -6,6 +6,7 @@ use App\Helpers\SettingsHelper;
 use App\Models\ProductAttributes;
 use App\Models\ProductAttributesDef;
 use App\Models\Products;
+use App\Models\Unities;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,12 @@ class ProductController extends Controller
     public function create()
     {
         $getDefinitionsOfProducts = ProductAttributesDef::all();
-        return view('products.create', ['attributeDefinitions' => $getDefinitionsOfProducts]);
+        $unities = Unities::all();
+
+        return view('products.create', [
+            'unities' => $unities,
+            'attributeDefinitions' => $getDefinitionsOfProducts,
+        ]);
     }
 
 
@@ -40,12 +46,14 @@ class ProductController extends Controller
             })
             -> get();
         $getDefinitionsOfProducts = ProductAttributesDef::all();
+        $unities = Unities::where('id', '!=', '1')->get();
 
         return view('products.create', [
             'productDetails' => $productDetails,
             'productAttributes' => $getProductAttr,
             'attributeDefinitions' => $getDefinitionsOfProducts,
-            'product_id' => $product_id
+            'product_id' => $product_id,
+            'unities' => $unities
         ]);
     }
 
@@ -77,24 +85,71 @@ class ProductController extends Controller
             ],
         ]);
 
-        $getDefinitionsOfProducts = ProductAttributesDef::all();
-        $product = new Products;
-        $product->product_num_ceap = $request->input('product_num_ceap');
-        $product->product_num_intern = $request->input('product_num_intern');
-        $product->product_name = $request->input('product_name');
-        $product->product_start = $request->input('product_start');
-        $product->product_end = $request->input('product_end');
-        $product->product_image = null;
-        $product->save();
+        $productData = [
+            'product_num_ceap' => $request->input('product_num_ceap'),
+            'product_num_intern' => $request->input('product_num_intern'),
+            'product_name' => $request->input('product_name'),
+            'product_start' => $request->input('product_start'),
+            'product_end' => ($request->input('product_end') == null) ? '01-01-3000 00:00:00' : $request->input('product_end'),
+            'product_image' => null
+        ];
 
-        Session::flash('success', 'Prodotto creato con successo!');
+        $productId = $request->input('productIdHidden');
+        $product = Products::find($productId);
+
+        if ($product) {
+            $product->fill($productData);
+            $product->save();
+            $message = 'Prodotto aggiornato con successo!';
+        } else {
+            $product = Products::create($productData);
+            $message = 'Prodotto creato con successo!';
+        }
+
+        $unities = Unities::all();
+        Session::flash('success', $message);
+
+        $productEndFormatted = isset($productDetails->product_end) ? Carbon::parse($productDetails->product_end)->format('Y-m-d') : '';
+
         return view('products.create', [
             'productDetails' => $product,
-            'attributeDefinitions' => $getDefinitionsOfProducts
+            'unities' => $unities,
+            'attributeDefinitions' => ProductAttributesDef::all()
         ]);
     }
 
     public function movements() {
         return view('products.movements');
+    }
+
+    public function duplicateProduct(Request $request) {
+        $request->validate([
+            'product_id' => 'required|int'
+        ]);
+
+        $product_id = $request->input('product_id');
+
+        $productToDuplicate = Products::find($product_id);
+        $productAttrs = ProductAttributes::where('product_ref_id', $product_id)
+            ->where('attribute_hidden', 1)
+            ->get();
+
+        if($productToDuplicate) {
+            $duplicatedRow = $productToDuplicate->replicate();
+            $duplicatedRow->save();
+            $newId = $duplicatedRow->id;
+        }
+
+        // Controlla se esiste il nuovo ID prodotto.
+        // Se esiste clona tutti gli attributi copiabili
+        if($newId != '0') {
+            foreach ($productAttrs as $attribute) {
+                $duplicatedAttribute = $attribute->replicate();
+                $duplicatedAttribute->product_ref_id = $newId;
+                $duplicatedAttribute->save();
+            }
+        }
+
+        return view('products.update', ['product_id' => $product_id]);
     }
 }

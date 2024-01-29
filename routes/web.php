@@ -36,6 +36,7 @@ Route::middleware(['role:CUSTODE_SPAI, CUSTODE_SSMT, ADMIN'])->group(function() 
 
     Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
     Route::post('/products/attributes/store', [ProuctAttributesController::class, 'storeAttribute'])->name('products.attribute.store');
+    Route::post('/products/duplicate', [ProductController::class, 'duplicateProduct'])->name('products.duplicate');
 });
 
 

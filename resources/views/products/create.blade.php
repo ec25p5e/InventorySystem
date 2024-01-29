@@ -19,6 +19,36 @@
 @endsection
 
 @section('body')
+    <div class="modal fade" id="duplicateProductModal" tabindex="-1" role="dialog" aria-labelledby="Duplica Prodotto" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Duplica prodotto: @isset($productDetails) {{ $productDetails->product_name }} @endisset</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="{{ route('products.duplicate') }}">
+                        <div class="form-group">
+                            <label for="unity_ref" class="form-label">Scuola di riferimento per il nuovo prodotto</label>
+                            <select class="form-control" id="unity_ref" name="unity_ref">
+                                @isset($unities)
+                                    @foreach($unities as $unity)
+                                        <option value="{{ $unity->id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
+                                    @endforeach
+                                @endisset
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-success align-right">Copia prodotto</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Chiudi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @if(Session::has('success'))
         <div class="alert alert-success">
             {{ Session::get('success') }}
@@ -34,12 +64,14 @@
                 <h3 class="box-title">Form per la creazione del prodotto</h3>
                 <h5 style="color: red;">Dopo il salvataggio è possibile inserire degli attributi. I campi contrassegnati con * sono obbligatori</h5>
                 @isset($productDetails->id)
-                    <button class="btn btn-primary pull-right" onClick="duplicateProduct({{ $productDetails->id }})">Duplica prodotto</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica prodotto</button>
                 @endisset
             </div>
             <div class="box-body">
                 <form action="{{ route('products.store') }}" method="post" name="form-product">
                     @csrf
+
+                    <input name="productIdHidden" type="hidden" @isset($productDetails->id) value="{{ $productDetails->id }}" @endisset />
 
                     <div class="row">
                         <div class="col-md-6">
@@ -69,24 +101,20 @@
                             <div class="mb-3">
                                 <label for="product_start" class="form-label">Data di INIZIO validità:</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ $productDetails->product_start }}" @endisset name="product_start">
+                                    <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @endisset name="product_start">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="product_end" class="form-label">Data di FINE validità:</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ $productDetails->product_end }}" @endisset name="product_end">
+                                    <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @endisset name="product_end">
                                 </div>
                             </div>
                         </div>
 
                         <div class="mb-3 ml-3">
-                            @isset($productDetails)
-                                <button type="submit" class="btn btn-primary">Aggiorna prodotto</button>
-                            @else
-                                <button type="submit" class="btn btn-primary">Crea prodotto</button>
-                            @endif
+                            <button type="submit" class="btn btn-primary">Invia dati</button>
                         </div>
                     </div>
                 </form>

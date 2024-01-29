@@ -76,6 +76,7 @@ class ProuctAttributesController extends Controller
         $productAttribute->attribute_name = $defName;
         $productAttribute->attribute_value = $attributeValue;
         $productAttribute->attribute_hidden = $attributeHidden;
+        $productAttribute->attribute_unique = ($defCode == 'UNITY') ? 1 : 0;
         $productAttribute->product_ref_id = $productId;
         $productAttribute->attribute_date_start = now();
         $productAttribute->attribute_date_end = null;
