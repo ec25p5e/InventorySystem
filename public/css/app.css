@@ -1,3 +1,7 @@
 .box-border-highlight {
     border: 2px solid darkgreen;
 }
+
+* {
+    zoom: 98%;
+}

@@ -88,7 +88,7 @@
                     </div>
                 </form>
 
-                <div class="container mt-5 box">
+                <div class="container box">
                     <div class="box-header">
                         <h3 class="box-title">Tabella degli attributi</h3>
 
