@@ -187,12 +187,12 @@
                                             <td>{{$productsAttribute->attribute_name}}</td>
                                             <td>{{$productsAttribute->attribute_value}}</td>
                                             <td>{{ ($productsAttribute->attribute_hidden == 1) ? 'SI' : 'NO' }}</td>
-                                            <td>{{ $productsAttribute->updated_at }}</td>
+                                            <td>{{ formatDateTime($productsAttribute->updated_at) }}</td>
                                             <td>
                                                 <button type="button" class="btn btn-warning" onClick="editFieldValue({{$productsAttribute->id}})">
                                                     <i class="fas fa-edit"></i> Modifica
                                                 </button>
-                                                <button type="button" class="btn btn-danger" onClick="deleteProductAttribute({{$productsAttribute->id}})">
+                                                <button type="button" class="btn btn-danger" onClick="deleteProductAttribute({{$productsAttribute->id}}, {{ $productDetails->id }})">
                                                     <i class="fas fa-trash"></i> Elimina
                                                 </button>
                                                 <button type="button" class="btn btn-info">
@@ -250,7 +250,7 @@
             console.log(queryString)
         }
 
-        function deleteProductAttribute(productAttrId) {
+        function deleteProductAttribute(productAttrId, productId) {
             let apiUrl = '/api/deleteProductAttribute';
 
             $.ajax({
@@ -260,7 +260,8 @@
                     'X-CSRF-Token': '{{ csrf_token() }}',
                 },
                 data: {
-                    'product_attribute_id': productAttrId
+                    'product_attribute_id': productAttrId,
+                    'product_id': productId,
                 },
                 success: function (data) {
                     console.log('Risposta API:', data);

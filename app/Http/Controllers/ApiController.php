@@ -38,13 +38,25 @@ class ApiController extends Controller
 
     public function deleteProductAttribute(Request $request) {
         $request->validate([
-            'product_attribute_id' => 'required|int'
+            'product_attribute_id' => 'required|int',
+            'product_id' => 'required|int'
         ]);
 
-        $attributeToDelete = ProductAttributes::find($request->input('product_attribute_id'));
+        $productAttrId = $request->input('product_attribute_id');
+        $productId = $request->input('product_id');
+
+        $attributeToDelete = ProductAttributes::find($productAttrId);
 
         if($attributeToDelete) {
+            // Dopo l'eliminazione si deve rimettere il vecchio record come attuale (rimuovere attribute_date_end)
+            $productAttribute = ProductAttributes::where('product_ref_id', $productId)
+                ->where('attribute_code', $attributeToDelete->attribute_code)
+                ->orderByDesc('attribute_date_end')
+                ->first();
+
             $attributeToDelete->delete();
+            $productAttribute->attribute_date_end = null;
+            $productAttribute->save();
             $data = ['message' => 'Eliminato con successo!'];
         } else {
             $data = ['message' => 'Impossibile eliminare!'];

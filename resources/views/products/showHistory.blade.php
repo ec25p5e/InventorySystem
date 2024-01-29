@@ -41,10 +41,10 @@
                             @foreach($attributeDetails as $attributeDetail)
                                 <tr>
                                     <td>{{ $attributeDetail->attribute_value }}</td>
-                                    <td>{{ $attributeDetail->attribute_date_start }}</td>
-                                    <td>{{ $attributeDetail->attribute_date_end }}</td>
-                                    <td>{{ $attributeDetail->user_id }}</td>
-                                    <td>{{ $attributeDetail->updated_at }}</td>
+                                    <td>{{ formatDateTime($attributeDetail->attribute_date_start) }}</td>
+                                    <td>{{ formatDateTime($attributeDetail->attribute_date_end) }}</td>
+                                    <td>{{ getUserById($attributeDetail->user_id) }}</td>
+                                    <td>{{ formatDateTime($attributeDetail->updated_at) }}</td>
                                 </tr>
                             @endforeach
                         @endisset
