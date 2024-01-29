@@ -92,4 +92,8 @@ class ProductController extends Controller
             'attributeDefinitions' => $getDefinitionsOfProducts
         ]);
     }
+
+    public function movements() {
+        return view('products.movements');
+    }
 }
