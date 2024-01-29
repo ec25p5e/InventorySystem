@@ -64,23 +64,6 @@ class ProductController extends Controller
         ]);
     }
 
-    public function showHistory($product_id, $product_attr_id) {
-        $attributeName = ProductAttributes::find($product_attr_id);
-        $productAttributes = ProductAttributes::
-            where(function ($query) use ($attributeName, $product_id) {
-                $query->where('product_ref_id', '=', $product_id)
-                      ->where('attribute_code', '=', $attributeName->attribute_code);
-            })
-            ->orderBy('attribute_date_end', 'asc')
-            ->get();
-
-
-        return view('products.showHistory', [
-            'attributeDetails' => $productAttributes,
-            'attributeName' => $attributeName
-        ]);
-    }
-
     public function store(Request $request) {
         $request->validate([
             'product_num_ceap' => 'required|int|',
@@ -115,8 +98,6 @@ class ProductController extends Controller
 
         $unities = Unities::all();
         Session::flash('success', $message);
-
-        $productEndFormatted = isset($productDetails->product_end) ? Carbon::parse($productDetails->product_end)->format('Y-m-d') : '';
 
         return view('products.create', [
             'productDetails' => $product,

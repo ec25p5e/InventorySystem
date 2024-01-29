@@ -23,7 +23,10 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Elenco dei prodotti</h3>
-                <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
+                @if(hasRole())
+                    <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
+                @endif
+
                 <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
             </div>
             <div class="box-body">

@@ -27,6 +27,7 @@ class ApiController extends Controller
             case 'product_attributes':
                 $attributeValue = ProductAttributes::where('product_ref_id', $productId)
                     ->where('attribute_code', $product_attribute)
+                    ->where('attribute_date_end', null)
                     ->value('attribute_value');
 
                 $data['value'] = $attributeValue;

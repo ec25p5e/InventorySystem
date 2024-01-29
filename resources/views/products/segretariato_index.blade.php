@@ -35,6 +35,7 @@
                         <th>Stato</th>
                         <th class="bg-secondary">Scuola</th>
                         <th class="bg-secondary">Quantità</th>
+                        <th class="bg-secondary">Quantità minima</th>
                         <th class="bg-secondary">Unità di misura</th>
                         <th style="width: 16%">Azioni</th>
                     </tr>
@@ -45,16 +46,14 @@
                             <td>{{ $product->product_num_ceap }}</td>
                             <td>{{ $product->product_num_intern }}</td>
                             <td>{{ $product->product_name }}</td>
-                            <td>{{ ($product->product_end == getSettings('DEFAULT_DATE_END')) ? "Attivo" : "Inutilizzato" }}</td>
+                            <td>{{ ($product->product_end == getSettings('DEFAULT_DATE_END') || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
                             <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
-                            <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
+                            <td id="qtyRefTd-{{ $product->id }}" class="bg-danger"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
+                            <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_WARNING', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
                             <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
                             <td>
-                                <button class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
-                                </button>
-                                <button class="btn btn-danger" onClick="deleteProduct({{ $product->id }})">
-                                    <i class="fas fa-trash"></i>Elimina</a>
+                                <button class="btn btn-success">
+                                    <i class="fas fa-edit"></i> <a style="text-decoration:none; color: white;">Spunta come ordinato</a>
                                 </button>
                             </td>
                         </tr>
@@ -75,28 +74,4 @@
 @section('js')
     @parent
 
-    <script>
-        function deleteProduct(product_id) {
-            let apiUrl = '/api/deleteProduct';
-
-            $.ajax({
-                url: apiUrl,
-                type: 'POST',
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-                data: {
-                    'product_id': product_id
-                },
-                success: function (data) {
-                    if(data['message']==='deleted') {
-                        location.reload()
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.error('Errore API:', status, error);
-                }
-            });
-        }
-    </script>
 @endsection

@@ -10,77 +10,82 @@ use Illuminate\Support\Facades\Session;
 
 class ProuctAttributesController extends Controller
 {
+    public function showHistory($product_id, $product_attr_id) {
+        $attributeName = ProductAttributes::find($product_attr_id);
+        $productAttributes = ProductAttributes::
+        where(function ($query) use ($attributeName, $product_id) {
+            $query->where('product_ref_id', '=', $product_id)
+                ->where('attribute_code', '=', $attributeName->attribute_code);
+        })
+            ->orderBy('attribute_date_end', 'asc')
+            ->get();
+
+
+        return view('products.showHistory', [
+            'attributeDetails' => $productAttributes,
+            'attributeName' => $attributeName
+        ]);
+    }
+
     public function storeAttribute(Request $request)
     {
         $request->validate([
             'attribute_code' => 'required|string',
             'attribute_value' => 'required|string',
-            'attribute_hidden' => 'required'
+            'attribute_hidden' => 'required|int',
+            'productId' => 'required|int'
         ]);
 
         $attributeCode = $request->input('attribute_code');
         $attributeValue = $request->input('attribute_value');
+        $attributeHidden = $request->input('attribute_hidden');
         $productId = $request->input('productId');
 
         $getCodeName = ProductAttributesDef::find($attributeCode);
         $attributeCodeReal = $getCodeName->def_code;
 
-        $checkIfExists = ProductAttributes
-            ::where(function ($query) use ($attributeCodeReal, $productId) {
-                $query->where('attribute_code', '=', $attributeCodeReal)
-                    ->where('product_ref_id', '=', $productId)
-                    ->where('attribute_date_end', '=', null);
-            })->first();
+        $existingAttribute = ProductAttributes
+            ::where('attribute_code', $attributeCodeReal)
+            ->where('product_ref_id', $productId)
+            ->whereNull('attribute_date_end')
+            ->first();
 
-        if ($getCodeName->def_name != null && $checkIfExists == null) {
-            if (Auth::check()) {
-                $this->insertProductAttribute(
-                    $getCodeName->def_code,
-                    $getCodeName->def_name,
-                    $attributeValue,
-                    $request->input('attribute_hidden'),
-                    $productId
-                );
-            }
-        } else if (Auth::check() && $checkIfExists != null) {
-            if($checkIfExists->attribute_value != $attributeValue) {
-                $rowToUpdate = ProductAttributes::find($checkIfExists->id);
-                $rowToUpdate->attribute_date_end = now();
-                $rowToUpdate->save();
+        if($existingAttribute) {
+            $productAttrId = $existingAttribute->id;
+            $existingAttribute = ProductAttributes::find($productAttrId);
 
-                $this->insertProductAttribute(
-                    $getCodeName->def_code,
-                    $getCodeName->def_name,
-                    $attributeValue,
-                    $request->input('attribute_hidden'),
-                    $productId
-                );
-            }
+            $attributeDataOld = [
+                'attribute_code' => $existingAttribute->attribute_code,
+                'attribute_name' => $existingAttribute->attribute_name,
+                'attribute_value' => $existingAttribute->attribute_value,
+                'attribute_hidden' => $existingAttribute->attribute_hidden,
+                'attribute_unique' => $existingAttribute->attribute_unique,
+                'product_ref_id' => $existingAttribute->product_ref_id,
+                'attribute_date_start' => $existingAttribute->attribute_date_start,
+                'attribute_date_end' => now(),
+                'user_id' => Auth::id(),
+            ];
+
+            $existingAttribute->fill($attributeDataOld);
+            $existingAttribute->save();
         }
 
-        Session::flash('success-product-attribute', 'Attributo registrato');
+        $attributeData = [
+            'attribute_code' => $attributeCodeReal,
+            'attribute_name' => $getCodeName->def_name,
+            'attribute_value' => $attributeValue,
+            'attribute_hidden' => $attributeHidden,
+            'attribute_unique' => ($attributeCode == 'UNITY') ? 1 : 0,
+            'product_ref_id' => $productId,
+            'attribute_date_start' => now(),
+            'attribute_date_end' => null,
+            'user_id' => Auth::id(),
+        ];
+
+        $product = ProductAttributes::create($attributeData);
+        $message = 'Attributo creato con successo';
+
+        Session::flash('success-product-attribute', $message);
         return back()->with('success', 'Operazione completata con successo.');
-    }
-
-
-    private function insertProductAttribute(
-        $defCode,
-        $defName,
-        $attributeValue,
-        $attributeHidden,
-        $productId
-    ): void
-    {
-        $productAttribute = new ProductAttributes;
-        $productAttribute->attribute_code = $defCode;
-        $productAttribute->attribute_name = $defName;
-        $productAttribute->attribute_value = $attributeValue;
-        $productAttribute->attribute_hidden = $attributeHidden;
-        $productAttribute->attribute_unique = ($defCode == 'UNITY') ? 1 : 0;
-        $productAttribute->product_ref_id = $productId;
-        $productAttribute->attribute_date_start = now();
-        $productAttribute->attribute_date_end = null;
-        $productAttribute->user_id = Auth::id();
-        $productAttribute->save();
     }
 }

@@ -21,7 +21,8 @@ class ProductAttributes extends Model
         'attribute_unique',
         'attribute_date_start',
         'attribute_date_end',
-        'product_ref_id'
+        'product_ref_id',
+        'user_id'
     ];
 
     // Relazione tra attributo e prodotto

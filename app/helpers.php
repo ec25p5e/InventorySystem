@@ -8,14 +8,22 @@ use Illuminate\Support\Facades\DB;
 if (!function_exists('formatDate')) {
     function formatDate($date)
     {
-        return Carbon::parse($date)->format('Y-m-d');
+        if($date != null) {
+            return Carbon::parse($date)->format('Y-m-d');
+        }
+
+        return '';
     }
 }
 
 if (!function_exists('formatDateTime')) {
     function formatDateTime($date)
     {
-        return Carbon::parse($date)->format('d.m.Y h:m');
+        if($date != null) {
+            return Carbon::parse($date)->format('d.m.Y H:i');
+        }
+
+        return '';
     }
 }
 
