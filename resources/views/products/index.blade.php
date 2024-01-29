@@ -33,23 +33,25 @@
                         <th>Numero CEAP</th>
                         <th>Numero interno</th>
                         <th>Nome</th>
+                        <th>Scuola</th>
                         <th>Stato</th>
                         <th style="width: 16%">Azioni</th>
                     </tr>
 
                     @foreach($products as $product)
                         <tr>
-                            <td>{{ $product->product_image }}</td>
+                            <td>{{ $product->id }}</td>
                             <td>{{ $product->product_num_ceap }}</td>
                             <td>{{ $product->product_num_intern }}</td>
                             <td>{{ $product->product_name }}</td>
+                            <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
                             <td>{{ ($product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
                             <td>
                                 <button class="btn btn-warning">
                                     <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
                                 </button>
                                 <button class="btn btn-danger">
-                                    
+                                    <i class="fas fa-trash"></i><a style="text-decoration:none; color: white;">Elimina</a>
                                 </button>
                             </td>
                         </tr>
@@ -64,4 +66,9 @@
             </div>
         </div>
     </section>
+@endsection
+
+
+@section('js')
+    @parent
 @endsection

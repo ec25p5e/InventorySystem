@@ -28,7 +28,8 @@ class ProuctAttributesController extends Controller
         $checkIfExists = ProductAttributes
             ::where(function ($query) use ($attributeCodeReal, $productId) {
                 $query->where('attribute_code', '=', $attributeCodeReal)
-                    ->where('product_ref_id', '=', $productId);
+                    ->where('product_ref_id', '=', $productId)
+                    ->where('attribute_date_end', '=', null);
             })->first();
 
         if ($getCodeName->def_name != null && $checkIfExists == null) {

@@ -16,6 +16,32 @@
     <script src="{{ asset('admin-assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('js/quagga.min.js') }}"></script>
+
+    <script>
+        function loadUnityInformation(product_id, entity, attribute, element) {
+            let apiUrl = '/api/loadProductColInfo';
+            console.log(element)
+
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'product_id': product_id,
+                    'entity': entity,
+                    'product_attribute': attribute
+                },
+                success: function (data) {
+                    $(element).append(data['value'])
+                },
+                error: function (xhr, status, error) {
+                    $(element).append(error)
+                }
+            });
+        }
+    </script>
 </head>
 <body class="hold-transition sidebar-mini layout-fixed skin-blue">
 <div class="wrapper">
@@ -95,6 +121,8 @@
             }, 50);
         });
     </script>
+
+
 </div>
 </body>
 </html>

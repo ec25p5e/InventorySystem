@@ -8,6 +8,8 @@ use App\Models\ProductAttributesDef;
 use App\Models\Products;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -16,14 +18,13 @@ class ProductController extends Controller
     // Visualizzazione di tutti i prodotti
     public function index(Request $request) {
         $products = Products::all();
-            // ->paginate(SettingsHelper::getSetting('MAX_ROW_PER_PAR'));
 
         return view('products.index', [
             'products' => $products
         ]);
     }
 
-    public function create(): \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+    public function create()
     {
         $getDefinitionsOfProducts = ProductAttributesDef::all();
         return view('products.create', ['attributeDefinitions' => $getDefinitionsOfProducts]);

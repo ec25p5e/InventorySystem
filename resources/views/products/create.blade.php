@@ -33,6 +33,9 @@
             <div class="box-header">
                 <h3 class="box-title">Form per la creazione del prodotto</h3>
                 <h5 style="color: red;">Dopo il salvataggio è possibile inserire degli attributi. I campi contrassegnati con * sono obbligatori</h5>
+                @isset($productDetails->id)
+                    <button class="btn btn-primary pull-right" onClick="duplicateProduct({{ $productDetails->id }})">Duplica prodotto</button>
+                @endisset
             </div>
             <div class="box-body">
                 <form action="{{ route('products.store') }}" method="post" name="form-product">
@@ -178,6 +181,10 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+    @parent
 
     <script>
         setTimeout(function() {
@@ -189,6 +196,27 @@
                 checkIfCeapExists($(this).val());
             });
         });
+
+        function duplicateProduct(product_id) {
+            let apiUrl = '/api/productDuplicate';
+
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'product_id': product_id
+                },
+                success: function (data) {
+                    alert(data['message']);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Errore API:', status, error);
+                }
+            });
+        }
 
         function checkIfCeapExists(queryString) {
             console.log(queryString)
@@ -214,6 +242,7 @@
                 }
             });
         }
+
 
 
         function editFieldValue(productAttrId) {

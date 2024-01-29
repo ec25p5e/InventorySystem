@@ -19,6 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/loadProductColInfo', [ApiController::class, 'loadProductColInfo'])->name('api.loadProductColInfo');
 Route::post('/deleteProductAttribute', [ApiController::class, 'deleteProductAttribute'])->name('api.deleteProductAttribute');
 Route::post('/updateUserRoles', [ApiController::class, 'updateUserRoles'])->name('api.updateUserRoles');
 Route::post('/processProductBarcode', [ApiController::class, 'processProductBarcode'])->name('api.processBarCode');
+Route::post('/productDuplicate', [ApiController::class, 'duplicateProduct'])->name('api.productDuplicate');
