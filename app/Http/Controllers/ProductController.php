@@ -16,11 +16,18 @@ use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
 
-    // Visualizzazione di tutti i prodotti
-    public function index(Request $request) {
+    public function index() {
         $products = Products::all();
 
         return view('products.index', [
+            'products' => $products
+        ]);
+    }
+
+    public function indexProductSegretariato() {
+        $products = DB::table('internal_product_warning')->get();
+
+        return view('products.segretariato_index', [
             'products' => $products
         ]);
     }

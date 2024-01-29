@@ -16,7 +16,13 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if(Auth::attempt($credentials)) {
-            return redirect('/dashboard');
+            if(getUserRoles(Auth::id(), 'ADMIN') > 0) {
+                return redirect('/admin');
+            } else if(getUserRoles(Auth::id(), 'SEG_SPAI') > 0 || getUserRoles(Auth::id(), 'SEG_SSMT') > 0) {
+                return redirect('/segretariato');
+            } else if(getUserRoles(Auth::id(), 'CUSTODE_SPAI') > 0 || getUserRoles(Auth::id(), 'CUSTODE_SSMT') > 0) {
+                return redirect('/custode');
+            }
         }
 
         // Auth fallita
