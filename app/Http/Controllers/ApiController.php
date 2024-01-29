@@ -72,4 +72,24 @@ class ApiController extends Controller
     public function processProductBarcode(Request $request) {
 
     }
+
+    public function deleteProduct(Request $request) {
+        $request->validate([
+            'product_id' => 'required|int'
+        ]);
+        $productId = $request->input('product_id');
+
+        $prodAttrToDelete = ProductAttributes::where('product_ref_id', $productId)->count();
+        $productToDelete = Products::find($productId)->count();
+
+        if($prodAttrToDelete > 0 && $productToDelete == 1) {
+            $prodAttrToDelete->delete();
+            $productToDelete->delete();
+            $data['message'] = 'deleted';
+        } else {
+            $data['message'] = 'error';
+        }
+
+        return response()->json($data);
+    }
 }

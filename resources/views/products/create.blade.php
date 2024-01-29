@@ -62,7 +62,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Form per la creazione del prodotto</h3>
-                <h5 style="color: red;">Dopo il salvataggio è possibile inserire degli attributi. I campi contrassegnati con * sono obbligatori</h5>
+                <h5 style="color: red;">Dopo il salvataggio è possibile inserire degli attributi. I campi contrassegnati con * sono obbligatori. Data di inizio e fine non sono da modificare per la v1</h5>
                 @isset($productDetails->id)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica prodotto</button>
                 @endisset
@@ -101,14 +101,14 @@
                             <div class="mb-3">
                                 <label for="product_start" class="form-label">Data di INIZIO validità:</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @endisset name="product_start">
+                                    <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @else value="{{ formatDate(now()) }}" @endisset name="product_start">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="product_end" class="form-label">Data di FINE validità:</label>
                                 <div class="input-group">
-                                    <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @endisset name="product_end">
+                                    <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @else value="3001-01-01" @endisset name="product_end">
                                 </div>
                             </div>
                         </div>
@@ -189,9 +189,6 @@
                                             <td>{{ ($productsAttribute->attribute_hidden == 1) ? 'SI' : 'NO' }}</td>
                                             <td>{{ formatDateTime($productsAttribute->updated_at) }}</td>
                                             <td>
-                                                <button type="button" class="btn btn-warning" onClick="editFieldValue({{$productsAttribute->id}})">
-                                                    <i class="fas fa-edit"></i> Modifica
-                                                </button>
                                                 <button type="button" class="btn btn-danger" onClick="deleteProductAttribute({{$productsAttribute->id}}, {{ $productDetails->id }})">
                                                     <i class="fas fa-trash"></i> Elimina
                                                 </button>
@@ -264,18 +261,14 @@
                     'product_id': productId,
                 },
                 success: function (data) {
-                    console.log('Risposta API:', data);
+                    if(data['message'] === 'Eliminato con successo!')
+                        location.reload()
+                        alert('Eliminato con successo')
                 },
                 error: function (xhr, status, error) {
                     console.error('Errore API:', status, error);
                 }
             });
-        }
-
-
-
-        function editFieldValue(productAttrId) {
-
         }
     </script>
 @endsection

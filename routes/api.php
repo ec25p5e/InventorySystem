@@ -23,3 +23,4 @@ Route::post('/loadProductColInfo', [ApiController::class, 'loadProductColInfo'])
 Route::post('/deleteProductAttribute', [ApiController::class, 'deleteProductAttribute'])->name('api.deleteProductAttribute');
 Route::post('/updateUserRoles', [ApiController::class, 'updateUserRoles'])->name('api.updateUserRoles');
 Route::post('/processProductBarcode', [ApiController::class, 'processProductBarcode'])->name('api.processBarCode');
+Route::post('/deleteProduct', [ApiController::class, 'deleteProduct'])->name('api.deleteProduct');
