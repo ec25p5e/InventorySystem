@@ -20,9 +20,9 @@ class ProductController extends Controller
         $showLess = $request->input('showLess');
 
         if($showLess == 1) {
-            $products = DB::table('internal_product_warning')->get();
+            $products = DB::table('internal_product_warning')->forPage(1, 10)->get();
         } else {
-            $products = Products::all();
+            $products = Products::all()->forPage(1, 10);
         }
 
 
@@ -74,8 +74,6 @@ class ProductController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'product_num_ceap' => 'required|int|',
-            'product_num_intern' => 'required|string|',
             'product_name' => 'required|string|',
             'product_start' => [
                 'required',

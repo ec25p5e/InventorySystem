@@ -20,26 +20,30 @@
     <script>
         function loadUnityInformation(product_id, entity, attribute, element) {
             let apiUrl = '/api/loadProductColInfo';
-            console.log(element)
 
-            $.ajax({
-                url: apiUrl,
-                type: 'POST',
-                headers: {
-                    'X-CSRF-Token': '{{ csrf_token() }}',
-                },
-                data: {
-                    'product_id': product_id,
-                    'entity': entity,
-                    'product_attribute': attribute
-                },
-                success: function (data) {
-                    $(element).append(data['value'])
-                },
-                error: function (xhr, status, error) {
-                    $(element).append(error)
-                }
-            });
+            if(localStorage.getItem({{ getSettings('CACHED_PRODUCT_LS') }})) {
+
+            } else {
+                $.ajax({
+                    url: apiUrl,
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-Token': '{{ csrf_token() }}',
+                    },
+                    data: {
+                        'product_id': product_id,
+                        'entity': entity,
+                        'product_attribute': attribute
+                    },
+                    success: function (data) {
+                        $(element).append(data['value'])
+                        localStorage.setItem({{ getSettings('CACHED_PRODUCT_LS') }}, JSON.stringify(data));
+                    },
+                    error: function (xhr, status, error) {
+                        $(element).append(error)
+                    }
+                });
+            }
         }
     </script>
 </head>
