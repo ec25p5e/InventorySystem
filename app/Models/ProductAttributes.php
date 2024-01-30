@@ -19,6 +19,7 @@ class ProductAttributes extends Model
         'attribute_value',
         'attribute_hidden',
         'attribute_unique',
+        'attribute_log',
         'attribute_date_start',
         'attribute_date_end',
         'product_ref_id',

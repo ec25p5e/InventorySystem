@@ -43,6 +43,7 @@ class ProductAttributesController extends Controller
 
         $getCodeName = ProductAttributesDef::find($attributeCode);
         $attributeCodeReal = $getCodeName->def_code;
+        $log = '';
 
         $existingAttribute = ProductAttributes
             ::where('attribute_code', $attributeCodeReal)
@@ -54,12 +55,19 @@ class ProductAttributesController extends Controller
             $productAttrId = $existingAttribute->id;
             $existingAttribute = ProductAttributes::find($productAttrId);
 
+            if($existingAttribute->attribute_value < $attributeValue) {
+                $log = 'INCREMENT';
+            } else if($existingAttribute->attribute_value > $attributeValue) {
+                $log = 'DECREMENT';
+            }
+
             $attributeDataOld = [
                 'attribute_code' => $existingAttribute->attribute_code,
                 'attribute_name' => $existingAttribute->attribute_name,
                 'attribute_value' => $existingAttribute->attribute_value,
                 'attribute_hidden' => $existingAttribute->attribute_hidden,
                 'attribute_unique' => $existingAttribute->attribute_unique,
+                'attribute_log' => $existingAttribute->attribute_log,
                 'product_ref_id' => $existingAttribute->product_ref_id,
                 'attribute_date_start' => $existingAttribute->attribute_date_start,
                 'attribute_date_end' => now(),
@@ -77,6 +85,7 @@ class ProductAttributesController extends Controller
             'attribute_hidden' => $attributeHidden,
             'attribute_unique' => ($attributeCode == 'UNITY') ? 1 : 0,
             'product_ref_id' => $productId,
+            'attribute_log' =>  $log,
             'attribute_date_start' => now(),
             'attribute_date_end' => null,
             'user_id' => Auth::id(),

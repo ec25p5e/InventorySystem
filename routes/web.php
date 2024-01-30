@@ -20,7 +20,7 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
 foreach($routeConfigurations as $route) {
-    switch ($route->route_controller) {
+    switch($route->route_controller) {
         case 'RoutesController':
             Route::{$route->route_method}($route->route_uri, [RoutesController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
@@ -44,3 +44,11 @@ foreach($routeConfigurations as $route) {
     }
 
 }
+
+$middlewareName = 'role:ADMIN';
+
+$routes = collect(Route::getRoutes())->filter(function ($route) use ($middlewareName) {
+    return collect($route->middleware())->contains($middlewareName);
+})->map(function ($route) {
+    return $route->uri();
+})->values();

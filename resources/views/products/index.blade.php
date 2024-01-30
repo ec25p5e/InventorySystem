@@ -59,6 +59,9 @@
                         <th>Stato</th>
                         <th class="bg-secondary">Scuola</th>
                         <th class="bg-secondary">Quantità</th>
+                        @if($showLess == 1)
+                            <th class="bg-secondary">Quantità minima</th>
+                        @endif
                         <th class="bg-secondary">Unità di misura</th>
                         <th style="width: 16%">Azioni</th>
                     </tr>
@@ -72,6 +75,9 @@
                             <td>{{ ($product->product_end == getSettings('DEFAULT_DATE_END')) ? "Attivo" : "Inutilizzato" }}</td>
                             <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
                             <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
+                            @if($showLess == 1)
+                                <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_WARNING', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
+                            @endif
                             <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
                             <td>
                                 <button class="btn btn-warning">

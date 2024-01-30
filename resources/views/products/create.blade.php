@@ -28,6 +28,8 @@
                 </div>
                 <div class="modal-body">
                     <form method="post" action="{{ route(getRoute(Auth::id(), 'DUPLICATE_PRODUCT')) }}">
+                        @csrf
+
                         <div class="form-group">
                             <label for="unity_ref" class="form-label">Scuola di riferimento per il nuovo prodotto</label>
                             <select class="form-control" id="unity_ref" name="unity_ref">

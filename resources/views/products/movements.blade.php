@@ -9,8 +9,8 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('dashboard.index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Prodotti</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}">Prodotti</a></li>
                         <li class="breadcrumb-item active">Movimenti</li>
                     </ol>
                 </div>
@@ -48,8 +48,30 @@
 
                 <div class="box-body">
                     <div id="barcode-scanner">
-                        <div id="barcode-result" ></div>
+                        <div id="barcode-result"></div>
+                        <form action="{{ route(getRoute(Auth::id(), 'SEARCH_PRODUCT')) }}" method="post" name="form-product">
+                            @csrf
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label for="product_num_ceap">Numero CEAP (*)</label>
+                                            <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-group">
+                                            <label for="product_name">Nome prodotto</label>
+                                            <input type="text" class="form-control" name="product_name" id="product_name"   />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

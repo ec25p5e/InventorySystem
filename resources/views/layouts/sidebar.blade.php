@@ -30,6 +30,14 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Movimenti
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'ROLES')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -59,6 +67,16 @@
                             </a>
                         </li>
                     </ul>
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Movimenti
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
                 </nav>
             @elseif(getUserRoles(Auth::id(), 'SEG_SPAI') > 0 || getUserRoles(Auth::id(), 'SEG_SSMT') > 0)
                 <nav class="mt-2">
@@ -68,6 +86,16 @@
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Prodotti
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Movimenti
                                 </p>
                             </a>
                         </li>
