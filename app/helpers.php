@@ -31,7 +31,7 @@ if (!function_exists('formatDateTime')) {
 if(!function_exists('getUserById')) {
     function getUserById($userId) {
 
-        $user = User::where('id', $userId)->value('first_name') . ' ' . User::where('id', $userId)->value('last_name');
+        $user = User::where('id', $userId)->value('username');
         return $user;
     }
 }
@@ -72,6 +72,18 @@ if(!function_exists('hasRole')) {
     }
 }
 
+if(!function_exists('getPrimaryRole')) {
+    function getPrimaryRole($userId) {
+        $roleName = DB::table('user_roles as ur')
+            ->join('roles as r', 'r.id', '=', 'ur.role_id')
+            ->where('ur.user_id', $userId)
+            ->where('ur.is_primary', 1)
+            ->select('r.role_name')
+            ->first();
+
+        return $roleName;
+    }
+}
 
 if(!function_exists('getRoute')) {
     function getRoute($userId, $route) {

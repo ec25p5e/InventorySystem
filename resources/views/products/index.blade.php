@@ -24,11 +24,31 @@
             <div class="box-header">
                 <h3 class="box-title">Elenco dei prodotti</h3>
                 @if(hasRole(Auth::id(), 'EXPORTER') > 0)
-                    <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
+                    <button class="btn btn-success ml-3" type="button" id="exportProductsToExcel">
+                        <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esporta in Excel</a>
+                    </button>
                 @endif
 
-                <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a></button>
+                <div class="pull-right">
+                    @if($showLess == 1)
+                        <button class="btn btn-success">
+                            <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'),  ['filters' => '?showLess=0']) }}">Mostra tutti i prodotti</a>
+                        </button>
+                    @else
+                        <button class="btn btn-success">
+                            <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'),  ['filters' => '?showLess=1']) }}">Mostra prodotti in esaurimento</a>
+                        </button>
+                    @endif
+                    <button class="btn btn-primary">
+                        Filtri
+                    </button>
+                    <button class="btn btn-primary">
+                        <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a>
+                    </button>
+                </div>
+                <div class="clearfix"></div>
             </div>
+
             <div class="box-body">
                 <table class="table table-bordered">
                     <tr>

@@ -16,7 +16,7 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if(Auth::attempt($credentials)) {
-            return redirect(getRoute(Auth::id(), 'DASHBOARD'));
+            return redirect(getRouteUri(Auth::id(), 'DASHBOARD'));
         }
 
         // Auth fallita

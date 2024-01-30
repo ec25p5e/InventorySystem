@@ -16,11 +16,19 @@ use Illuminate\Support\Facades\Session;
 class ProductController extends Controller
 {
 
-    public function index() {
-        $products = Products::all();
+    public function index(Request $request) {
+        $showLess = $request->input('showLess');
+
+        if($showLess == 1) {
+            $products = DB::table('internal_product_warning')->get();
+        } else {
+            $products = Products::all();
+        }
+
 
         return view('products.index', [
-            'products' => $products
+            'products' => $products,
+            'showLess' => $showLess
         ]);
     }
 
