@@ -26,6 +26,7 @@ class CheckRoleMiddleware {
             ->join('roles as r', 'r.id', '=', 'ur.role_id')
             ->where('u.id', $userId)
             ->where('r.role_code', 'LIKE', '%'. $roleMatch . '%')
+            ->where('ur.is_primary', '=', 1)
             ->count();
 
         return $roles;

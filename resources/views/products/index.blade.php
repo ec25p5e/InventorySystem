@@ -23,11 +23,17 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Elenco dei prodotti</h3>
-                @if(hasRole())
+                @if(hasRole(Auth::id(), 'EXPORTER') > 0)
                     <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
                 @endif
 
-                <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
+                @if(hasRole(Auth::id(), 'SEG_SPAI') > 0 || hasRole(Auth::id(), 'SEG_SSMT') > 0)
+                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create.segretariato') }}">Nuovo prodotto</a></button>
+                @elseif(hasRole(Auth::id(), 'CUSTODE_SPAI') > 0 || hasRole(Auth::id(), 'CUSTODE_SSMT') > 0)
+                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
+                @elseif(hasRole(Auth::id(), 'ADMIN') > 0)
+                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create.admin') }}">Nuovo prodotto</a></button>
+                @endif
             </div>
             <div class="box-body">
                 <table class="table table-bordered">

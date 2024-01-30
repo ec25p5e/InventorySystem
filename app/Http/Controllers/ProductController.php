@@ -24,10 +24,10 @@ class ProductController extends Controller
         ]);
     }
 
-    public function indexProductSegretariato() {
+    public function lessProducts() {
         $products = DB::table('internal_product_warning')->get();
 
-        return view('products.segretariato_index', [
+        return view('products.lessProducts', [
             'products' => $products
         ]);
     }

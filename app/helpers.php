@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Settings;
+use App\Models\Unities;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -51,8 +52,67 @@ if(!function_exists('getUserRoles')) {
             ->join('roles as r', 'r.id', '=', 'ur.role_id')
             ->where('u.id', $userId)
             ->where('r.role_code', 'LIKE', '%'. $roleMatch . '%')
+            ->where('ur.is_primary', '=', 1)
             ->count();
 
         return $roles;
+    }
+}
+
+if(!function_exists('hasRole')) {
+    function hasRole($userId, $roleMatch) {
+        $roles = DB::table('users as u')
+            ->join('user_roles as ur', 'ur.user_id', '=', 'u.id')
+            ->join('roles as r', 'r.id', '=', 'ur.role_id')
+            ->where('u.id', $userId)
+            ->where('r.role_code', '=', $roleMatch)
+            ->count();
+
+        return $roles;
+    }
+}
+
+
+if(!function_exists('getRoute')) {
+    function getRoute($userId, $route) {
+        $routeValue = DB::table('routes_conf as rc')
+            ->select('rc.route_name')
+            ->where('rc.role_id', function ($query) use ($userId) {
+                $query->select('ur.role_id')
+                    ->from('user_roles as ur')
+                    ->where('ur.user_id', $userId)
+                    ->where('ur.is_primary', 1);
+            })
+            ->where('rc.route_code', $route)
+            ->where('rc.unity_id', function ($query) use ($userId) {
+                $query->select('u.unity_id')
+                    ->from('users as u')
+                    ->where('u.id', $userId);
+            })
+            ->first();
+
+        return ($routeValue) ? $routeValue->route_name : "";
+    }
+}
+
+if(!function_exists('getRouteUri')) {
+    function getRouteUri($userId, $route) {
+        $routeValue = DB::table('routes_conf as rc')
+            ->select('rc.route_uri')
+            ->where('rc.role_id', function ($query) use ($userId) {
+                $query->select('ur.role_id')
+                    ->from('user_roles as ur')
+                    ->where('ur.user_id', $userId)
+                    ->where('ur.is_primary', 1);
+            })
+            ->where('rc.route_code', $route)
+            ->where('rc.unity_id', function ($query) use ($userId) {
+                $query->select('u.unity_id')
+                    ->from('users as u')
+                    ->where('u.id', $userId);
+            })
+            ->first();
+
+        return ($routeValue) ? $routeValue->route_uri : "";
     }
 }

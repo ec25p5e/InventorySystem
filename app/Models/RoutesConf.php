@@ -5,16 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class UserRoles extends Model
+class RoutesConf extends Model
 {
     use HasFactory;
 
-    protected $table = 'user_roles';
+    protected $table = 'routes_conf';
 
     protected $fillable = [
-        'user_id',
-        'unity_id',
         'role_id',
-        'is_primary',
+        'unity_id',
+        'route_code',
+        'route_name',
+        'route_uri',
+        'route_method',
+        'route_controller',
     ];
 }

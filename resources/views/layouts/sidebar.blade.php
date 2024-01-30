@@ -22,7 +22,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('products.index') }}" class="nav-link">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Prodotti
@@ -30,10 +30,26 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('roles.index') }}" class="nav-link">
+                            <a href="{{ route(getRoute(Auth::id(), 'LESS_PRODUCTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Prodotti in esaurimento
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'ROLES')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Gestione di sistema > Ruoli
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'ROUTE_CONF')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Gestione di sistema > Configurazione dei percorsi
                                 </p>
                             </a>
                         </li>
@@ -43,10 +59,18 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('products.index') }}" class="nav-link">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Prodotti
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'LESS_PRODUCTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Prodotti in esaurimento
                                 </p>
                             </a>
                         </li>
@@ -56,10 +80,18 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route('products.segretariato') }}" class="nav-link">
+                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Prodotti
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'LESS_PRODUCTS')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Prodotti in esaurimento
                                 </p>
                             </a>
                         </li>

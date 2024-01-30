@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Elenco prodotti</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route(getRoute(Auth::id, 'LIST_OF_PRODUCTS')) }}">Elenco prodotti</a></li>
                         <li class="breadcrumb-item active">Creazione</li>
                     </ol>
                 </div>
