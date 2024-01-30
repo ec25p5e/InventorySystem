@@ -49,6 +49,24 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="mb-3">
+                                <div class="form-group has-feedback @error('route_controller') has-error @enderror">
+                                    <label for="route_controller">Controller della route</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="route_controller">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group has-feedback @error('controller_method') has-error @enderror">
+                                    <label for="controller_method">Metodo del controller</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="controller_method">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="col-md-6">
@@ -68,6 +86,25 @@
                                     <label for="route_code">Percorso della route (URL)</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control" name="route_value">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group has-feedback @error('route_method') has-error @enderror">
+                                    <label for="route_method">Metodo</label>
+                                    <select class="form-control" id="route_method" name="route_method">
+                                        <option value="get">GET</option>
+                                        <option value="post">POST</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group has-feedback @error('route_middleware') has-error @enderror">
+                                    <label for="route_middleware">Middleware</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="route_middleware">
                                     </div>
                                 </div>
                             </div>

@@ -7,6 +7,8 @@ use App\Models\Unities;
 
 class RoutesController extends Controller
 {
+    protected $namespace = 'App\Http\Controllers\RoutesController';
+
     public function index(){
         return view('routes.list');
     }

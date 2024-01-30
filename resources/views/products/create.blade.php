@@ -9,7 +9,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="{{ route(getRoute(Auth::id, 'LIST_OF_PRODUCTS')) }}">Elenco prodotti</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}">Elenco prodotti</a></li>
                         <li class="breadcrumb-item active">Creazione</li>
                     </ol>
                 </div>
@@ -27,7 +27,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('products.duplicate') }}">
+                    <form method="post" action="{{ route(getRoute(Auth::id(), 'DUPLICATE_PRODUCT')) }}">
                         <div class="form-group">
                             <label for="unity_ref" class="form-label">Scuola di riferimento per il nuovo prodotto</label>
                             <select class="form-control" id="unity_ref" name="unity_ref">
@@ -68,7 +68,7 @@
                 @endisset
             </div>
             <div class="box-body">
-                <form action="{{ route('products.store') }}" method="post" name="form-product">
+                <form action="{{ route(getRoute(Auth::id(), 'STORE_PRODUCT')) }}" method="post" name="form-product">
                     @csrf
 
                     <input name="productIdHidden" type="hidden" @isset($productDetails->id) value="{{ $productDetails->id }}" @endisset />
@@ -145,7 +145,7 @@
                             </thead>
                             <tbody>
                                 <tr id="insertingRow">
-                                    <form action="{{ route('products.attribute.store') }}" method="POST" class="form-control" name="form-product-attributes">
+                                    <form action="{{ route(getRoute(Auth::id(), 'STORE_PRODUCT_ATTR')) }}" method="POST" class="form-control" name="form-product-attributes">
                                         @csrf
                                         <input type="hidden" name="productId" @isset($product_id) value="{{ $product_id }}" @endisset />
 
@@ -193,7 +193,7 @@
                                                     <i class="fas fa-trash"></i> Elimina
                                                 </button>
                                                 <button type="button" class="btn btn-info">
-                                                    <i class="fas fa-info"></i> <a href="{{ route('products.update.showHistory', ['product_id' => $productDetails->id, 'product_attr_id' => $productsAttribute->id]) }}" style="text-decoration:none; color: white;">Visualizza storico</a>
+                                                    <i class="fas fa-info"></i> <a href="{{ route(getRoute(Auth::id(), 'SHOW_PRODUCT_ATTR_HISTORY'), ['product_id' => $productDetails->id, 'product_attr_id' => $productsAttribute->id]) }}" style="text-decoration:none; color: white;">Visualizza storico</a>
                                                 </button>
                                             </td>
                                         </tr>

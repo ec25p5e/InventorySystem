@@ -27,13 +27,7 @@
                     <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button>
                 @endif
 
-                @if(hasRole(Auth::id(), 'SEG_SPAI') > 0 || hasRole(Auth::id(), 'SEG_SSMT') > 0)
-                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create.segretariato') }}">Nuovo prodotto</a></button>
-                @elseif(hasRole(Auth::id(), 'CUSTODE_SPAI') > 0 || hasRole(Auth::id(), 'CUSTODE_SSMT') > 0)
-                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create') }}">Nuovo prodotto</a></button>
-                @elseif(hasRole(Auth::id(), 'ADMIN') > 0)
-                    <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route('products.create.admin') }}">Nuovo prodotto</a></button>
-                @endif
+                <button class="btn btn-primary pull-right"><a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a></button>
             </div>
             <div class="box-body">
                 <table class="table table-bordered">
@@ -61,7 +55,7 @@
                             <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
                             <td>
                                 <button class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> <a href="{{ route('products.update', ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
+                                    <i class="fas fa-edit"></i> <a href="{{ route(getRoute(Auth::id(), 'UPDATE_PRODUCTS'), ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
                                 </button>
                                 <button class="btn btn-danger" onClick="deleteProduct({{ $product->id }})">
                                     <i class="fas fa-trash"></i>Elimina</a>

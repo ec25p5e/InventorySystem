@@ -23,7 +23,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Prodotti in esaurimento</h3>
-                <!-- <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route('products.export_to_excel') }}">Esporta in Excel</a></button> -->
+                <!-- <button class="btn btn-success pull-right ml-3" type="button" id="exportProductsToExcel"><a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esporta in Excel</a></button> -->
             </div>
             <div class="box-body">
                 <table class="table table-bordered">

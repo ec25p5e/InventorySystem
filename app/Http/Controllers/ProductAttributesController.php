@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
-class ProuctAttributesController extends Controller
+class ProductAttributesController extends Controller
 {
     public function showHistory($product_id, $product_attr_id) {
         $attributeName = ProductAttributes::find($product_attr_id);
