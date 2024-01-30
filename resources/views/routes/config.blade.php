@@ -25,7 +25,7 @@
                 <h3 class="box-title">Form per la creazione delle route</h3>
             </div>
             <div class="box-body">
-                <form action="{{ route(getRoute(Auth::id(), 'SAVE_NEW_ROUTE')) }}" method="post" name="form-product">
+                <form  method="post" name="form-product">
                     @csrf
 
                     <div class="row">

@@ -5,6 +5,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ProuctAttributesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoutesController;
+use App\Models\RoutesConf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +28,15 @@ Route::get('/', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
 
+$routeConfigurations = RoutesConf::all();
 
-Route::middleware(['role:SEG_SPAI, SEG_SSMT'])->group(function() {
+
+foreach($routeConfigurations as $route) {
+    var_dump($route->route_controller);
+    Route::{$route->route_method}($route->route_uri, [$route->route_controller, $route->controller_method])->name($route->route_name);
+}
+
+/* Route::middleware(['role:SEG_SPAI, SEG_SSMT'])->group(function() {
     Route::get('/segretariato', [DashboardController::class, 'segretariato'])->name('dashboard.segretariato');
 
     Route::get('/products/segretariato', [ProductController::class, 'index'])->name('products.index.segretariato');
@@ -78,4 +86,4 @@ Route::middleware(['role:ADMIN'])->group(function () {
 
 Route::middleware(['role:EXPORTER'])->group(function () {
     Route::get('/products/export', [ExportController::class, 'exportToExcel'])->name('products.export_to_excel');
-});
+}); */

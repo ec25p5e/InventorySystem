@@ -20,4 +20,8 @@ class RoutesController extends Controller
             'roles' =>$roles,
         ]);
     }
+
+    public function store(Request $request) {
+
+    }
 }
