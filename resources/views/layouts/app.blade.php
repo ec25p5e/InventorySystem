@@ -16,34 +16,34 @@
     <script src="{{ asset('admin-assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('js/quagga.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
     <script>
         function loadUnityInformation(product_id, entity, attribute, element) {
             let apiUrl = '/api/loadProductColInfo';
 
-            if(localStorage.getItem({{ getSettings('CACHED_PRODUCT_LS') }})) {
-
-            } else {
-                $.ajax({
-                    url: apiUrl,
-                    type: 'POST',
-                    headers: {
-                        'X-CSRF-Token': '{{ csrf_token() }}',
-                    },
-                    data: {
-                        'product_id': product_id,
-                        'entity': entity,
-                        'product_attribute': attribute
-                    },
-                    success: function (data) {
-                        $(element).append(data['value'])
-                        localStorage.setItem({{ getSettings('CACHED_PRODUCT_LS') }}, JSON.stringify(data));
-                    },
-                    error: function (xhr, status, error) {
-                        $(element).append(error)
-                    }
-                });
-            }
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'product_id': product_id,
+                    'entity': entity,
+                    'product_attribute': attribute
+                },
+                success: function (data) {
+                    $(element).append(data['value'])
+                    localStorage.setItem({{ getSettings('CACHED_PRODUCT_LS') }}, JSON.stringify(data));
+                },
+                error: function (xhr, status, error) {
+                    $(element).append(error)
+                }
+            });
         }
     </script>
 </head>
@@ -53,32 +53,8 @@
         <img class="" src="{{asset('https://www.sdk-csd.ch/admin/data/files/member/image/64/logo@3x_logo_big.png?lm=1572338395')}}" alt="AdminLTELogo" height="60" width="60">
     </div>
 
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-            </li>
 
-        </ul>
-
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown">
-                <a class="nav-link" data-toggle="dropdown" href="#">
-                    <i class="far fa-user"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <a href="" class="dropdown-item">
-                        Cambia unità
-                    </a>
-                    <a href="{{route('logout')}}" class="dropdown-item">
-                        Logout
-                    </a>
-                </div>
-            </li>
-
-        </ul>
-    </nav>
-
+    @include('layouts.header')
     @include('layouts.sidebar')
 
     <div class="content-wrapper">
@@ -98,10 +74,7 @@
         <!-- Control sidebar content goes here -->
     </aside>
 
-    <script src="{{ asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+
     @yield('js')
 
     <script>

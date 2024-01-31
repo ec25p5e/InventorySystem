@@ -72,16 +72,31 @@ if(!function_exists('hasRole')) {
     }
 }
 
-if(!function_exists('getPrimaryRole')) {
-    function getPrimaryRole($userId) {
-        $roleName = DB::table('user_roles as ur')
+if(!function_exists('checkPrimaryRole')) {
+    function checkPrimaryRole($userId, $roleCode) {
+        $role = DB::table('user_roles as ur')
             ->join('roles as r', 'r.id', '=', 'ur.role_id')
+            ->join('users as u', 'u.unity_id', '=', 'ur.unity_id')
+            ->where('ur.user_id', $userId)
+            ->where('ur.is_primary', 1)
+            ->where('r.role_code', $roleCode)
+            ->count();
+
+        return $role;
+    }
+}
+
+if(!function_exists('getPrimaryRoleForUnity')) {
+    function getPrimaryRoleForUnity($userId) {
+        $role = DB::table('user_roles as ur')
+            ->join('roles as r', 'r.id', '=', 'ur.role_id')
+            ->join('users as u', 'u.unity_id', '=', 'ur.unity_id')
             ->where('ur.user_id', $userId)
             ->where('ur.is_primary', 1)
             ->select('r.role_name')
             ->first();
 
-        return $roleName;
+        return ($role) ? $role->role_name : "";
     }
 }
 
@@ -89,17 +104,18 @@ if(!function_exists('getRoute')) {
     function getRoute($userId, $route) {
         $routeValue = DB::table('routes_conf as rc')
             ->select('rc.route_name')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
             ->where('rc.route_code', $route)
             ->where('rc.unity_id', function ($query) use ($userId) {
                 $query->select('u.unity_id')
                     ->from('users as u')
                     ->where('u.id', $userId);
+            })
+            ->where('rc.role_id', function ($query) use ($userId) {
+                $query->select('ur.role_id')
+                    ->from('user_roles as ur')
+                    ->where('ur.user_id', $userId)
+                    ->where('ur.is_primary', 1)
+                    ->whereRaw('ur.unity_id = rc.unity_id');
             })
             ->first();
 
@@ -111,17 +127,18 @@ if(!function_exists('getRouteUri')) {
     function getRouteUri($userId, $route) {
         $routeValue = DB::table('routes_conf as rc')
             ->select('rc.route_uri')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
             ->where('rc.route_code', $route)
             ->where('rc.unity_id', function ($query) use ($userId) {
                 $query->select('u.unity_id')
                     ->from('users as u')
                     ->where('u.id', $userId);
+            })
+            ->where('rc.role_id', function ($query) use ($userId) {
+                $query->select('ur.role_id')
+                    ->from('user_roles as ur')
+                    ->where('ur.user_id', $userId)
+                    ->where('ur.is_primary', 1)
+                    ->whereRaw('ur.unity_id = rc.unity_id');
             })
             ->first();
 
@@ -129,90 +146,31 @@ if(!function_exists('getRouteUri')) {
     }
 }
 
-if(!function_exists('getRouteController')) {
-    function getRouteController($userId, $route) {
-        $routeValue = DB::table('routes_conf as rc')
-            ->select('rc.route_uri')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
-            ->where('rc.route_code', $route)
-            ->where('rc.unity_id', function ($query) use ($userId) {
+if(!function_exists('getUserUnities')) {
+    function getUserUnities($userId) {
+        $unities = DB::table('user_roles as ur')
+            ->select('u.id', 'u.unity_code', 'u.unity_name')
+            ->join('unities as u', 'u.id', '=', 'ur.unity_id')
+            ->where('ur.user_id', $userId)
+            ->where('ur.is_primary', 1)
+            ->whereNotIn('ur.unity_id', function ($query) {
                 $query->select('u.unity_id')
                     ->from('users as u')
-                    ->where('u.id', $userId);
+                    ->where('u.id', 1);
             })
-            ->first();
+            ->get();
 
-        return ($routeValue) ? $routeValue->route_controller : "";
+        return ($unities) ? $unities : "";
     }
 }
 
-if(!function_exists('getRouteMethod')) {
-    function getRouteMethod($userId, $route) {
-        $routeValue = DB::table('routes_conf as rc')
-            ->select('rc.route_controller')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
-            ->where('rc.route_code', $route)
-            ->where('rc.unity_id', function ($query) use ($userId) {
-                $query->select('u.unity_id')
-                    ->from('users as u')
-                    ->where('u.id', $userId);
-            })
+if(!function_exists('getCurrentUnityForUser')) {
+    function getCurrentUnityForUser($userId) {
+        $unityName = User::select('unities.unity_name')
+            ->join('unities', 'unities.id', '=', 'users.unity_id')
+            ->where('users.id', $userId)
             ->first();
 
-        return ($routeValue) ? $routeValue->route_method : "";
-    }
-}
-
-if(!function_exists('getRouteMiddleware')) {
-    function getRouteMiddleware($userId, $route) {
-        $routeValue = DB::table('routes_conf as rc')
-            ->select('rc.route_middleware')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
-            ->where('rc.route_code', $route)
-            ->where('rc.unity_id', function ($query) use ($userId) {
-                $query->select('u.unity_id')
-                    ->from('users as u')
-                    ->where('u.id', $userId);
-            })
-            ->first();
-
-        return ($routeValue) ? $routeValue->route_middleware : "";
-    }
-}
-
-if(!function_exists('getControllerMethod')) {
-    function getControllerMethod($userId, $route) {
-        $routeValue = DB::table('routes_conf as rc')
-            ->select('rc.controller_method')
-            ->where('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId)
-                    ->where('ur.is_primary', 1);
-            })
-            ->where('rc.route_code', $route)
-            ->where('rc.unity_id', function ($query) use ($userId) {
-                $query->select('u.unity_id')
-                    ->from('users as u')
-                    ->where('u.id', $userId);
-            })
-            ->first();
-
-        return ($routeValue) ? $routeValue->controller_method : "";
+        return ($unityName) ? $unityName->unity_name : "";
     }
 }

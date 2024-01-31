@@ -14,11 +14,13 @@
                     <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">{{ getUserById(Auth::id()) }}</a>
+                    <span href="#" class="d-block">{{ getUserById(Auth::id()) }}</span>
+                    <p></p>
+                    <span>{{ getPrimaryRoleForUnity(Auth::id()) }}</span>
                 </div>
             </div>
 
-            @if(getUserRoles(Auth::id(), 'ADMIN') > 0)
+            @if(checkPrimaryRole(Auth::id(), 'ADMIN') > 0)
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
@@ -55,7 +57,7 @@
                         </li>
                     </ul>
                 </nav>
-            @elseif(getUserRoles(Auth::id(), 'CUSTODE_SPAI') > 0 || getUserRoles(Auth::id(), 'CUSTODE_SSMT') > 0)
+            @elseif(checkPrimaryRole(Auth::id(), 'CUSTODE_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'CUSTODE_SSMT') > 0)
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
@@ -78,7 +80,7 @@
                         </li>
                     </ul>
                 </nav>
-            @elseif(getUserRoles(Auth::id(), 'SEG_SPAI') > 0 || getUserRoles(Auth::id(), 'SEG_SSMT') > 0)
+            @elseif(checkPrimaryRole(Auth::id(), 'SEG_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'SEG_SSMT') > 0)
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">

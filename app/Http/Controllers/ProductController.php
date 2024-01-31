@@ -20,9 +20,14 @@ class ProductController extends Controller
         $showLess = $request->input('showLess');
 
         if($showLess == 1) {
-            $products = DB::table('internal_product_warning')->forPage(1, 10)->get();
+            $count = DB::table('internal_product_warning')->count();
+            if($count > 0) {
+                $products = DB::table('internal_product_warning')->paginate(10)->get();
+            } else {
+                $products = null;
+            }
         } else {
-            $products = Products::all()->forPage(1, 10);
+            $products = Products::whereNull('product_end')->paginate(10);
         }
 
 

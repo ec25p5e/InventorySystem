@@ -5,6 +5,7 @@ use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ProductAttributesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoutesController;
+use App\Http\Controllers\UnityController;
 use App\Models\RoutesConf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -38,6 +39,12 @@ foreach($routeConfigurations as $route) {
             break;
         case 'DashboardController':
             Route::{$route->route_method}($route->route_uri, [DashboardController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'AuthController':
+            Route::{$route->route_method}($route->route_uri, [AuthController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'UnityController':
+            Route::{$route->route_method}($route->route_uri, [UnityController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
         default:
             break;

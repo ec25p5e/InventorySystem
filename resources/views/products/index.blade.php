@@ -21,39 +21,39 @@
 @section('body')
     <section class="content">
         <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Elenco dei prodotti</h3>
-                @if(hasRole(Auth::id(), 'EXPORTER') > 0)
-                    <button class="btn btn-success ml-3" type="button" id="exportProductsToExcel">
-                        <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esporta in Excel</a>
-                    </button>
-                @endif
-
-                <div class="pull-right">
-                    @if($showLess == 1)
-                        <button class="btn btn-success">
-                            <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'),  ['filters' => '?showLess=0']) }}">Mostra tutti i prodotti</a>
-                        </button>
-                    @else
-                        <button class="btn btn-success">
-                            <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'),  ['filters' => '?showLess=1']) }}">Mostra prodotti in esaurimento</a>
-                        </button>
-                    @endif
-                    <button class="btn btn-primary">
-                        Filtri
-                    </button>
-                    <button class="btn btn-primary">
+            <div class="box-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary mr-3">
                         <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a>
                     </button>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="optionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Opzioni
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="optionsDropdown">
+                            @if($showLess == 1)
+                                <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showLess=0']) }}">Mostra tutti i prodotti</a>
+                            @else
+                                <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showLess=1']) }}">Mostra prodotti in esaurimento</a>
+                            @endif
+
+                            <div class="dropdown-divider"></div>
+                            @if(hasRole(Auth::id(), 'EXPORTER') > 0)
+                                <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esportazione completa (con attributi)</a>
+                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esportazione parziale</a>
+                            @endif
+                        </div>
+                    </div>
                 </div>
-                <div class="clearfix"></div>
             </div>
+
 
             <div class="box-body">
                 <table class="table table-bordered">
                     <tr>
                         <th style="width: 10px">#</th>
                         <th>Numero CEAP</th>
+                        <th>Numero C&C</th>
                         <th>Numero interno</th>
                         <th>Nome</th>
                         <th>Stato</th>
@@ -66,35 +66,37 @@
                         <th style="width: 16%">Azioni</th>
                     </tr>
 
-                    @foreach($products as $product)
-                        <tr>
-                            <td>{{ $product->id }}</td>
-                            <td>{{ $product->product_num_ceap }}</td>
-                            <td>{{ $product->product_num_intern }}</td>
-                            <td>{{ $product->product_name }}</td>
-                            <td>{{ ($product->product_end == getSettings('DEFAULT_DATE_END')) ? "Attivo" : "Inutilizzato" }}</td>
-                            <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
-                            <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
-                            @if($showLess == 1)
-                                <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_WARNING', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
-                            @endif
-                            <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
-                            <td>
-                                <button class="btn btn-warning">
-                                    <i class="fas fa-edit"></i> <a href="{{ route(getRoute(Auth::id(), 'UPDATE_PRODUCTS'), ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
-                                </button>
-                                <button class="btn btn-danger" onClick="deleteProduct({{ $product->id }})">
-                                    <i class="fas fa-trash"></i>Elimina</a>
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
+                    @isset($products)
+                        @foreach($products as $product)
+                            <tr>
+                                <td>{{ $product->id }}</td>
+                                <td>{{ $product->product_num_ceap }}</td>
+                                <td id="ccTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'C&C_NUM', $('#ccTd-{{ $product->id }}'))</script></td>
+                                <td>{{ $product->product_num_intern }}</td>
+                                <td>{{ $product->product_name }}</td>
+                                <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
+                                <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
+                                <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
+                                @if($showLess == 1)
+                                    <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_WARNING', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
+                                @endif
+                                <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
+                                <td>
+                                    <button class="btn btn-warning">
+                                        <i class="fas fa-edit"></i> <a href="{{ route(getRoute(Auth::id(), 'UPDATE_PRODUCTS'), ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
+                                    </button>
+                                    <button class="btn btn-danger" onClick="deleteProduct({{ $product->id }})">
+                                        <i class="fas fa-trash"></i>Elimina</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endisset
                 </table>
             </div>
 
             <div class="col-md-12">
                 <div class="pagination justify-content-center">
-
                 </div>
             </div>
         </div>
