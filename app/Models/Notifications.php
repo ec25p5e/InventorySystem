@@ -9,7 +9,7 @@ class Notifications extends Model
 {
     use HasFactory;
 
-    protected $table = 'products';
+    protected $table = 'notifications';
 
     protected $fillable = [
         'notification_code',

@@ -19,7 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware(['api_custom.throttle:FAST_COL_ACCESS,1400,60'])->group(function () {
+Route::middleware(['throttle:1400,1'])->group(function () {
     Route::post('/loadProductColInfo', [ApiController::class, 'loadProductColInfo'])->name('api.loadProductColInfo');
 });
 
@@ -32,7 +32,7 @@ Route::post('/processProductBarcode', [ApiController::class, 'processProductBarc
 Route::post('/deleteProduct', [ApiController::class, 'deleteProduct'])->name('api.deleteProduct');
 
 
-$middlewareName = 'api_custom.throttle:FAST_COL_ACCESS,1400,60';
+$middlewareName = 'api_custom.throttle:FAST_COL_ACCESS,1400,1';
 
 $routes = collect(Route::getRoutes())->filter(function ($route) use ($middlewareName) {
     return collect($route->middleware())->contains($middlewareName);

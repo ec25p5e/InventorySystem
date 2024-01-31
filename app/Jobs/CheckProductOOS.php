@@ -37,13 +37,15 @@ class CheckProductOOS implements ShouldQueue
 
         if($count > 0) {
             // Se ci sono righe, inserire nel DB
-            Notifications::create([
+            $data = [
                 'notification_code' => 'AUTO_GENERATED_OOS',
                 'notification_title' => 'Prodotti in esaurimento',
                 'notification_message' => 'Gli stock di alcuni prodotti sono in esaurimento',
                 'user_id_ref' => 1,
                 'is_checked' => 0
-            ]);
+            ];
+
+            Notifications::create($data);
         }
     }
 }

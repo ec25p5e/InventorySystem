@@ -71,10 +71,4 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'role' => \App\Http\Middleware\CheckRoleMiddleware::class,
     ];
-
-    protected function schedule(Schedule $schedule)
-    {
-        // Esegui il job per il controllo dei prodotti esauriti alle 00:00 e alle 12:00
-        $schedule->job(new CheckProductOOS)->twiceDaily(0, 12);
-    }
 }

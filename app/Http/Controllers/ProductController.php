@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\SettingsHelper;
+use App\Jobs\CheckProductOOS;
 use App\Models\ProductAttributes;
 use App\Models\ProductAttributesDef;
 use App\Models\Products;
@@ -10,6 +11,7 @@ use App\Models\Unities;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -17,6 +19,9 @@ class ProductController extends Controller
 {
 
     public function index(Request $request) {
+
+        Bus::dispatch(new CheckProductOOS());
+
         $showLess = $request->input('showLess');
         $showTerminateProducts = $request->input('showTerminateProducts');
 
