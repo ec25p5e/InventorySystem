@@ -28,6 +28,17 @@ if (!function_exists('formatDateTime')) {
     }
 }
 
+if (!function_exists('formatDatePortal')) {
+    function formatDatePortal($date)
+    {
+        if($date != null) {
+            return Carbon::parse($date)->format('d.m.Y');
+        }
+
+        return '';
+    }
+}
+
 if(!function_exists('getUserById')) {
     function getUserById($userId) {
 

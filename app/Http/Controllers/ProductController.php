@@ -117,8 +117,33 @@ class ProductController extends Controller
         ]);
     }
 
-    public function movements() {
-        return view('products.movements');
+    public function movements(Request $request) {
+        $quantityCode = 'QTY';
+        $request->validate([
+           'product_id' => 'required|int'
+        ]);
+        $productId = $request->input('product_id');
+
+        $dates = ProductAttributes::selectRaw('CAST(attribute_date_start AS DATE) AS attribute_date')
+            ->where('attribute_code', $quantityCode)
+            ->where('product_ref_id', $productId)
+            ->groupByRaw('CAST(attribute_date_start AS DATE)')
+            ->orderByRaw('CAST(attribute_date_start AS DATE) desc')
+            ->get();
+
+        $movementForDate = function($date) use ($quantityCode) {
+            $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
+                ->where('product_ref_id', 285)
+                ->where('attribute_date_start', 'like', $date . '%')
+                ->get();
+
+            return $productAttributes;
+        };
+
+        return view('products.movements', [
+            'timelineDates' => $dates,
+            'moveForDate' => $movementForDate
+        ]);
     }
 
     public function duplicateProduct(Request $request) {

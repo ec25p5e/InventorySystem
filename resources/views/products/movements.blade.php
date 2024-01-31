@@ -61,7 +61,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <div class="form-group">
@@ -71,6 +70,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <button type="submit" class="btn btn-success align-right">Cerca prodotto</button>
                         </form>
                     </div>
                 </div>
@@ -79,38 +80,62 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Entrate</h3>
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Dettagli del prodotto</h3>
                 </div>
-                <div class="box-body">
-                    <table class="table table-bordered" id="tableRoles">
-                        <tr>
-                            <th>#</th>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
+                <div class="card-body">
 
-        <div class="col-md-6">
-            <div class="box" id="tableUsersBox">
-                <div class="box-header">
-                    <h3 class="box-title">Uscite</h3>
-                </div>
-                <div class="box-body">
-                    <table class="table table-bordered" id="tableUsers">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                        </tr>
-
-                    </table>
                 </div>
             </div>
         </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Timeline della quantità</h3>
+                </div>
+                <div class="card-body">
+                    <div class="timeline timeline-inverse">
+                        @isset($timelineDates)
+                            @foreach($timelineDates as $date)
+                                <div class="time-label">
+                                    <span class="bg-green">{{ $date->attribute_date }}</span>
+                                </div>
+
+                                @foreach($moveForDate($date->attribute_date) as $move)
+                                    <p></p>
+                                    <div>
+                                        <i class="fas fa-envelope {{ ($move->attribute_log == "DECREMENT") ? "bg-danger" : "bg-info" }}"></i>
+                                        <div class="timeline-item">
+                                            <span class="time"><i class="fas fa-solid fa-right-from-bracket"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
+                                            <h3 class="timeline-header"><a href="#">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
+                                            <div class="timeline-body">
+                                                Sono
+                                                {{ ($move->attribute_log == "DECREMENT") ? " stati sottratti " : " stati aggiunti " }}
+                                                5
+                                                prodotti
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p></p>
+                                @endforeach
+                            @endforeach
+                        @endisset
+                        <div>
+                            <i class="fas fa-clock bg-gray"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('js')
     <script>
         Quagga.init({
             inputStream: {

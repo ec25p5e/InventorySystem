@@ -39,8 +39,8 @@
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
+                <i class="far fa-bell"></i>
+                <span class="badge badge-warning navbar-badge">3</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                 <a href="#" class="dropdown-item">
@@ -60,16 +60,6 @@
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                <div class="dropdown-divider"></div>
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
                 <i class="far fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
@@ -78,9 +68,11 @@
                 <a href="#" class="dropdown-item">
                     <i class="fas fa-user mr-2"></i> Profile
                 </a>
+
                 <button class="dropdown-item" data-toggle="modal" data-target="#changeUnityRefModal">
                     <i class="fas fa-solid fa-building"></i> Cambia unità
                 </button>
+
                 <div class="dropdown-divider"></div>
                 <a href="{{ route(getRoute(Auth::id(), 'LOGOUT')) }}" class="dropdown-item dropdown-footer">Sign out</a>
             </div>
