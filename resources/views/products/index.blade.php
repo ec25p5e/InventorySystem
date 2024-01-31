@@ -37,6 +37,12 @@
                                 <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showLess=1']) }}">Mostra prodotti in esaurimento</a>
                             @endif
 
+                            @if($showTerminateProducts == 1)
+                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=0']) }}">Mostra tutti i prodotti</a>
+                                @else
+                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti scaduti</a>
+                            @endif
+
                             <div class="dropdown-divider"></div>
                             @if(hasRole(Auth::id(), 'EXPORTER') > 0)
                                 <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esportazione completa (con attributi)</a>

@@ -52,7 +52,7 @@ foreach($routeConfigurations as $route) {
 
 }
 
-$middlewareName = 'role:ADMIN';
+$middlewareName = 'throttle:60,1';
 
 $routes = collect(Route::getRoutes())->filter(function ($route) use ($middlewareName) {
     return collect($route->middleware())->contains($middlewareName);

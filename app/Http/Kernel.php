@@ -67,8 +67,9 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'api_custom.throttle' => \App\Http\Middleware\CustomThrottleMiddleware::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'role' => \App\Http\Middleware\CheckRoleMiddleware::class
+        'role' => \App\Http\Middleware\CheckRoleMiddleware::class,
     ];
 
     protected function schedule(Schedule $schedule)

@@ -18,6 +18,7 @@ class ProductController extends Controller
 
     public function index(Request $request) {
         $showLess = $request->input('showLess');
+        $showTerminateProducts = $request->input('showTerminateProducts');
 
         if($showLess == 1) {
             $count = DB::table('internal_product_warning')->count();
@@ -26,14 +27,20 @@ class ProductController extends Controller
             } else {
                 $products = null;
             }
+        } else if($showTerminateProducts == 1) {
+            $products = DB::table('expired_products')->paginate(10);
         } else {
-            $products = Products::whereNull('product_end')->paginate(10);
+            $products = DB::table('products')
+                ->whereNull('product_end')
+                ->orWhere('product_end', '!=', getSettings('DEFAULT_DATE_END'))
+                ->paginate(10);
         }
 
 
         return view('products.index', [
             'products' => $products,
-            'showLess' => $showLess
+            'showLess' => $showLess,
+            'showTerminateProducts' => $showTerminateProducts
         ]);
     }
 
