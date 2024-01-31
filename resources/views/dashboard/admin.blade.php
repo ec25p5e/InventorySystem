@@ -18,5 +18,41 @@
 @endsection
 
 @section('body')
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="ineer">
+                        <h3>150</h3>
+                        <p>Prodotti</p>
+                    </div>
 
+                    <div class="icon">
+                        <i class="fas fa-solid fa-product"></i>
+                    </div>
+
+                    <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="small-box-footer">
+                        Tutti i prodotti
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="ineer">
+                        <h3>150</h3>
+                        <p>Prodotti</p>
+                    </div>
+
+                    <div class="icon">
+                        <i class="fas fa-solid fa-product"></i>
+                    </div>
+
+                    <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="small-box-footer">
+                        Tutti i prodotti
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection

@@ -22,7 +22,7 @@ class ProductController extends Controller
         if($showLess == 1) {
             $count = DB::table('internal_product_warning')->count();
             if($count > 0) {
-                $products = DB::table('internal_product_warning')->paginate(10)->get();
+                $products = DB::table('internal_product_warning')->get();
             } else {
                 $products = null;
             }
@@ -121,6 +121,35 @@ class ProductController extends Controller
         $quantityCode = 'QTY';
         $request->validate([
            'product_id' => 'required|int'
+        ]);
+        $productId = $request->input('product_id');
+
+        $dates = ProductAttributes::selectRaw('CAST(attribute_date_start AS DATE) AS attribute_date')
+            ->where('attribute_code', $quantityCode)
+            ->where('product_ref_id', $productId)
+            ->groupByRaw('CAST(attribute_date_start AS DATE)')
+            ->orderByRaw('CAST(attribute_date_start AS DATE) desc')
+            ->get();
+
+        $movementForDate = function($date) use ($quantityCode) {
+            $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
+                ->where('product_ref_id', 285)
+                ->where('attribute_date_start', 'like', $date . '%')
+                ->get();
+
+            return $productAttributes;
+        };
+
+        return view('products.movements', [
+            'timelineDates' => $dates,
+            'moveForDate' => $movementForDate
+        ]);
+    }
+
+    public function movementsAdmin(Request $request) {
+        $quantityCode = 'QTY';
+        $request->validate([
+            'product_id' => 'required|int'
         ]);
         $productId = $request->input('product_id');
 

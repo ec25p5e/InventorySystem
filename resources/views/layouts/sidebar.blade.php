@@ -24,6 +24,14 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -61,6 +69,14 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -68,8 +84,6 @@
                                 </p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -84,6 +98,14 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
@@ -91,8 +113,6 @@
                                 </p>
                             </a>
                         </li>
-                    </ul>
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
                             <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
