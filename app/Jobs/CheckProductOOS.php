@@ -41,6 +41,8 @@ class CheckProductOOS implements ShouldQueue
                 'notification_code' => 'AUTO_GENERATED_OOS',
                 'notification_title' => 'Prodotti in esaurimento',
                 'notification_message' => 'Gli stock di alcuni prodotti sono in esaurimento',
+                'notification_uri' => ' ',
+                'notification_args' => ' ',
                 'user_id_ref' => 1,
                 'is_checked' => 0
             ];

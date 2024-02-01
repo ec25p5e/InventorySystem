@@ -17,5 +17,7 @@ class Notifications extends Model
         'notification_message',
         'user_id_ref',
         'is_checked',
+        'notification_uri',
+        'notification_args'
     ];
 }

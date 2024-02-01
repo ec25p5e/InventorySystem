@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProductAttributesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoutesController;
@@ -53,6 +54,9 @@ foreach($routeConfigurations as $route) {
             break;
         case 'FormsController':
             Route::{$route->route_method}($route->route_uri, [FormsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'NotificationsController':
+            Route::{$route->route_method}($route->route_uri, [NotificationsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
         default:
             break;

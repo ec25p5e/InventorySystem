@@ -43,19 +43,24 @@
                 <span class="badge badge-warning navbar-badge">3</span>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <div class="media">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Prodotti in esaurimento
-                                <!-- <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span> -->
-                            </h3>
-                            <p class="text-sm">Controllare gli stock...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Ore fa</p>
-                        </div>
-                    </div>
-                </a>
-                <span class="dropdown-item dropdown-header">Mostra tutte</span>
+                @if(getNotifications(Auth::id())->count() > 0)
+                    @foreach(getNotifications(Auth::id()) as $notify)
+                        <a href="" class="dropdown-item">
+                            <div class="media">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        {{ $notify->notification_title }}
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">{{ $notify->notification_message }}</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ formatDateTime($notify->created_at) }}</p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                @endif
+
+                <span class="dropdown-item dropdown-header"><a href="{{ route(getRoute(Auth::id(), 'ALL_NOTIFICATIONS')) }}">Mostra tutte</a></span>
             </div>
         </li>
         <li class="nav-item dropdown">

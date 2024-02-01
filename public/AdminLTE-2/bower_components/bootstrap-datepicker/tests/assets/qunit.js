@@ -834,7 +834,7 @@ window.onerror = function( message, file, line ) {
 function done() {
 	config.autorun = true;
 
-	// Log the last module results
+	// Logs the last module results
 	if ( config.currentModule ) {
 		runLoggingCallbacks( 'moduleDone', QUnit, {
 			name: config.currentModule,

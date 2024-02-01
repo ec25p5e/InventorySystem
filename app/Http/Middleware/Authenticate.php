@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Logs;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class Authenticate extends Middleware
 {
@@ -14,7 +16,15 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
+        if (!$request->expectsJson()) {
+            Logs::create([
+                'log_type' => 'AUTHENTICATE_MIDDLEWARE',
+                'method' => $request->method(),
+                'uri' => $request->url(),
+                'user_id' => Auth::id(),
+                'app_mode' => env('APP_ENV')
+            ]);
+
             return route('login');
         }
     }

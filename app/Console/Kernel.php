@@ -17,6 +17,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new CheckProductOOS)->dailyAt(getSettings('CHECK_OOS_PRODUCT_JOB'));
+        $schedule->command('cron:clean_1_week_logs_old')->daily();
     }
 
     /**

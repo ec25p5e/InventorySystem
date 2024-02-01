@@ -680,7 +680,7 @@ function done() {
 
 	config.autorun = true;
 
-	// Log the last module results
+	// Logs the last module results
 	if ( config.previousModule ) {
 		runLoggingCallbacks( "moduleDone", {
 			name: config.previousModule.name,
