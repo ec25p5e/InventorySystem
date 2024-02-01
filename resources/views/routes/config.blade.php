@@ -45,7 +45,7 @@
                                 <div class="form-group has-feedback @error('route_code') has-error @enderror">
                                     <label for="route_code">Codice univoco d'indentificazione della route</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="route_code">
+                                        <input type="text" class="form-control" name="route_code" {{ ($record->route_code) ? "readonly=true" : "" }} value="@isset($record->route_code) {{ $record->route_code }} @endisset">
                                     </div>
                                 </div>
                             </div>
@@ -54,7 +54,7 @@
                                 <div class="form-group has-feedback @error('route_controller') has-error @enderror">
                                     <label for="route_controller">Controller della route</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="route_controller">
+                                        <input type="text" class="form-control" name="route_controller" value="@isset($record->route_controller) {{ $record->route_controller }} @endisset">
                                     </div>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <div class="form-group has-feedback @error('controller_method') has-error @enderror">
                                     <label for="controller_method">Metodo del controller</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="controller_method">
+                                        <input type="text" class="form-control" name="controller_method" value="@isset($record->controller_method) {{ $record->controller_method }} @endisset">
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,7 @@
                             <div class="mb-3">
                                 <div class="form-group has-feedback @error('role_code') has-error @enderror">
                                     <label for="unity_code">Ruolo primario di riferimento</label>
-                                    <select class="form-control" id="role_code" name="role_code">
+                                        <select class="form-control" id="role_code" name="role_code">
                                         @foreach($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->role_name }} ({{ $role->role_code }})</option>
                                         @endforeach
@@ -85,7 +85,7 @@
                                 <div class="form-group has-feedback @error('route_value') has-error @enderror">
                                     <label for="route_code">Percorso della route (URL)</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="route_value">
+                                        <input type="text" class="form-control" name="route_value" value="@isset($record->route_uri) {{ $record->route_uri }} @endisset">
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +104,7 @@
                                 <div class="form-group has-feedback @error('route_middleware') has-error @enderror">
                                     <label for="route_middleware">Middleware</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" name="route_middleware">
+                                        <input type="text" class="form-control" name="route_middleware" value="@isset($record->route_middleware) {{ $record->route_middleware }} @endisset">
                                     </div>
                                 </div>
                             </div>

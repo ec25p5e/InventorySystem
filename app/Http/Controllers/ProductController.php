@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -129,12 +130,57 @@ class ProductController extends Controller
         ]);
     }
 
-    public function movements(Request $request) {
+    public function movements(Request $request)
+    {
         $quantityCode = 'QTY';
-        $request->validate([
-           'product_id' => 'required|int'
-        ]);
-        $productId = $request->input('product_id');
+        $productId = null;
+        $key[] = null;
+        $safeKey = null;
+
+        $productIdRules = [
+            'product_id' => 'required|int|min:0'
+        ];
+
+        $numCeapRules = [
+            'product_num_ceap' => 'required|int|min:0'
+        ];
+
+        $prodNameRules = [
+            'product_name' => 'required|string'
+        ];
+
+        $productCompleteRules = [
+            'product_id' => 'required|int|min:0',
+            'product_num_ceap' => 'required|int|min:0'
+        ];
+
+        $validatorIdRules = Validator::make($request->all(), $productIdRules);
+        $validatorProdName = Validator::make($request->all(), $prodNameRules);
+        $validatorNumCeap = Validator::make($request->all(), $numCeapRules);
+        $validatorComplete = Validator::make($request->all(), $productCompleteRules);
+
+        if (!$validatorIdRules->fails()) {
+            $productId = $request->input('product_id');
+        } else if (!$validatorNumCeap->fails()) {
+            $key['product_num_ceap'] = $request->input('product_num_ceap');
+        } else if (!$validatorProdName->fails()) {
+            $key['product_name'] = $request->input('product_name');
+        } else if (!$validatorComplete->fails()) {
+            $productId = $request->input('product_id');
+            $key['product_num_ceap'] = $request->input('product_num_ceap');
+        }
+
+        if(isset($key['product_num_ceap'])) {
+            $safeKey = $key['product_num_ceap'];
+        } else if(isset($key['product_name'])) {
+            $safeKey = $key['product_name'];
+        }
+
+        $listOfProducts = Products::where('id', '=', $productId)
+            ->orWhere('product_num_ceap', '=', $safeKey)
+            ->orWhere('product_name', '=', $safeKey)
+            ->paginate(5);
+
 
         $dates = ProductAttributes::selectRaw('CAST(attribute_date_start AS DATE) AS attribute_date')
             ->where('attribute_code', $quantityCode)
@@ -143,9 +189,9 @@ class ProductController extends Controller
             ->orderByRaw('CAST(attribute_date_start AS DATE) desc')
             ->get();
 
-        $movementForDate = function($date) use ($quantityCode) {
+        $movementForDate = function ($date) use ($productId, $quantityCode) {
             $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
-                ->where('product_ref_id', 285)
+                ->where('product_ref_id', $productId)
                 ->where('attribute_date_start', 'like', $date . '%')
                 ->get();
 
@@ -154,36 +200,10 @@ class ProductController extends Controller
 
         return view('products.movements', [
             'timelineDates' => $dates,
-            'moveForDate' => $movementForDate
-        ]);
-    }
-
-    public function movementsAdmin(Request $request) {
-        $quantityCode = 'QTY';
-        $request->validate([
-            'product_id' => 'required|int'
-        ]);
-        $productId = $request->input('product_id');
-
-        $dates = ProductAttributes::selectRaw('CAST(attribute_date_start AS DATE) AS attribute_date')
-            ->where('attribute_code', $quantityCode)
-            ->where('product_ref_id', $productId)
-            ->groupByRaw('CAST(attribute_date_start AS DATE)')
-            ->orderByRaw('CAST(attribute_date_start AS DATE) desc')
-            ->get();
-
-        $movementForDate = function($date) use ($quantityCode) {
-            $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
-                ->where('product_ref_id', 285)
-                ->where('attribute_date_start', 'like', $date . '%')
-                ->get();
-
-            return $productAttributes;
-        };
-
-        return view('products.movements', [
-            'timelineDates' => $dates,
-            'moveForDate' => $movementForDate
+            'moveForDate' => $movementForDate,
+            'listOfProducts' => $listOfProducts,
+            'productId' => $productId,
+            'formFields' => $key
         ]);
     }
 

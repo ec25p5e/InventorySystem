@@ -49,7 +49,7 @@
                 <div class="box-body">
                     <div id="barcode-scanner">
                         <div id="barcode-result"></div>
-                        <form action="{{ route(getRoute(Auth::id(), 'SEARCH_PRODUCT')) }}" method="post" name="form-product">
+                        <form action="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" method="get" name="form-product">
                             @csrf
 
                             <div class="row">
@@ -57,7 +57,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="product_num_ceap">Numero CEAP (*)</label>
-                                            <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" />
+                                            <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($formFields['product_num_ceap']) value="{{$formFields['product_num_ceap']}}" @endisset />
                                         </div>
                                     </div>
                                 </div>
@@ -65,7 +65,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="product_name">Nome prodotto</label>
-                                            <input type="text" class="form-control" name="product_name" id="product_name"   />
+                                            <input type="text" class="form-control" name="product_name" id="product_name" @isset($formFields['product_name']) value="{{$formFields['product_name']}}" @endisset  />
                                         </div>
                                     </div>
                                 </div>
@@ -80,20 +80,49 @@
     </div>
 
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Dettagli del prodotto</h3>
                 </div>
                 <div class="card-body">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th style="width: 10px">#</th>
+                            <th>Numero CEAP</th>
+                            <th>Numero C&C</th>
+                            <th>Numero interno</th>
+                            <th>Nome</th>
+                            <th>Stato</th>
+                            <th class="bg-secondary">Scuola</th>
+                            <th style="width: 16%">Azioni</th>
+                        </tr>
 
+                         @isset($listOfProducts)
+                            @foreach($listOfProducts as $product)
+                                <tr>
+                                    <td>{{ $product->id }}</td>
+                                    <td>{{ $product->product_num_ceap }}</td>
+                                    <td id="ccTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'C&C_NUM', $('#ccTd-{{ $product->id }}'))</script></td>
+                                    <td>{{ $product->product_num_intern }}</td>
+                                    <td>{{ $product->product_name }}</td>
+                                    <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
+                                    <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
+                                    <td>
+                                        <button class="btn btn-success">
+                                            <i class="fas fa-check"></i> <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS'), ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;"> Seleziona</a>
+                                        </button>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endisset
+
+                    </table>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Timeline della quantità</h3>

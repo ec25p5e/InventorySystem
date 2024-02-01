@@ -16,7 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new CheckProductOOS)->twiceDaily(0, 12);
+        $schedule->job(new CheckProductOOS)->dailyAt(getSettings('CHECK_OOS_PRODUCT_JOB'));
     }
 
     /**
