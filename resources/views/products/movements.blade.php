@@ -110,7 +110,12 @@
                                     <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
                                     <td>
                                         <button class="btn btn-success">
-                                            <i class="fas fa-check"></i> <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS'), ['product_id' => $product->id]) }}" style="text-decoration:none; color: white;"> Seleziona</a>
+                                            <i class="fas fa-check"></i>
+                                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS'), [
+                                                'product_id' => $product->id,
+                                                'product_num_ceap' => isset($formFields['product_num_ceap']) > 0 ? $formFields['product_num_ceap'] : "",
+                                                'product_name' => isset($formFields['product_name']) > 0 ? $formFields['product_name'] : ""
+                                            ]) }}" style="text-decoration:none; color: white;"> Seleziona</a>
                                         </button>
                                     </td>
                                 </tr>

@@ -63,10 +63,10 @@
                 <i class="far fa-user"></i>
             </a>
             <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">User Menu</span>
+                <span class="dropdown-item dropdown-header">Menu utente</span>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item">
-                    <i class="fas fa-user mr-2"></i> Profile
+                    <i class="fas fa-user mr-2"></i> Profilo
                 </a>
 
                 <button class="dropdown-item" data-toggle="modal" data-target="#changeUnityRefModal">

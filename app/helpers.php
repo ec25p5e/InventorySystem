@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Roles;
+use App\Models\RoutesConf;
 use App\Models\Settings;
 use App\Models\Unities;
 use App\Models\User;
@@ -107,7 +109,7 @@ if(!function_exists('getPrimaryRoleForUnity')) {
             ->select('r.role_name')
             ->first();
 
-        return ($role) ? $role->role_name : "";
+        return ($role) ? $role->role_name : "null";
     }
 }
 
@@ -130,7 +132,7 @@ if(!function_exists('getRoute')) {
             })
             ->first();
 
-        return ($routeValue) ? $routeValue->route_name : "";
+        return ($routeValue) ? $routeValue->route_name : "null";
     }
 }
 
@@ -153,7 +155,7 @@ if(!function_exists('getRouteUri')) {
             })
             ->first();
 
-        return ($routeValue) ? $routeValue->route_uri : "";
+        return ($routeValue) ? $routeValue->route_uri : "null";
     }
 }
 
@@ -171,7 +173,7 @@ if(!function_exists('getUserUnities')) {
             })
             ->get();
 
-        return ($unities) ? $unities : "";
+        return ($unities) ? $unities : "null";
     }
 }
 
@@ -182,6 +184,30 @@ if(!function_exists('getCurrentUnityForUser')) {
             ->where('users.id', $userId)
             ->first();
 
-        return ($unityName) ? $unityName->unity_name : "";
+        return ($unityName) ? $unityName->unity_name : "null";
+    }
+}
+
+if(!function_exists('getUnityName')) {
+    function getUnityName($unityId) {
+        $unity = Unities::find($unityId);
+
+        return ($unity) ? $unity->unity_name : "null";
+    }
+}
+
+if(!function_exists('getRoleName')) {
+    function getRoleName($roleId) {
+        $role = Roles::find($roleId);
+
+        return ($role) ? $role->role_name : "null";
+    }
+}
+
+if(!function_exists('getRouteCode')) {
+    function getRouteCode($routeId) {
+        $route = RoutesConf::find($routeId);
+
+        return ($route) ? $route->route_code : "null";
     }
 }

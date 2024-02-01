@@ -79,6 +79,14 @@
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'CREATE_NEW_FORM')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Gestione di sistema > Gestione dei form
+                                </p>
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             @elseif(checkPrimaryRole(Auth::id(), 'CUSTODE_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'CUSTODE_SSMT') > 0)

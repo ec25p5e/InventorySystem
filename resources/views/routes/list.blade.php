@@ -30,7 +30,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <div class="form-group has-feedback ">
-                                    <label for="unity_code">Unità di riferimento</label>
+                                    <label for="unity_code">Unità di riferimento: <span style="color: red">@isset($formFields['unity_code']) {{ getUnityName($formFields['unity_code']) }} @endisset</span></label>
                                     <select class="form-control" id="unity_code" name="unity_code">
                                         <option value="" selected>Seleziona un'unità</option>
                                         @foreach($unities as $unity)
@@ -44,7 +44,7 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <div class="form-group has-feedback ">
-                                    <label for="role_code">Ruolo di riferimento</label>
+                                    <label for="role_code">Ruolo di riferimento: <span style="color: red">@isset($formFields['unity_code']) {{ getRoleName($formFields['role_code']) }} @endisset</span></label>
                                     <select class="form-control" id="role_code" name="role_code">
                                         <option value="" selected>Seleziona un ruolo</option>
                                         @foreach($roles as $role)
@@ -58,9 +58,9 @@
                         <div class="col-md-4">
                             <div class="mb-3">
                                 <div class="form-group has-feedback ">
-                                    <label for="route_code">Codice univoco del percorso</label>
+                                    <label for="route_code">Codice univoco del percorso: <span style="color: red">@isset($formFields['route_code']) {{ $formFields['route_code'] }} @endisset</span></label>
                                     <select class="form-control" id="route_code" name="route_code">
-                                        <option value="" selected>Seleziona un codice route</option>
+                                        <option value="" selected>Seleziona un percorso</option>
                                         @foreach($routes as $routeCode)
                                             <option value="{{ $routeCode }}">{{ $routeCode }}</option>
                                         @endforeach
@@ -121,6 +121,22 @@
                         @endforeach
                     @endisset
                 </table>
+
+                <div class="pagination pagination-sm">
+                    @isset($results)
+                        @if ($results->currentPage() > 1)
+                            <a href="{{ $results->previousPageUrl() }}" class="page-link">Previous</a>
+                        @endif
+
+                        @for ($i = 1; $i <= $results->lastPage(); $i++)
+                            <a href="{{ $results->url($i) }}" class="page-link {{ $results->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+                        @endfor
+
+                        @if ($results->currentPage() < $results->lastPage())
+                            <a href="{{ $results->nextPageUrl() }}" class="page-link">Next</a>
+                        @endif
+                    @endisset
+                </div>
             </div>
         </div>
     </section>
