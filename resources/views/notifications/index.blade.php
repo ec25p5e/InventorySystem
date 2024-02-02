@@ -21,6 +21,41 @@
 @section('body')
     <section class="content">
         <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Elenco delle notifiche</h3>
+            </div>
+            <div class="box-body">
+                <div class="timeline timeline-inverse">
+                    @isset($timelineDates)
+                        @foreach($timelineDates as $date)
+                            <div class="time-label">
+                                <span class="bg-green">{{ $date->attribute_date }}</span>
+                            </div>
+
+                            @foreach($moveForDate($date->attribute_date) as $move)
+                                <p></p>
+                                <div>
+                                    <i class="fas fa-envelope {{ ($move->attribute_log == "DECREMENT") ? "bg-danger" : "bg-info" }}"></i>
+                                    <div class="timeline-item">
+                                        <span class="time"><i class="{{ ($move->attribute_log == "DECREMENT") ? "fas fa-solid fa-arrow-left" : "fas fa-solid fa-arrow-right" }}"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
+                                        <h3 class="timeline-header"><a href="#">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
+                                        <div class="timeline-body">
+                                            Sono
+                                            {{ ($move->attribute_log == "DECREMENT") ? " stati sottratti " : " stati aggiunti " }}
+                                            {{ $move->attribute_log_detail }}
+                                            prodotti
+                                        </div>
+                                    </div>
+                                </div>
+                                <p></p>
+                            @endforeach
+                        @endforeach
+                    @endisset
+                    <div>
+                        <i class="fas fa-clock bg-gray"></i>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 @endsection

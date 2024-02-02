@@ -51,7 +51,7 @@
                             <a href="{{ route(getRoute(Auth::id(), 'CREATE_NEW_USER_COMPLETE')) }}" class="nav-link">
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
-                                    Utenti
+                                    Creazione nuovo utente
                                 </p>
                             </a>
                         </li>
@@ -150,6 +150,27 @@
                                 <i class="nav-icon fas fa-tachometer-alt"></i>
                                 <p>
                                     Movimenti
+                                </p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            @elseif(checkPrimaryRole(Auth::id(), 'TEACHER_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'TEACHER_SSMT') > 0)
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Dashboard
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>
+                                    Le mie comande
                                 </p>
                             </a>
                         </li>

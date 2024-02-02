@@ -180,6 +180,7 @@ class ProductController extends Controller
             $listOfProducts = Products::where('id', '=', $productId)
                 ->orWhere('product_num_ceap', '=', $safeKey)
                 ->orWhere('product_name', 'like', $safeKey . '%')
+                ->orWhere('product_num_intern', 'like', '%'.$safeKey.'%')
                 ->paginate(5);
 
 
@@ -194,18 +195,25 @@ class ProductController extends Controller
                 $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
                     ->where('product_ref_id', $productId)
                     ->where('attribute_date_start', 'like', $date . '%')
+                    ->orderBy('attribute_date_start', 'desc')
                     ->get();
 
                 return $productAttributes;
             };
         }
 
+        // Prendi tutti gli utenti non sull'unità Root
+        // Quindi sono amministrativi o docenti
+        $teachers = User::whereNot('unity_id', 1)->get();
+
+
         return view('products.movements', [
             'timelineDates' => $dates,
             'moveForDate' => $movementForDate,
             'listOfProducts' => $listOfProducts,
             'productId' => $productId,
-            'formFields' => $key
+            'formFields' => $key,
+            'teachers' => $teachers
         ]);
     }
 

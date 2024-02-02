@@ -24,9 +24,7 @@
         <div class="col-md-6">
             <div class="box">
                 <div class="box-header">
-                    <div class="box-header">
-                        <h3 class="box-title">Scansione prodotto</h3>
-                    </div>
+                    <h3 class="card-title">Scansione prodotto</h3>
                 </div>
 
                 <div class="box-body">
@@ -41,9 +39,7 @@
         <div class="col-md-6">
             <div class="box">
                 <div class="box-header">
-                    <div class="box-header">
-                        <h3 class="box-title">Prodotto scansionato</h3>
-                    </div>
+                    <h3 class="card-title">Filtri di ricerca</h3>
                 </div>
 
                 <div class="box-body">
@@ -57,7 +53,7 @@
                                     <div class="mb-3">
                                         <div class="form-group">
                                             <label for="product_num_ceap">Numero CEAP (*)</label>
-                                            <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($formFields['product_num_ceap']) value="{{$formFields['product_num_ceap']}}" @endisset />
+                                            <input type="text" class="form-control" name="product_num_ceap" id="product_num_ceap" @isset($formFields['product_num_ceap']) value="{{$formFields['product_num_ceap']}}" @endisset />
                                         </div>
                                     </div>
                                 </div>
@@ -80,12 +76,12 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Dettagli del prodotto</h3>
+        <div class="col-md-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Dettagli del prodotto</h3>
                 </div>
-                <div class="card-body">
+                <div class="box-body">
                     <table class="table table-bordered">
                         <tr>
                             <th style="width: 10px">#</th>
@@ -95,6 +91,7 @@
                             <th>Nome</th>
                             <th>Stato</th>
                             <th class="bg-secondary">Scuola</th>
+                            <th class="bg-secondary">Quantità </th>
                             <th style="width: 16%">Azioni</th>
                         </tr>
 
@@ -108,6 +105,7 @@
                                     <td>{{ $product->product_name }}</td>
                                     <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
                                     <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
+                                    <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
                                     <td>
                                         <button class="btn btn-success">
                                             <i class="fas fa-check"></i>
@@ -126,13 +124,15 @@
                 </div>
             </div>
         </div>
+    </div>
 
+    <div class="row">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Timeline della quantità</h3>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Timeline della quantità</h3>
                 </div>
-                <div class="card-body">
+                <div class="box-body">
                     <div class="timeline timeline-inverse">
                         @isset($timelineDates)
                             @foreach($timelineDates as $date)
@@ -145,12 +145,12 @@
                                     <div>
                                         <i class="fas fa-envelope {{ ($move->attribute_log == "DECREMENT") ? "bg-danger" : "bg-info" }}"></i>
                                         <div class="timeline-item">
-                                            <span class="time"><i class="fas fa-solid fa-right-from-bracket"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
+                                            <span class="time"><i class="{{ ($move->attribute_log == "DECREMENT") ? "fas fa-solid fa-arrow-left" : "fas fa-solid fa-arrow-right" }}"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
                                             <h3 class="timeline-header"><a href="#">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
                                             <div class="timeline-body">
                                                 Sono
                                                 {{ ($move->attribute_log == "DECREMENT") ? " stati sottratti " : " stati aggiunti " }}
-                                                5
+                                                {{ $move->attribute_log_detail }}
                                                 prodotti
                                             </div>
                                         </div>
@@ -163,6 +163,67 @@
                             <i class="fas fa-clock bg-gray"></i>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Registra nuovo movimento</h3>
+                </div>
+                <div class="box-body">
+                    <form action="{{ route(getRoute(Auth::id(), 'EDIT_PRODUCT_ATTR_QTY')) }}" method="post" name="form-product">
+                        @csrf
+                        <input type="hidden" name="attribute_code" value="QTY" />
+                        <input type="hidden" name="product_ref_id" value="{{ $productId }}" />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="attribute_log">Movimento</label>
+                                        <select class="form-control" id="attribute_log" name="attribute_log">
+                                            <option value="" selected>Seleziona un'opzione...</option>
+                                            <option value="INCREMENT">Incremento (entrata)</option>
+                                            <option value="DECREMENT">Decremento (uscita)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="attribute_value">Differenza di materiale (incremento o decremento)</label>
+                                        <input type="text" class="form-control" name="attribute_value" id="attribute_value" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="form-group">
+                                        <label for="user_id">Per conto di...</label>
+                                        <select class="form-control" id="user_id" name="user_id">
+                                            <option value="" selected>Seleziona un'opzione...</option>
+                                            @isset($teachers)
+                                                @foreach($teachers as $teacher)
+                                                    <option value="{{ $teacher->id }}">{{ $teacher->username }}</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="submit" class="btn btn-primary">Registra</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

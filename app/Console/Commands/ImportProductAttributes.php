@@ -5,21 +5,21 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 
-class ImportProductsWithAttribute extends Command
+class ImportProductAttributes extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'command:import_products_w_attribute';
+    protected $signature = 'command:import_history_access';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Importa i prodotti dalla tabella import_products';
+    protected $description = 'Importa i prodotti dalla tabella import_history_access';
 
     /**
      * Execute the console command.
@@ -30,7 +30,6 @@ class ImportProductsWithAttribute extends Command
     {
         $userRefId = 755;
         $qtyCode = 'QTY';
-        $previousEndDate = null;
 
         /**
          * STEP 1: Ciclare tutti i prodotti della tabella ponte
@@ -55,7 +54,7 @@ class ImportProductsWithAttribute extends Command
                 'attribute_log' => ' ',
                 'attribute_log_detail' => 'CREATE BY SCRIPT import_stock_access()',
                 'attribute_date_start' => $record->data,
-                'attribute_date_end' => null,
+                'attribute_date_end' => now(),
                 'product_ref_id' => $record->id,
                 'user_id' => $userRefId,
                 'created_at' => now(),
@@ -77,29 +76,10 @@ class ImportProductsWithAttribute extends Command
 
          // Cicla per cercare gli attributi qta di tutti
          foreach($distinctMaterials as $mat) {
-             $name = $mat->material;
-             $attributes = DB::table('products as p')
+             $attribute = DB::table('products as p')
                  ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
                  ->select('pa.*')
-                 ->where('p.product_name', $name)
-                 ->where('pa.attribute_code', $qtyCode)
-                 ->orderBy('pa.attribute_date_start', 'desc')
-                 ->get();
-
-             // Imposta la data di fine del record precedente
-             for($i = 0; $i < count($attributes); $i++) {
-                 // Aggiorna il record nel database
-                 DB::table('product_attributes')
-                     ->where('id', $attributes[$i]->id)
-                     ->update([
-                         'attribute_date_end' => $attributes[(($i + 1) < count($attributes)) ? $i + 1 : $i]->attribute_date_start
-                     ]);
-             }
-
-             /* $attribute = DB::table('products as p')
-                 ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
-                 ->select('pa.*')
-                 ->where('p.product_name', $name)
+                 ->where('p.product_name', $mat->material)
                  ->where('pa.attribute_code', $qtyCode)
                  ->orderByDesc('pa.attribute_date_start')
                  ->first();
@@ -107,9 +87,7 @@ class ImportProductsWithAttribute extends Command
              // Aggiorna la data di fine a null per quello più recente
              DB::table('product_attributes')
                  ->where('id', $attribute->id)
-                 ->update(['attribute_date_end' => null]); */
-
-             $previousEndDate = $mat->data;
+                 ->update(['attribute_date_end' => null]);
          }
 
          $this->info('Importazione completata con successo.');
