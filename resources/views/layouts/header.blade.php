@@ -50,7 +50,6 @@
                                 <div class="media-body">
                                     <h3 class="dropdown-item-title">
                                         {{ $notify->notification_title }}
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
                                     </h3>
                                     <p class="text-sm">{{ $notify->notification_message }}</p>
                                     <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ formatDateTime($notify->created_at) }}</p>

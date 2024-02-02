@@ -39,7 +39,6 @@ class ProductController extends Controller
                 ->paginate(10);
         }
 
-
         return view('products.index', [
             'products' => $products,
             'showLess' => $showLess,
@@ -184,7 +183,7 @@ class ProductController extends Controller
                 ->paginate(5);
 
 
-            $dates = ProductAttributes::selectRaw('CAST(attribute_date_start AS DATE) AS attribute_date')
+            $dates = ProductAttributes::selectRaw('cast(attribute_date_start AS DATE) AS attribute_date')
                 ->where('attribute_code', $quantityCode)
                 ->where('product_ref_id', $productId)
                 ->groupByRaw('CAST(attribute_date_start AS DATE)')

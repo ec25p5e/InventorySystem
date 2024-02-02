@@ -143,9 +143,9 @@
                                 @foreach($moveForDate($date->attribute_date) as $move)
                                     <p></p>
                                     <div>
-                                        <i class="fas fa-envelope {{ ($move->attribute_log == "DECREMENT") ? "bg-danger" : "bg-info" }}"></i>
+                                        <i class="fas fa-solid {{ ($move->attribute_log == "DECREMENT") ? "fa-arrow-left bg-danger" : "fa-arrow-right bg-info" }}"></i>
                                         <div class="timeline-item">
-                                            <span class="time"><i class="{{ ($move->attribute_log == "DECREMENT") ? "fas fa-solid fa-arrow-left" : "fas fa-solid fa-arrow-right" }}"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
+                                            <span class="time"><i class="fas fa-solid fa-clock"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
                                             <h3 class="timeline-header"><a href="#">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
                                             <div class="timeline-body">
                                                 Sono

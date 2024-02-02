@@ -215,7 +215,10 @@ if(!function_exists('getRouteCode')) {
 
 if(!function_exists('getNotifications')) {
     function getNotifications($userId) {
-        $notifications = Notifications::where('user_id_ref', $userId)->get();
+        $notifications = Notifications::where('user_id_ref', $userId)
+            ->orderBy('created_at', 'desc')
+            ->limit(3)
+            ->get();
 
         return ($notifications) ? $notifications : null;
     }
