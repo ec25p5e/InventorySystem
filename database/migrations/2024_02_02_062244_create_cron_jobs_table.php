@@ -13,15 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('cron_jobs', function (Blueprint $table) {
             $table->id();
-            $table->string('form_code')->unique();
-            $table->string('form_name');
-            $table->string('form_description')->nullable();
-            $table->string('created_by');
-            $table->string('updated_by')->nullable();
-            $table->dateTime('form_start');
-            $table->dateTime('form_end');
+            $table->string('name');
+            $table->string('command');
+            $table->string('schedule');
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -33,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('cron_jobs');
     }
 };

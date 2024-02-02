@@ -5,18 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Logs extends Model
+class CronJob extends Model
 {
     use HasFactory;
 
-    protected $table = 'logs';
+    protected $table = 'cron_jobs';
 
     protected $fillable = [
-        'log_type',
-        'method',
-        'uri',
-        'message',
-        'user_id',
-        'app_mode',
+        'name',
+        'command',
+        'schedule',
+        'is_active'
     ];
 }

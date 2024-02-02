@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Jobs\CheckProductOOS;
+use App\Models\CronJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -16,8 +17,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->job(new CheckProductOOS)->dailyAt(getSettings('CHECK_OOS_PRODUCT_JOB'));
-        $schedule->command('cron:clean_1_week_logs_old')->daily();
+        $cronJobs = CronJob::where('is_active', true)->get();
+        foreach ($cronJobs as $cronJob) {
+            $schedule->exec($cronJob->command)->cron($cronJob->schedule);
+        }
+
+        /* $schedule->job(new CheckProductOOS)->dailyAt(getSettings('CHECK_OOS_PRODUCT_JOB'));
+        $schedule->command('cron:clean_1_week_logs_old')->daily(); */
     }
 
     /**

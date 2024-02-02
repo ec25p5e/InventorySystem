@@ -3,6 +3,7 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FormsController;
+use App\Http\Controllers\JobsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProductAttributesController;
 use App\Http\Controllers\RolesController;
@@ -57,6 +58,9 @@ foreach($routeConfigurations as $route) {
             break;
         case 'NotificationsController':
             Route::{$route->route_method}($route->route_uri, [NotificationsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'JobsController':
+            Route::{$route->route_method}($route->route_uri, [JobsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
         default:
             break;
