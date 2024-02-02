@@ -180,7 +180,7 @@ class ProductController extends Controller
                 ->orWhere('product_num_ceap', '=', $safeKey)
                 ->orWhere('product_name', 'like', $safeKey . '%')
                 ->orWhere('product_num_intern', 'like', '%'.$safeKey.'%')
-                ->paginate(5);
+                ->paginate(getSettings('PAGINATE_TABLE_PRODUCTS_IN_MOVEMENTS'));
 
 
             $dates = ProductAttributes::selectRaw('cast(attribute_date_start AS DATE) AS attribute_date')

@@ -1,0 +1,447 @@
+﻿N. articolo SPAI;N. articolo CEAP;N. articolo C&C;ARTICOLO descrizione;IMBALLAGGIO da pz;UNITA';STOCK SPAI;DATA CONTROLLO stock SPAI  da segr;ELIMINARE ARTICOLO  a fine stock;Quantità MINIMA;OSSERVAZIONI;da ordinare SPAI;Ordinare ? (AUTOMATICO)
+A1;;455898;Anelli rinforzo per fogli da classatore;1000;PZ;4;15/26.3.2021;;1;;;NO
+A2;;;Agenda giornaliera;1;PZ;0;15/26.3.2021;Si;0;;;No, attendere fine stock ed eliminare articolo
+A3;;;Agenda calendario;1;PZ;0;15/26.3.2021;Si;0;;;No, attendere fine stock ed eliminare articolo
+B1;100000058;;Bloc-notes A4;1;PZ;0;15/26.3.2021;Si;0;;;No, attendere fine stock ed eliminare articolo
+B10;100000120;;Bucatrici Leitz 5005 5008;1;PZ;5;15/26.3.2021;;2;;;NO
+B11;;;Bucatrici Leitz 5138;1;PZ;;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+B12;100000019;;Bucatrici Leitz 5180;1;PZ;1;15/26.3.2021;;1;;;NO
+B13;;;Bucatrici Rapid C20;1;PZ;2;15/26.3.2021;Si;1;;;No, attendere fine stock ed eliminare articolo
+B14;;954440009;Bucatrici Leitz 5012 4 fori;1;PZ;1;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+B15;;387034882;Buste formato C4 (bianche);250;SC;520;15/26.3.2021;;250;;;NO
+B15 CI;100000508;;Buste cantone formato C4 (posta interna/corrispondenza);250;SC;500;15/26.3.2021;;250;;;NO
+B16;;387080796;Buste formato C5 (bianche);500;SC;406;21.04.2021;;500;;;SI, 94
+B17;;387030786;Buste formato C6 (bianche);500;SC;160;21.04.2021;;500;;;SI, 340
+B18;;387034968;Buste formato B4 (bianche);250;SC;517;21.04.2021;;250;;;NO
+B19;;;Buste spedizione CD;1;PZ;39;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+B2;100000058;;Bloc-notes A5;1;PZ;13;21.04.2021;;5;;;NO
+B20;;387032966;Buste formato B5 (bianche);500;SC;0;15/26.3.2021;;500;;;SI, 500
+B21;;;Buste formato C6/5 con finestra (bianche);500;SC;640;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+B22;;;Buste formato C6/5 neutre (bianche);500;SC;802;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+B3;;173423917;Bloc-notes A6;1;PZ;5;21.04.2021;;5;;;NO
+B4;;;Bloc-notes A4 SPAI;50;SC;1950;01.06.2021;;;sono in archivio (piano -1);;Manca quantità MINIMA
+B5;100000270;;Batterie AAA 1.5V;;;0;15/26.3.2021;;;;da ordinare;Manca quantità MINIMA
+B6;100000193;;Batterie AA 1.5V;4;SC;16;15/26.3.2021;;;;;Manca quantità MINIMA
+B7;;968492;Batterie 9V;22;PZ;22;15/26.3.2021;;;;;Manca quantità MINIMA
+B8;;135033979;Batterie CR 2025;1;PZ;3;15/26.3.2021;;;;;Manca quantità MINIMA
+B8.2;;135030428;Batterie CR2450;1;PZ;4;15/26.3.2021;;;;;Manca quantità MINIMA
+B8.3;;135052550;Batterie LR54 ;;;;15/26.3.2021;;;;;Manca quantità MINIMA
+B8.4;;;Batterie LR1130;;;0;15/26.3.2021;;;Fuori commercio;;Manca quantità MINIMA
+B9;;135002906;Batterie LR20 1.5V;2;SC;14;15/26.3.2021;;;;;Manca quantità MINIMA
+BC.02;;;Busta cantone C6/5 con finestra;500;SC;2500;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+BC.03;;;Busta cantone C5 ;500;SC;1000;15/26.3.2021;Si;;fuori produzione;;No, attendere fine stock ed eliminare articolo
+BC.04;100000504;;Buste cantone B5;500;SC;3000;15/26.3.2021;;2000;;;NO
+BC.05;100000509;;Buste cantone C4;250;SC;3250;15/26.3.2021;;500;;;NO
+BC.06;100000506;;Buste cantone marroni B4;200;SC;3200;15/26.3.2021;;400;;;NO
+BC.07;100000507;;Buste cantone C5 con finestra (500);500;SC;4500;15/26.3.2021;;2000;;;NO
+C1;;223632123;Calamite 5 colori 32 mm MAUL;10;SC;20;15/26.3.2021;;20;;;NO
+C10;100000165;;Cancellino magnetico per lavagna bianca;1;PZ;9;21.04.2021;;5;;;NO
+C15;;;Carta millimetrata A3;1;PZ;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C16;;;carta millimetrata A4;1;PZ;2;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C2;;;Calamite bianche 20/25 mm;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C20;;681301;Fogli Flipchart;;SC;17;21.04.2021;;5;;;NO
+C25;;280035880;Carta da pacchi (rotolo);;;0;22.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C26;;930120;Carta da pacchi (fogli 100x150);1;PZ;12;23.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C3;;;Calamite bianche 30/35 mm;10;SC;50;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C30;100000174;;Cartoncini A4 bianchi per rilegatura;;;;15/26.3.2021;;;;;Manca quantità MINIMA
+C35;100000173;;Cartoncini A4 grigi per rinforzo buste;1;PZ;100;21.04.2021;;50;;;NO
+C4;;;Calamite blu 30/35 mm;10;SC;20;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C40;;;Cassettini per corrispondenza;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C41;100000075;;Copertine trasparenti per rilegature;5;SC;;21.04.2021;;;;;Manca quantità MINIMA
+C5;;;Calamite gialle 30/35 mm;10;SC;20;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C50;100000024;;Classatori 7cm arancio;10;SC;12;15/26.3.2021;;10;;;NO
+C51;100000027;;Classatori 7cm blu;10;SC;17;15/26.3.2021;;10;;;NO
+C52;100000026;;Classatori 7cm rossi;10;SC;15;15/26.3.2021;;10;;;NO
+C53;100000028;;Classatori 7cm verdi;10;SC;13;15/26.3.2021;;10;;;NO
+C53.1;;;Classatori 7 cm verde chiaro;10;SC;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C54;;921007001;Classatori 7cm gialli;10;SC;21;15/26.3.2021;;10;;;NO
+C55;100000025;;Classatori 7cm grigi;10;SC;21;15/26.3.2021;;10;;;NO
+C56;;921007050;Classatori 7cm turchese;10;SC;15;15/26.3.2021;;10;;;NO
+C57;;921007;Classatori 7 cm bianchi;10;SC;10;15/26.3.2021;;10;;;NO
+C58;;921007020;Classatori 7cm rosa;10;SC;27;15/26.3.2021;;10;;;NO
+C59;;;Classatori 7cm lilla;10;SC;19;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C6;;;Calamite nere 30/35 mm;10;SC;50;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C60;100000029;;Classatori 4cm arancio;15;SC;21;15/26.3.2021;;10;;;NO
+C61;;921004;Classatori 4cm bianchi;15;SC;19;15/26.3.2021;;10;;;NO
+C62;100000032;;Classatori 4cm blu;15;SC;21;15/26.3.2021;;10;;;NO
+C63;;921004001;Classatori 4cm gialli;15;SC;12;15/26.3.2021;;10;;;NO
+C64;100000030;;Classatori 4cm grigi;15;SC;22;15/26.3.2021;;10;;;NO
+C65;;921004020;Classatori 4cm rosa;15;SC;10;15/26.3.2021;;10;;;NO
+C66;;921000002;Classatori 4cm rossi;15;SC;6;15/26.3.2021;;10;;;SI, 4
+C67;100000033;;Classatori 4cm verdi;15;SC;18;15/26.3.2021;;10;;;NO
+C67.1;;;Classatori 4 cm verde chiaro;15;SC;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C68;;;Classatori 4cm viola;15;SC;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C69;;;Classatori 4 cm turchese;15;SC;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C7;;;Calamite verdi 20/25 mm;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C70;;;Colla attacca-stacca;1;PZ;16;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C71;100000144;;Colla stick;1;PZ;17;15/26.3.2021;;5;;;NO
+C73;;;Colla stick Universale;1;PZ;4;15/26.3.2021;Si;;vedi C71;;No, attendere fine stock ed eliminare articolo
+C75;;;Colori ;;SC;3;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C8;;;Calamite verdi 30/35 mm;10;SC;50;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C80;;;Calcolatrici Tascabili;1;PZ;2;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C9;;;Cassette audio 60 min;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C90;;;CD-R (registrabili);;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C91;;;CD-RW (registrabili diverse volte;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+C92;;;Digital 8 Cassette videocamera digitale;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+D1;;;DVD-R;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+D2;;;DVD-RW;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+E1;;101901670;Etichette dorsi classatori 7cm;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+E10;"""100000128""";;Elastici fini (601118);1 (100g);SC;10;15/26.3.2021;;;;;Manca quantità MINIMA
+E2;;;Etichette dorsi classatori 4cm;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+E5;100000152;;Etichette per mappette VetroMobil;;;1100;21.04.2021;;;;;Manca quantità MINIMA
+F1;;602511;Fogli cubo con box 9x9x9;1;PZ;1;21.04.2021;;1;;;NO
+F10;;;Fissatori fogli;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+F15;100000600;;Feltri per magneti lavagna bianca;10;SC;300;21.04.2021;;20;;;NO
+F2;;602504;Fogli cubo 9x9x9 ricarica;1;PZ;11;21.04.2021;;5;;;NO
+F20;100000076;;Fogli adesivi A4;200;SC;750;21.04.2021;;;;;Manca quantità MINIMA
+F21;;;Fogli rigati A4x2 (1 scatola 250 fogli);250;SC;1250;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+F25;;;Fogli trasparenti per ricalchi;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+F3;;;Fogli colorati cubo con portapenna;1;PZ;5;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+F4;;602524;Fogli bianchi cubo con portapenne;1;PZ;3;21.04.2021;;1;;;NO
+F5;100000121;;Forbici;1;PZ;13;15/26.3.2021;;5;;;NO
+G1;100000163;;Gessi bianchi;100;SC;700;15/26.3.2021;;100;;;NO
+G10;;;RICARICA Graffatrici Leitz  / 26-6;1;PZ;10;15/26.3.2021;Si;;vedi G15;;No, attendere fine stock ed eliminare articolo
+G12;100000118;;Graffatrici Rapid Classic 45 / 26-6;1;PZ;0;15/26.3.2021;;;;;Manca quantità MINIMA
+G15;100000122;;Ricarica 26-6;1000;SC;11000;15/26.3.2021;Si;;vedi G17;;No, attendere fine stock ed eliminare articolo
+G16;;915007;Ricarica N°10;1000;SC;4000;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+G17;;915008;Ricarica 24-6;1000;SC;2000;15/26.3.2021;;5000;;;SI, 3000
+G2;100000164;;Gessi colorati;100;SC;900;15/26.3.2021;;100;;;NO
+G2.1;;;Gessi Arancio;10;SC;2;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G2.2;;;Gessi Blu chiaro;10;SC;5;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G2.3;;;Gessi Gialli;10;SC;0;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G2.4;;;Gessi Rosa;10;SC;3;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G2.5;;;Gessi Rossi;10;SC;3;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G2.6;;;Gessi Verde chiaro;10;SC;2;15/26.3.2021;Si;;fuori commercio;;No, attendere fine stock ed eliminare articolo
+G20;100000123;;Graffette N°2;100;SC;4600;15/26.3.2021;;1000;;;NO
+G21;100000124;;Graffette N°3;100;SC;4600;15/26.3.2021;;1000;;;NO
+G22;100000125;;Graffette N°4;100;SC;3400;15/26.3.2021;;1000;;;NO
+G23;100000126;;Graffette N°5;100;SC;4200;15/26.3.2021;;1000;;;NO
+G25;;;Graffette intrecciate N°2;75;SC;75;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+G26;;;Graffette intrecciate N°3;50;SC;50;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+G28;;;Graffette d'angolo;100;SC;200;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+G5;;;Gomme combi;1;PZ;12;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+G6;100000023;;Gomme matita;1;PZ;30;15/26.3.2021;;5;;;NO
+G7;;;Gomme penna;1;PZ;36;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+I1;100000138;;Inchiostro nero per timbri;1;PZ;3;15/26.3.2021;;3;;;NO
+I2;100000139;;Inchiostro rosso per timbri;1;PZ;5;15/26.3.2021;;3;;;NO
+L1;100000195;;Lucidi per fotocopiatrice;;SC;650;21.04.2021;;100;;;NO
+L2;100000194;;Lucidi per stampante inchiostro;;SC;150;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+L24;;;Lampadine Osram 24V 250W per retroproiettore;;;;15/26.3.2021;;;si acquistano solo su bisgono;;Manca quantità MINIMA
+L36;;;Lampadine Osram 36V 400W per retroproiettore;;;;15/26.3.2021;;;si acquistano solo su bisgono;;Manca quantità MINIMA
+L5;;715222;Penna laser;1;PZ;1;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M1;100000045;;Mappette per classatore;100;SC;829;21.04.2021;;500;;;NO
+M11;100000051;;Mappette di carta bianche con finestrella;100;SC;503;21.04.2021;;20;;;NO
+M12;100000114;;Mappette di carta celesti con finestrella;100;SC;200;21.04.2021;;20;;;NO
+M13;100000112;;Mappette di carta gialle con finestrella;100;SC;125;21.04.2021;;20;;;NO
+M15;100000113;;Mappette di carta rosa con finestrella;100;SC;214;21.04.2021;;20;;;NO
+M16;100000115;;Mappette di carta verdi con finestrella;100;SC;170;21.04.2021;;20;;;NO
+M20;;380464004;Mappette plastica arancio (liscie);100;SC;108;21.04.2021;;200;;;SI, 92
+M21;100000108;;Mappette plastica blu;100;SC;400;21.04.2021;;200;;;NO
+M22;100000106;;Mappette plastica gialle;100;SC;200;21.04.2021;;200;;;NO
+M23;100000107;;Mappette plastica rosse;100;SC;134;21.04.2021;;200;;;SI, 66
+M24;100000105;;Mappette plastica incolore;100;SC;120;21.04.2021;;200;;;SI, 80
+M25;100000109;;Mappette plastica verdi;100;SC;138;21.04.2021;;200;;;SI, 62
+M26;;380464006;Mappette plastica viola;100;SC;90;21.04.2021;;200;;;SI, 110
+M30;;;Mappette con raccoglitore bianche;1;PZ;112;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M31;;;Mappette con raccoglitore blu;1;PZ;44;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M32;;;Mappette con raccoglitore gialle;1;PZ;106;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M33;;;Mappette con raccoglitore rosse;1;PZ;41;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M34;;;Mappette con raccoglitore verdi;1;PZ;88;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M40;;;Mappette sospese VetroMobil;1;PZ;137;21.04.2021;;50;;;NO
+M45;;;Mappette Jura Biella verdi;1;PZ;42;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M46;;;Mappette Jura Biella gialle;1;PZ;70;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M47;;;Mappette Jura Biella rosa;1;PZ;42;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M48;;;Mappette Jura Biella blu;1;PZ;53;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M5;;;Mappette magnetiche per lavagna bianca;1;PZ;27;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M50;;;Mollette fermafogli per binari;1;PZ;3;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M55;;;Matite grigie;1;PZ;12;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M56;100000020;;Matite rosse;1;PZ;25;15/26.3.2021;;10;;;NO
+M57;;;Matite con gommino (non esiste);;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M58;;;Mine matita 2mm (confezione da 3pz);3;SC;6;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+M59;100000220;;Matita per mine Flexpencil N°22;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+ML1;;;Mappette custodie PVC libretto;;;;15/26.3.2021;Si;;Segr;;No, attendere fine stock ed eliminare articolo
+N1;100000150;;Nastro adesivo per pacchi;1;PZ;3;15/26.3.2021;;1;;;NO
+N2;100000374;;Nastro adesivo di carta;1;PZ;14;15/26.3.2021;;3;;;NO
+P1;;;Pennarelli per fogli flipchart;;;;15/26.3.2021;Si;;v. pennarelli per flipchart;;No, attendere fine stock ed eliminare articolo
+P1.1;;;Pennarelli neri per Smart Board;;;17;05.05.2021;;1;etichettarli dal custode/vedi commento P1.1;;NO
+P1.2;;;Pennarelli blu per Smart Board;;;4;05.05.2021;;1;etichettarli dal custode/vedi commento P1.2;;NO
+P1.3;;;Pennarelli verdi per Smart Board;;;3;05.05.2021;;1;etichettarli dal custode/vedi commento P1.3;;NO
+P1.4;;;Pennarelli rossi per Smart Board;;;2;05.05.2021;;1;etichettarli dal custode/vedi commento P1.4;;NO
+P1.5;;;Punte di ricambio per pennarelli per Smart Board;;;24;05.05.2021;;10;etichettarli dal custode/vedi commento P1.5;;NO
+P10;10000017;;Penna a biglia blu;50;PZ;126;15/26.3.2021;;20;;;NO
+P11;100000015;;Penne a biglia nere;50;SC;65;15/26.3.2021;;20;;;NO
+P12;100000016;;Penne a biglia rosse;50;SC;72;15/26.3.2021;;20;;;NO
+P13;;110825210;Penne a biglia verdi;50;SC;55;15/26.3.2021;;20;;;NO
+P15;100000245;;Portacancelleria;1;PZ;1;21.04.2021;;1;;;NO
+P2;;;Pennarelli per lavagna bianca;;;;15/26.3.2021;Si;;v. P2.1 ecc.;;No, attendere fine stock ed eliminare articolo
+P2.1;100000670;;Pennarello per lavagna bianca Blu;10;SC;17;15/26.3.2021;;10;;;NO
+P2.2;100000671;;Pennarello per lavagna bianca Nero;10;SC;15;15/26.3.2021;;10;;;NO
+P2.3;100000672;;Pennarello per lavagna bianca Rosso;10;SC;21;15/26.3.2021;;10;;;NO
+P2.4;100000673;;Pennarello per lavagna bianca Verde;10;SC;21;15/26.3.2021;;10;;;NO
+P20;;926108;Plastificazione A3;100;SC;300;21.04.2021;;;;;Manca quantità MINIMA
+P21;;926104;Plastificazione A4 (100 Micron);100;SC;200;21.04.2021;;;;;Manca quantità MINIMA
+P22;;926111;Plastificazione A5;100;SC;100;21.04.2021;;;;;Manca quantità MINIMA
+P23;;926118;Plastificazione businnes card;100;SC;200;21.04.2021;;;;;Manca quantità MINIMA
+P24;;926116;Plastificazione credit card;100;SC;200;21.04.2021;;;;;Manca quantità MINIMA
+P3;100000084;;Pennarelli per retroproiettore;6;ASTUCCIO;180;15/26.3.2021;;24;;;NO
+P30;;302670;Post-it colorati 15x50;1;PZ;6;15/26.3.2021;;10;;;SI, 4
+P31;;302653404;Post-it colorati 38x52;1;PZ;12;15/26.3.2021;;10;;;NO
+P32;;302303020;Post-it colorati 76x76;1;PZ;60;15/26.3.2021;;10;;;NO
+P33;;;Post-it colorati 25x76 3pz;1;PZ;7;15/26.3.2021;Si;10;fuori commercio;;No, attendere fine stock ed eliminare articolo
+P35;;;Post-it frecce;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P36;;;Post-it nuvola;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P37;;;Post-it fiore;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P38;;;Post-it cuore;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P4;100000003;;Penne Bic Roller 0.7mm - Nero;12;SC;62;15/26.3.2021;;24;;;NO
+P40;100000060;;Post-it gialli 76x76;1;PZ;8;15/26.3.2021;;10;;;SI, 2
+P41;100000059;;Post-it gialli 76x102;1;PZ;9;15/26.3.2021;;10;;;SI, 1
+P42;;;Post-it gialli 102 x 76;;;;15/26.3.2021;Si;;VEDI P41;;No, attendere fine stock ed eliminare articolo
+P43;;302469190;Post-it gialli 102x152 rigati;1;PZ;6;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P44;100000061;;Post-it gialli 51x76;1;PZ;6;15/26.3.2021;;10;;;SI, 4
+P45;;900300001-005;Post it index 25.4x43.2;1;PZ;12;15/26.3.2021;;10;;;NO
+P46;;302654330;Post-it 76x76 gialli a Z;1;PZ;103;15/26.3.2021;;20;;;NO
+P47;;302654350;Post-it 127x76 mm;1;PZ;14;15/26.3.2021;;10;;;NO
+P5;100000004;;Penne Bic Roller 0.7mm - Rosso;12;SC;41;15/26.3.2021;;24;;;NO
+P5.1;100000011;;Pennarelli flipchart blu;10;SC;52;15/26.3.2021;;10;;;NO
+P5.2;100000009;;Pennarelli flipchart nero;10;SC;53;15/26.3.2021;;10;;;NO
+P5.3;10000010;;Pennarelli flipchart rosso;10;SC;52;15/26.3.2021;;10;;;NO
+P5.4;;;Pennarello permanente edding 22 verde (flipchart);10;SC;64;15/26.3.2021;Si;10;fuori commercio;;No, attendere fine stock ed eliminare articolo
+P50;100000127;;Puntine;;;5;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P51;;;Portanomi con clip (da 25 pezzi);25;SC;75;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P53;;;Penne di segnalazione;1;PZ;2;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P55;100000056;;Cavallieri in metallo per mappette VetroMobil;1;PZ;56;22.04.2021;;10;;;NO
+P56;100000100;;Placchette in plastica gialle per mappette VetroMobil;1;PZ;50;22.04.2021;;10;;;NO
+P57 ;100000103;;Placchette in plastica blu per mappette VetroMobil;1;PZ;25;22.04.2021;;10;;;NO
+P58;100000101;;Placchette in plastica arancioni per mappette VetroMobil;1;PZ;142;15/26.3.2021;;10;;;NO
+P59;100000102;;Placchette in plastica rosa per mappette VetroMobil;1;PZ;109;22.04.2021;;10;;;NO
+P6;100000005;;Penne Bic Roller 0.7mm - Blu;12;SC;96;22.04.2021;;24;;;NO
+P60;;;Placchette in plastica rosse per mappette VetroMobil;1;PZ;36;22.04.2021;Si;10;fuori commercio;;No, attendere fine stock ed eliminare articolo
+P61;100000099;;Placchette in plastica incolore per mappette VetroMobil;1;PZ;23;22.04.2021;;10;;;NO
+P62;100000104;;Placchette in plastica verdi per mappette VetroMobil;1;PZ;80;15/26.3.2021;;10;;;NO
+P7;;;Pennarelli colorati;10;SC;20;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+P8;100000202;;Presa Multipla 6 attacchi bianca;;;;15/26.3.2021;;;vedi custode;;Manca quantità MINIMA
+P9;100000200;;Prolunga 5 metri;;;;15/26.3.2021;;;vedi custode;;Manca quantità MINIMA
+Q1;100000071;;Quaderni a quadretti 4 mm;;;;15/26.3.2021;;;Vedi custode;;Manca quantità MINIMA
+R1;100000162;;Righe 30cm;1;PZ;3;15/26.3.2021;;1;;;NO
+R10;;970014009;Rimuovi Graffette;1;PZ;15;15/26.3.2021;;5;;;NO
+R2;;532600050;Righe 50cm;1;PZ;5;15/26.3.2021;;1;;;NO
+S1;100000149;;Scotch - supporto (810);1;PZ;5;15/26.3.2021;;3;;;NO
+S10;100000065;;Separazioni a 6 posizioni per classatore;25;SC;86;15/26.3.2021;;25;;;NO
+S11;100000064;;Separazioni a 10 posizioni per classatore;;SC;200;15/26.3.2021;;25;;;NO
+S12;;104614120;Separazioni a 12 posizioni per classatore;;SC;166;15/26.3.2021;;25;;;NO
+S15;100000062;;Separazioni alfabetiche per classatore;;SC;69;15/26.3.2021;;25;;;NO
+S16;100000063;;Separazioni numeriche  1 / 31;;SC;68;15/26.3.2021;;;Interessano a SaG?;;Manca quantità MINIMA
+S17;;380720003;Separazioni numeriche 1 / 20;;SC;141;15/26.3.2021;;;Interessano a SaG?;;Manca quantità MINIMA
+S18;;380712003;Separazioni numeriche da 1 a 12;;SC;62;15/26.3.2021;;;Interessano a SaG?;;Manca quantità MINIMA
+S19;;421315008;Separazioni 1 / 15;;SC;40;15/26.3.2021;;;Interessano a SaG?;;Manca quantità MINIMA
+S2;100000146;;Scotch trasparente ricarica (550);1;PZ;19;15/26.3.2021;;10;;;NO
+S20;;202069004;Stabilo Boss arancio;;SC;19;15/26.3.2021;;10;;;NO
+S21;;202069002;Stabilo Boss celeste;;SC;29;15/26.3.2021;;10;;;NO
+S22;;202069001;Stabilo Boss giallo;;SC;6;15/26.3.2021;;10;;;SI, 4
+S23;;202069020;Stabilo Boss rosa;;SC;10;15/26.3.2021;;10;;;NO
+S25;;;Stabilo Boss lavanda;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+S26;;;Stabilo Boss lilla;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+S27;;202069069;Stabilo Boss turchese;;SC;9;15/26.3.2021;;10;;;SI, 1
+S28;;202069020;Stabilo Boss verde;;SC;22;15/26.3.2021;;10;;;NO
+S3;100000145;;Scotch biadesivo con supporto;1;PZ;10;15/26.3.2021;;3;;;NO
+S30;100000070;;Spugne per lavagna;1;PZ;14;21.04.2021;;10;;;NO
+S31;100000165;;Spugne per lavagna bianca RICARICA;1;PZ;10;21.04.2021;;10;;;NO
+S32;;;Spugne per Smart Board;1;PZ;9;05.05.2021;;2;etichettarli dal custode/ vedi commento P1.1;;NO
+S35;100000159;;Spago;1;PZ;5;21.04.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+S36;100000067;;Scatole d'archivio 8 cm;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+S37;100000066;;Scatole d'archivio 10 cm;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+S4;;301136126;Scotch biadesivo (ricarica);1;PZ;18;15/26.3.2021;;5;;;NO
+S5;100000080;;Scotch trasparente removibile (ricarica);1;PZ;4;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+S6;;;Spine elettriche 220V tipo 12 (10A);;;0;15/26.3.2021;;;si acquistano solo su bisgono;;Manca quantità MINIMA
+S7;10000075;;Stracci per lavagna;;;0;15/26.3.2021;;;Vedi custode;;Manca quantità MINIMA
+T1;100000169;;Taglierini con lama 9 mm;1;PZ;4;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+T10;100000135;;Tampone nero per timbri;1;PZ;2;15/26.3.2021;;3;;;SI, 1
+T11;100000136;;Tampone rosso per timbri;1;PZ;3;15/26.3.2021;;3;;;NO
+T15;;;Tappettini Mouse;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+T2;100000370;;Taglierini con lama 18 mm;1;PZ;1;15/26.3.2021;;1;;;NO
+T20;100000118;;Tip-ex mouse;1;PZ;16;21.04.2021;;10;;;NO
+T21;100000068;;Tip-ex liquido;1;PZ;4;21.04.2021;;2;;;NO
+T25;100000161;;Temperini;1;PZ;40;15/26.3.2021;;5;;;NO
+T30;100000168;;Tagliacarta per ufficio (apri buste);1;PZ;5;15/26.3.2021;;2;;;NO
+T4;;915021629;Tavoletta portablocco;1;PZ;5;21.04.2021;;2;;;NO
+T5;;914014;Lame 18 mm per taglierini;10;SC;70;15/26.3.2021;;10;;;NO
+TD1;;;Tabelle diario 1 classe;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+TD4;;;Tabelle diario 4 classi;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+TF1;;;Tabelle per il controllo delle frequenze;;;0;15/26.3.2021;Si;;Segr.;;No, attendere fine stock ed eliminare articolo
+U4;;970415;Penne USB 4 GB;1;PZ;13;15/26.3.2021;;5;;;NO
+V1;;;VHS 120min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V2;;;VHS 180min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V3;;;VHS 240min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V4;;;VHS 30min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V5;;;VHS 60min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V6;;;VHS 90min cassette video;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V7;;;VHS-C 45min cassette videocamera;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+V8;;;Video 8 Cassette videocamera;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+Z1;;;Zip Iomega 250 Mb per PC;;;0;15/26.3.2021;Si;;;;No, attendere fine stock ed eliminare articolo
+;;;graffatrice lunga Leinz 5560;;;1;;;;Vedi G10 o G12 oppure agg;;Manca quantità MINIMA
+;;;Ganci per lavagna bianca;;;3;;Si;;Vedi M50;;No, attendere fine stock ed eliminare articolo
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
+;;;;;;;;;;;;
