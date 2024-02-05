@@ -23,4 +23,8 @@ class UserAttributes extends Model
         'user_id',
         'user_mod',
     ];
+
+    public function attributeDef(){
+        return $this->hasMany(UserAttributeDef::class, 'attribute_code');
+    }
 }

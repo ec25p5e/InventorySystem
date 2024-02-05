@@ -137,7 +137,7 @@
                         @isset($timelineDates)
                             @foreach($timelineDates as $date)
                                 <div class="time-label">
-                                    <span class="bg-green">{{ $date->attribute_date }}</span>
+                                    <span class="bg-green">{{ formatDatePortal($date->attribute_date) }}</span>
                                 </div>
 
                                 @foreach($moveForDate($date->attribute_date) as $move)
@@ -146,7 +146,7 @@
                                         <i class="fas fa-solid {{ ($move->attribute_log == "DECREMENT") ? "fa-arrow-left bg-danger" : "fa-arrow-right bg-info" }}"></i>
                                         <div class="timeline-item">
                                             <span class="time"><i class="fas fa-solid fa-clock"></i> {{ formatDateTime($move->attribute_date_start) }}</span>
-                                            <h3 class="timeline-header"><a href="#">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
+                                            <h3 class="timeline-header"><a href="{{ route(getRoute(Auth::id(), 'USER_DETAILS_PANE'), ['user_id' => $move->user_id]) }}">{{ getUserById($move->user_id) }}</a> {{ ($move->attribute_log == "DECREMENT") ? " ha prelevato dal " : " ha aggiunto al" }} magazzino</h3>
                                             <div class="timeline-body">
                                                 Sono
                                                 {{ ($move->attribute_log == "DECREMENT") ? " stati sottratti " : " stati aggiunti " }}

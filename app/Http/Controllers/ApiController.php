@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProductAttributes;
 use App\Models\Products;
+use App\Models\UserAttributes;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -18,15 +19,23 @@ class ApiController extends Controller
             'product_attribute' => 'required|string'
         ]);
 
-        $productId = $request->input('product_id');
+        $keyId = $request->input('product_id');
         $entity = $request->input('entity');
-        $product_attribute = $request->input('product_attribute');
+        $attribute = $request->input('product_attribute');
         $data = [];
 
         switch($entity) {
             case 'product_attributes':
-                $attributeValue = ProductAttributes::where('product_ref_id', $productId)
-                    ->where('attribute_code', $product_attribute)
+                $attributeValue = ProductAttributes::where('product_ref_id', $keyId)
+                    ->where('attribute_code', $attribute)
+                    ->where('attribute_date_end', null)
+                    ->value('attribute_value');
+
+                $data['value'] = $attributeValue;
+                break;
+            case 'user_attributes':
+                $attributeValue = UserAttributes::where('user_id', $keyId)
+                    ->where('attribute_code', $attribute)
                     ->where('attribute_date_end', null)
                     ->value('attribute_value');
 

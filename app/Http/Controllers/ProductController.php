@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\SettingsHelper;
-use App\Jobs\CheckProductOOS;
 use App\Models\ProductAttributes;
 use App\Models\ProductAttributesDef;
 use App\Models\Products;
@@ -11,7 +9,6 @@ use App\Models\Unities;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
@@ -22,21 +19,52 @@ class ProductController extends Controller
     public function index(Request $request) {
         $showLess = $request->input('showLess');
         $showTerminateProducts = $request->input('showTerminateProducts');
+        $userId = Auth::id();
 
         if($showLess == 1) {
-            $count = DB::table('internal_product_warning')->count();
-            if($count > 0) {
-                $products = DB::table('internal_product_warning')->get();
-            } else {
-                $products = null;
-            }
+            $products = DB::table('oos_products as oosp')
+                ->whereIn('oosp.unity', function ($query) use ($userId) {
+                    $query->select('ut.unity_code')
+                        ->from('unities_tree as ut')
+                        ->where('ut.user_id', $userId)
+                        ->whereExists(function ($query) {
+                            $query->select('u.unity_id')
+                                ->from('users as u')
+                                ->whereColumn('u.id', 'ut.user_id');
+                        });
+                })
+                ->paginate(getSettings('MAX_ROW_PER_PAR'));
         } else if($showTerminateProducts == 1) {
-            $products = DB::table('expired_products')->paginate(10);
+            $products = DB::table('expired_products as ep')
+                ->whereIn('ep.unity', function ($query) use ($userId) {
+                    $query->select('ut.unity_code')
+                        ->from('unities_tree as ut')
+                        ->where('ut.user_id', $userId)
+                        ->whereExists(function ($query) {
+                            $query->select('u.unity_id')
+                                ->from('users as u')
+                                ->whereColumn('u.id', 'ut.user_id');
+                        });
+                })
+                ->paginate(getSettings('MAX_ROW_PER_PAR'));
         } else {
-            $products = DB::table('products')
-                ->whereNull('product_end')
-                ->orWhere('product_end', '!=', getSettings('DEFAULT_DATE_END'))
-                ->paginate(10);
+            $products = DB::table('products as p')
+                ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
+                ->where('pa.attribute_code', 'UNITY')
+                ->whereNull('p.product_end')
+                ->whereNull('pa.attribute_date_end')
+                ->whereIn('pa.attribute_value', function ($query) use ($userId) {
+                    $query->select('ut.unity_code')
+                        ->from('unities_tree as ut')
+                        ->where('ut.user_id', $userId)
+                        ->whereExists(function ($query) {
+                            $query->select('u.unity_id')
+                                ->from('users as u')
+                                ->whereColumn('u.id', 'ut.user_id');
+                        });
+                })
+                ->select('p.*')
+                ->paginate(getSettings('MAX_ROW_PER_PAR'));
         }
 
         return view('products.index', [
@@ -121,6 +149,7 @@ class ProductController extends Controller
     public function movements(Request $request)
     {
         $quantityCode = 'QTY';
+        $userId = Auth::id();
         $productId = null;
         $key[] = null;
         $dates = null;
@@ -176,10 +205,22 @@ class ProductController extends Controller
         }
 
         if(isset($safeKey)) {
-            $listOfProducts = Products::where('id', '=', $productId)
-                ->orWhere('product_num_ceap', '=', $safeKey)
-                ->orWhere('product_name', 'like', $safeKey . '%')
-                ->orWhere('product_num_intern', 'like', '%'.$safeKey.'%')
+            $listOfProducts = DB::table('products as p')
+                ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
+                ->where(function($query) use ($safeKey, $productId) {
+                    $query->where('p.id', $productId)
+                        ->orWhere('p.product_num_ceap', $safeKey)
+                        ->orWhere('p.product_name', 'LIKE', $safeKey . '%')
+                        ->orWhere('p.product_num_intern', 'LIKE', '%' . $safeKey . '%');
+                })
+                ->whereNull('pa.attribute_date_end')
+                ->where('pa.attribute_code', 'UNITY')
+                ->whereIn('pa.attribute_value', function ($query) use ($userId) {
+                    $query->select('ut.unity_code')
+                        ->from('unities_tree as ut')
+                        ->where('ut.user_id', $userId);
+                })
+                ->select("p.*")
                 ->paginate(getSettings('PAGINATE_TABLE_PRODUCTS_IN_MOVEMENTS'));
 
 
@@ -203,7 +244,7 @@ class ProductController extends Controller
 
         // Prendi tutti gli utenti non sull'unità Root
         // Quindi sono amministrativi o docenti
-        $teachers = User::whereNot('unity_id', 1)->get();
+        $teachers = User::all();
 
 
         return view('products.movements', [

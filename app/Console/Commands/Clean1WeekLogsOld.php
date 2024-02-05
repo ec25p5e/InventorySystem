@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class Clean1WeekLogsOld extends Command
+class lean1WeekLogsOld extends Command
 {
     /**
      * The name and signature of the console command.

@@ -22,7 +22,7 @@
     <script src="{{ asset('admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
     <script>
-        function loadUnityInformation(product_id, entity, attribute, element) {
+        function loadUnityInformation(product_id, entity, attribute, element, isTable = true) {
             let apiUrl = '/api/loadProductColInfo';
 
             $.ajax({
@@ -37,8 +37,11 @@
                     'product_attribute': attribute
                 },
                 success: function (data) {
-                    $(element).append(data['value'])
-                    localStorage.setItem({{ getSettings('CACHED_PRODUCT_LS') }}, JSON.stringify(data));
+                    if(isTable) {
+                        $(element).append(data['value'])
+                    } else {
+                        $(element).val(data['value'])
+                    }
                 },
                 error: function (xhr, status, error) {
                     $(element).append(error)

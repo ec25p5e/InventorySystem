@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Dashboard</h1>
+                    <h1 class="m-0">Elenco prodotti</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -26,6 +26,7 @@
                     <button class="btn btn-primary mr-3">
                         <a style="text-decoration: none; color: white;" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a>
                     </button>
+
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" type="button" id="optionsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Opzioni
@@ -40,7 +41,7 @@
                             @if($showTerminateProducts == 1)
                                     <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=0']) }}">Mostra tutti i prodotti</a>
                                 @else
-                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti scaduti</a>
+                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti non più utilizzati</a>
                             @endif
 
                             <div class="dropdown-divider"></div>
@@ -52,7 +53,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="box-body">
                 <table class="table table-bordered">
@@ -84,7 +84,7 @@
                                 <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
                                 <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
                                 @if($showLess == 1)
-                                    <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_WARNING', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
+                                    <td id="minWarningRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'MIN_QTY', $('#minWarningRefTd-{{ $product->id }}'))</script></td>
                                 @endif
                                 <td id="unitRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNIT', $('#unitRefTd-{{ $product->id }}'))</script></td>
                                 <td>

@@ -31,12 +31,8 @@ class ImportProducts extends Command
      *
      * @return int
      */
-    public function handle(Request $request)
+    public function handle()
     {
-        DB::table('product_attributes')->delete();
-        DB::table('products')->delete();
-
-
         /**
          * STEP 1: Elimina tutte le eventuali righe vuote
          */
@@ -95,7 +91,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'UNIT' as attribute_code, 'Unità' as attribute_name, unita as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'UNIT' as attribute_code, 'Unità di misura' as attribute_name, unita as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -161,11 +157,17 @@ class ImportProducts extends Command
         );
 
         /**
-         * STEP 4: Dopo aver importato i record nella tabella "import_products_stock"
-         *         Ciclare tutti i record e iniziare a inserire quelli più recenti verso quelli meno recenti
-         *         L'operazione viene eseguita prodotto per prodotto
+         * STEP 3.7: Iniziare a inserire gli attributi uno per uno
+         *         Secondo attributo: "Unità"
          */
+        DB::table('product_attributes')->insertUsing(
+            ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
+            function ($query) {
+                $query->select(DB::raw("'UNITY' as attribute_code, 'Unità' as attribute_name, scuola as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                    ->from('import_products');
+            }
+        );
 
-
+        return self::SUCCESS;
     }
 }

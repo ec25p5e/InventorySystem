@@ -18,7 +18,7 @@ class ProductAttributesController extends Controller
             $query->where('product_ref_id', '=', $product_id)
                 ->where('attribute_code', '=', $attributeName->attribute_code);
         })
-            ->orderBy('attribute_date_end', 'asc')
+            ->orderBy('attribute_date_start', 'desc')
             ->get();
 
 
@@ -163,6 +163,7 @@ class ProductAttributesController extends Controller
                     'attribute_date_start' => $attributeDateStart,
                     'attribute_date_end' => null,
                     'user_id' => isset($userId) > 0 ? $userId : Auth::id(),
+                    'user_mod' => Auth::id()
                 ];
 
                 ProductAttributes::create($newRow);
