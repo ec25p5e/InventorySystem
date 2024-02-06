@@ -177,6 +177,7 @@
                         @csrf
                         <input type="hidden" name="attribute_code" value="QTY" />
                         <input type="hidden" name="product_ref_id" value="{{ $productId }}" />
+                        <input type="hidden" name="attribute_hidden" value="1" />
 
                         <div class="row">
                             <div class="col-md-6">

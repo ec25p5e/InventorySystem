@@ -8,7 +8,10 @@ use App\Models\Unities;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Ramsey\Uuid\Type\Integer;
 
 class RoutesController extends Controller
 {
@@ -231,19 +234,94 @@ class RoutesController extends Controller
         ]);
     }
 
-    public function create() {
-        $unities = Unities::all();
+    public function create(Request $request) {
+        $unities = Unities::with('childrenRecursive')->whereNull('unity_ref_id')->get();
         $roles = Roles::all();
+        $key[] = null;
+
+        $unityIdRules = [
+            'unity_id' => 'required|numeric|min:0'
+        ];
+
+        $formCreationRules = [
+            '_token' => 'required|string',
+            'unity_id' => 'required|int',
+            'route_code' => 'required|string',
+            'route_controller' => 'required|string',
+            'controller_method' => 'required|string',
+            'role_code' => 'required|int',
+            'route_name' => 'required|string',
+            'route_method' => 'required|string',
+            'btnForm' => 'required|int'
+        ];
+
+        $validatorUnityId = Validator::make($request->all(), $unityIdRules);
+        $validatorForm = Validator::make($request->all(), $formCreationRules);
+
+        if($validatorForm->fails() && $validatorUnityId->fails()) {
+            Session::remove('routes_creation');
+            $routes = [];
+        } else {
+            $routes = Session::get('routes_creation');
+        }
+
+        if(!$validatorUnityId->fails()) {
+            $key['unity_id'] = $request->input('unity_id');
+            $unities = Unities::where('id', $key['unity_id'])->get();
+        }
+
+        if(!$validatorForm->fails()) {
+            if($request->input('btnForm') == 2) { // Modalità propaga
+                // Prendi tutte le unità sotto quella di riferimento
+                $unitiesToPropagte = DB::table('unities_tree')
+                    ->select('unity_id')
+                    ->where('unity_ref', $key['unity_id'])
+                    ->distinct()
+                    ->pluck('unity_id');
+
+
+
+            }
+
+
+            $key['unity_id'] = $request->input('unity_id');
+            $key['route_code'] = $request->input('route_code');
+            $key['route_controller'] = $request->input('route_controller');
+            $key['controller_method'] = $request->input('controller_method');
+            $key['role_code'] = $request->input('role_code');
+            $key['route_name'] = $request->input('route_name');
+            $key['route_method'] = $request->input('route_method');
+            $key['btnForm'] = $request->input('btnForm');
+            $key['auto_id'] = Str::random(4);
+
+            $row = [
+                'auto_id' => $key['auto_id'],
+                'unity_id' => $key['unity_id'],
+                'route_code' => $key['route_code'],
+                'role_code' => $key['role_code'],
+                'route_method' => $key['route_method'],
+                'route_name' => $key['route_name'],
+                'route_controller' => $key['route_controller'],
+                'controller_method' => $key['controller_method']
+            ];
+
+            $routes[] = $row;
+            $convertedArray = collect($routes);
+            Session::put('routes_creation', $convertedArray->unique()->values()->all());
+        }
 
         return view('routes.config', [
             'unities' => $unities,
             'roles' =>$roles,
+            'parameters' => $key,
+            'routes' => $routes,
+            'validationCompleteResult' => $validatorForm->fails()
         ]);
     }
 
     public function update($routeId) {
         $record = RoutesConf::find($routeId);
-        $unities = Unities::all();
+        $unities = Unities::with('childrenRecursive')->whereNull('unity_ref_id')->get();
         $roles = Roles::all();
 
         return view('routes.config', [

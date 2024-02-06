@@ -33,10 +33,10 @@ class UsersController extends Controller
     }
 
     public function edit($userId) {
-        $quantityCode = 'QTY';
-        $unityCode = 'UNITY';
-
+        $quantityCode = getAttributeIdByCode('QTY');
+        $unityCode = getAttributeIdByCode('UNITY');
         $user = User::find($userId);
+
         $movements = Products::join('product_attributes as pa', 'pa.product_ref_id', '=', 'products.id')
             ->join('users as u', 'u.id', '=', 'pa.user_id')
             ->join('product_attributes as pa2', function ($join) use ($unityCode) {

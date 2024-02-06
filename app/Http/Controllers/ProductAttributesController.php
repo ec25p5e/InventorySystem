@@ -124,10 +124,9 @@ class ProductAttributesController extends Controller
             if(isset($productId)) {
                 // Prendi la riga attuale
                 $currentRow = ProductAttributes::where('product_ref_id', $productId)
-                    ->where('attribute_code', $attributeCode)
+                    ->where('attribute_code', getAttributeIdByCode($attributeCode))
                     ->whereNull('attribute_date_end')
                     ->first();
-                $codeName = ProductAttributesDef::where('def_code', $attributeCode)->first();
 
                 $isHidden = $currentRow->attribute_hidden;
                 $isUnique = $currentRow->attribute_unique;
@@ -149,8 +148,8 @@ class ProductAttributesController extends Controller
 
                 // Inserisci la nuova riga
                 $newRow = [
-                    'attribute_code' => $attributeCode,
-                    'attribute_name' => $codeName->def_name,
+                    'attribute_code' => getAttributeIdByCode($attributeCode),
+                    'attribute_name' => ' ',
                     'attribute_value' => $rowValue,
                     'attribute_hidden' => $isHidden,
                     'attribute_unique' => $isUnique,

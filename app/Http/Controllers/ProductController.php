@@ -130,7 +130,7 @@ class ProductController extends Controller
             'product_num_intern' => $request->input('product_num_intern'),
             'product_name' => $request->input('product_name'),
             'product_start' => $request->input('product_start'),
-            'product_end' => ($request->input('product_end') == null) ? '01-01-3000 00:00:00' : $request->input('product_end'),
+            'product_end' => ($request->input('product_end') == null) ? getSettings('DEFAULT_DATE_END') : $request->input('product_end'),
             'product_image' => null
         ];
 
@@ -176,7 +176,7 @@ class ProductController extends Controller
 
     public function movements(Request $request)
     {
-        $quantityCode = 'QTY';
+        $quantityCode = getAttributeIdByCode('QTY');
         $userId = Auth::id();
         $productId = null;
         $key[] = null;
@@ -242,9 +242,9 @@ class ProductController extends Controller
                         ->orWhere('p.product_num_intern', 'LIKE', '%' . $safeKey . '%');
                 })
                 ->whereNull('pa.attribute_date_end')
-                ->where('pa.attribute_code', 'UNITY')
+                ->where('pa.attribute_code', getAttributeIdByCode('UNITY'))
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
-                    $query->select('ut.unity_code')
+                    $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
                         ->where('ut.user_id', $userId);
                 })
@@ -260,7 +260,7 @@ class ProductController extends Controller
                 ->get();
 
             $movementForDate = function ($date) use ($productId, $quantityCode) {
-                $productAttributes = ProductAttributes::where('attribute_code', 'QTY')
+                $productAttributes = ProductAttributes::where('attribute_code', $quantityCode)
                     ->where('product_ref_id', $productId)
                     ->where('attribute_date_start', 'like', $date . '%')
                     ->orderBy('attribute_date_start', 'desc')
@@ -270,10 +270,7 @@ class ProductController extends Controller
             };
         }
 
-        // Prendi tutti gli utenti non sull'unità Root
-        // Quindi sono amministrativi o docenti
         $teachers = User::all();
-
 
         return view('products.movements', [
             'timelineDates' => $dates,

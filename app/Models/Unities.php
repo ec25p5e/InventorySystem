@@ -16,4 +16,13 @@ class Unities extends Model
         'unity_name'
     ];
 
+    public function parent()
+    {
+        return $this->belongsTo(Unities::class, 'unity_ref_id');
+    }
+
+    public function childrenRecursive()
+    {
+        return $this->hasMany(Unities::class, 'unity_ref_id')->with('childrenRecursive');
+    }
 }
