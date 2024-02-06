@@ -27,11 +27,15 @@ class ApiController extends Controller
         switch($entity) {
             case 'product_attributes':
                 $attributeValue = ProductAttributes::where('product_ref_id', $keyId)
-                    ->where('attribute_code', $attribute)
+                    ->where('attribute_code', getAttributeIdByCode($attribute))
                     ->where('attribute_date_end', null)
                     ->value('attribute_value');
 
-                $data['value'] = $attributeValue;
+                if($attribute == 'UNITY') {
+                    $data['value'] = getUnityCode($attributeValue);
+                } else {
+                    $data['value'] = $attributeValue;
+                }
                 break;
             case 'user_attributes':
                 $attributeValue = UserAttributes::where('user_id', $keyId)

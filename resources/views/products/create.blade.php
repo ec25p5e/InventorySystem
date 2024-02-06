@@ -64,7 +64,7 @@
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Form per la creazione del prodotto</h3>
-                <h5 style="color: red;">Dopo il salvataggio è possibile inserire degli attributi. I campi contrassegnati con * sono obbligatori. Data di inizio e fine non sono da modificare per la v1</h5>
+                <h5 style="color: red;">I campi contrassegnati con * sono obbligatori.</h5>
                 @isset($productDetails->id)
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica prodotto</button>
                 @endisset
