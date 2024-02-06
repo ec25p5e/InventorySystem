@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Notifications;
+use App\Models\ProductAttributesDef;
 use App\Models\Roles;
 use App\Models\RoutesConf;
 use App\Models\Settings;
@@ -197,6 +198,14 @@ if(!function_exists('getUnityName')) {
     }
 }
 
+if(!function_exists('getUnityCode')) {
+    function getUnityCode($unityId) {
+        $unity = Unities::find($unityId);
+
+        return ($unity) ? $unity->unity_code : null;
+    }
+}
+
 if(!function_exists('getRoleName')) {
     function getRoleName($roleId) {
         $role = Roles::find($roleId);
@@ -221,5 +230,23 @@ if(!function_exists('getNotifications')) {
             ->get();
 
         return ($notifications) ? $notifications : null;
+    }
+}
+
+if(!function_exists('getAttributeName')) {
+    function getAttributeName($defId)
+    {
+        $attributeDef = ProductAttributesDef::where('id', $defId)->first();
+
+        return $attributeDef ? $attributeDef->def_name : null;
+    }
+}
+
+if(!function_exists('getAttributeIdByCode')) {
+    function getAttributeIdByCode($code)
+    {
+        $attributeDef = ProductAttributesDef::where('def_code', $code)->first();
+
+        return $attributeDef ? $attributeDef->id : null;
     }
 }

@@ -41,13 +41,10 @@ class ProductAttributesController extends Controller
         $attributeValue = $request->input('attribute_value');
         $attributeHidden = $request->input('attribute_hidden');
         $productId = $request->input('productId');
-
-        $getCodeName = ProductAttributesDef::find($attributeCode);
-        $attributeCodeReal = $getCodeName->def_code;
         $log = '';
 
         $existingAttribute = ProductAttributes
-            ::where('attribute_code', $attributeCodeReal)
+            ::where('attribute_code', $attributeCode)
             ->where('product_ref_id', $productId)
             ->whereNull('attribute_date_end')
             ->first();
@@ -81,8 +78,8 @@ class ProductAttributesController extends Controller
         }
 
         $attributeData = [
-            'attribute_code' => $attributeCodeReal,
-            'attribute_name' => $getCodeName->def_name,
+            'attribute_code' => $attributeCode,
+            'attribute_name' => ' ',
             'attribute_value' => $attributeValue,
             'attribute_hidden' => $attributeHidden,
             'attribute_unique' => ($attributeCode == 'UNITY') ? 1 : 0,

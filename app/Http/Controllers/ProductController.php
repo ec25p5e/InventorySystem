@@ -20,6 +20,8 @@ class ProductController extends Controller
         $showLess = $request->input('showLess');
         $showTerminateProducts = $request->input('showTerminateProducts');
         $userId = Auth::id();
+        $productEnd = getSettings('DEFAULT_DATE_END');
+        $attributeCode = getAttributeIdByCode('UNITY');
 
         if($showLess == 1) {
             $products = DB::table('oos_products as oosp')
@@ -37,7 +39,7 @@ class ProductController extends Controller
         } else if($showTerminateProducts == 1) {
             $products = DB::table('expired_products as ep')
                 ->whereIn('ep.unity', function ($query) use ($userId) {
-                    $query->select('ut.unity_code')
+                    $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
                         ->where('ut.user_id', $userId)
                         ->whereExists(function ($query) {
@@ -50,17 +52,20 @@ class ProductController extends Controller
         } else {
             $products = DB::table('products as p')
                 ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
-                ->where('pa.attribute_code', 'UNITY')
-                ->whereNull('p.product_end')
+                ->where('pa.attribute_code', '=', $attributeCode)
+                ->where(function($query) use ($productEnd) {
+                    $query->whereNull('p.product_end')
+                        ->orWhere('p.product_end', '=', $productEnd);
+                })
                 ->whereNull('pa.attribute_date_end')
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
-                    $query->select('ut.unity_code')
+                    $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
-                        ->where('ut.user_id', $userId)
+                        ->where('ut.user_id', '=', $userId)
                         ->whereExists(function ($query) {
                             $query->select('u.unity_id')
                                 ->from('users as u')
-                                ->whereColumn('u.id', 'ut.user_id');
+                                ->whereColumn('u.id', '=', 'ut.user_id');
                         });
                 })
                 ->select('p.*')
@@ -76,8 +81,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        $getDefinitionsOfProducts = ProductAttributesDef::all();
-        $unities = Unities::all();
+        $getDefinitionsOfProducts = ProductAttributesDef::where('is_visible', 1)->get();
+        $unities = DB::table('unities_tree')
+            ->where('user_id', Auth::id())
+            ->get();
 
         return view('products.create', [
             'unities' => $unities,
@@ -94,8 +101,10 @@ class ProductController extends Controller
                     -> where('attribute_date_end', '=', null);
             })
             -> get();
-        $getDefinitionsOfProducts = ProductAttributesDef::all();
-        $unities = Unities::where('id', '!=', '1')->get();
+        $getDefinitionsOfProducts = ProductAttributesDef::where('is_visible', 1)->get();
+        $unities = DB::table('unities_tree')
+            ->where('user_id', Auth::id())
+            ->get();
 
         return view('products.create', [
             'productDetails' => $productDetails,
@@ -109,6 +118,7 @@ class ProductController extends Controller
     public function store(Request $request) {
         $request->validate([
             'product_name' => 'required|string|',
+            'unity_ref' => 'required|int|min:0',
             'product_start' => [
                 'required',
                 'date'
@@ -130,9 +140,27 @@ class ProductController extends Controller
         if ($product) {
             $product->fill($productData);
             $product->save();
+
             $message = 'Prodotto aggiornato con successo!';
         } else {
             $product = Products::create($productData);
+
+            $attributeDataQty = [
+                'attribute_code' => ProductAttributesDef::where('def_code', 'UNITY')->first()->id,
+                'attribute_name' => ' ',
+                'attribute_value' => $request->input('unity_ref'),
+                'attribute_hidden' => 1,
+                'attribute_unique' => 1,
+                'attribute_log' => 'CREATE',
+                'attribute_log_detail' => ' ',
+                'attribute_date_start' => now(),
+                'attribute_date_end' => null,
+                'product_ref_id' => $product->id,
+                'user_id' => Auth::id(),
+                'user_mod' => Auth::id()
+            ];
+
+            ProductAttributes::create($attributeDataQty);
             $message = 'Prodotto creato con successo!';
         }
 

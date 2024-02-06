@@ -35,7 +35,7 @@
                             <select class="form-control" id="unity_ref" name="unity_ref">
                                 @isset($unities)
                                     @foreach($unities as $unity)
-                                        <option value="{{ $unity->id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
+                                        <option value="{{ $unity->unity_id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
                                     @endforeach
                                 @endisset
                             </select>
@@ -79,13 +79,13 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <div class="form-group">
-                                    <label for="liveSearch">Numero CEAP (*)</label>
+                                    <label for="liveSearch">Numero CEAP</label>
                                     <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($productDetails->product_num_ceap) value="{{ $productDetails->product_num_ceap }}" @endisset  />
                                 </div>
                             </div>
 
                             <div class="mb-3">
-                                <label for="product_num_intern" class="form-label">Numero interno (*):</label>
+                                <label for="product_num_intern" class="form-label">Numero interno:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" @isset($productDetails->product_num_intern) value="{{ $productDetails->product_num_intern }}" @endisset name="product_num_intern">
                                 </div>
@@ -93,7 +93,7 @@
 
                             <div class="mb-3">
                                 <label for="product_name" class="form-label">Nome (*):</label>
-                                <div class="input-group">
+                                <div class="input-group has-feedback @error('product_name') has-error @enderror">
                                     <input type="text" class="form-control" @isset($productDetails->product_name) value="{{ $productDetails->product_name }}" @endisset name="product_name">
                                 </div>
                             </div>
@@ -113,6 +113,19 @@
                                     <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @else value="3001-01-01" @endisset name="product_end">
                                 </div>
                             </div>
+
+                            @if(!isset($productDetails))
+                                <div class="mb-3">
+                                    <label for="unity_ref" class="form-label">Unità scolastica (*):</label>
+                                    <select class="form-control" id="unity_ref" name="unity_ref">
+                                        @isset($unities)
+                                            @foreach($unities as $unity)
+                                                <option value="{{ $unity->unity_id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
+                                            @endforeach
+                                        @endisset
+                                    </select>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="mb-3 ml-3">
@@ -186,8 +199,8 @@
                                 @isset($productAttributes)
                                     @foreach($productAttributes as $productsAttribute)
                                         <tr>
-                                            <td>{{$productsAttribute->attribute_name}}</td>
-                                            <td>{{$productsAttribute->attribute_value}}</td>
+                                            <td>{{ getAttributeName($productsAttribute->attribute_code) }}</td>
+                                            <td>@if($productsAttribute->attribute_code == getAttributeIdByCode('UNITY')) {{ getUnityCode($productsAttribute->attribute_value) }} @else {{ $productsAttribute->attribute_value}} @endif</td>
                                             <td>{{ ($productsAttribute->attribute_hidden == 1) ? 'SI' : 'NO' }}</td>
                                             <td>{{ formatDateTime($productsAttribute->updated_at) }}</td>
                                             <td>

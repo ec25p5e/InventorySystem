@@ -14,5 +14,6 @@ class ProductAttributesDef extends Model
     protected $fillable = [
         'def_code',
         'def_name',
+        'is_visible'
     ];
 }
