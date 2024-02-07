@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommandController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FormsController;
@@ -69,6 +70,9 @@ foreach($routeConfigurations as $route) {
             break;
         case 'ReportsController':
             Route::{$route->route_method}($route->route_uri, [ReportsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'CommandController':
+            Route::{$route->route_method}($route->route_uri, [CommandController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
         default:
             break;

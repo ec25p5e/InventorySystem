@@ -208,13 +208,14 @@ class RoutesController extends Controller
         foreach($routes as $route) {
             // Prendi il codice del ruolo per il middleware
             $middlewareRole = Roles::find($route['role_code']);
+            $randomUri = Str::random(20);
 
             $row = [
                 'route_code' => $route['route_code'],
                 'role_id' => $route['role_code'],
                 'unity_id' => $route['unity_id'],
-                'route_name' => $route['route_name'],
-                'route_uri' => '/' . Str::random(20),
+                'route_name' => $route['route_name'] . '_' . $randomUri,
+                'route_uri' => '/' . $randomUri,
                 'route_method' => $route['route_method'],
                 'route_controller' => $route['route_controller'],
                 'controller_method' => $route['controller_method'],
