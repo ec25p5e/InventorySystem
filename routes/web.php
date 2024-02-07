@@ -6,6 +6,7 @@ use App\Http\Controllers\FormsController;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\ProductAttributesController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\RoutesController;
 use App\Http\Controllers\UnityController;
@@ -65,6 +66,9 @@ foreach($routeConfigurations as $route) {
             break;
         case 'JobsController':
             Route::{$route->route_method}($route->route_uri, [JobsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
+            break;
+        case 'ReportsController':
+            Route::{$route->route_method}($route->route_uri, [ReportsController::class, $route->controller_method])->name($route->route_name)->middleware($route->route_middleware);
             break;
         default:
             break;

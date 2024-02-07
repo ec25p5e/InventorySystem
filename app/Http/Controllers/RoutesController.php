@@ -22,11 +22,51 @@ class RoutesController extends Controller
     public function index(Request $request){
         $unities = Unities::with('childrenRecursive')->whereNull('unity_ref_id')->get();
         $roles = Roles::all();
+        $routes[] = null;
 
+        $unityRules = [
+            'unity_id' => 'required|int'
+        ];
+
+        $biFilterRules = [
+            'unity_id' => 'required|int',
+            'role_id' => 'required|int'
+        ];
+
+        $validatorUnityId = Validator::make($request->all(), $unityRules);
+        $validatorBiFilterRule = Validator::make($request->all(), $biFilterRules);
+
+        if(!$validatorUnityId->fails()) {
+            $key['unity_id'] = $request->input('unity_id');
+            $unities = Unities::where('id', $key['unity_id'])->get();
+
+            $routes = RoutesConf::where('unity_id', $key['unity_id'])
+                ->orderBy('route_code')
+                ->paginate(getSettings('PAGINATE_TABLE_ROUTING_CONF'));
+        }
+
+        if(!$validatorBiFilterRule->fails()) {
+            $key['unity_id'] = $request->input('unity_id');
+            $key['role_id'] = $request->input('role_id');
+            $roles = Roles::where('id', $key['role_id'])->get();
+
+            $routes = RoutesConf::where('unity_id', $key['unity_id'])
+                ->where('role_id', $key['role_id'])
+                ->orderBy('route_code')
+                ->paginate(getSettings('PAGINATE_TABLE_ROUTING_CONF'));
+        }
+
+        if($validatorBiFilterRule->fails() && $validatorUnityId->fails()){
+            $roles = Roles::all();
+            $key = null;
+            $routes = null;
+        }
 
         return view('routes.list', [
             'unities' => $unities,
-            'roles' => $roles
+            'roles' => $roles,
+            'routes' => $routes,
+            'parameters' => $key,
         ]);
     }
 
@@ -41,16 +81,15 @@ class RoutesController extends Controller
 
         $formCreationRules = [
             '_token' => 'required|string',
-            'unity_id' => 'required|int',
+            'unity_id' => 'required|numeric',
             'route_code' => 'required|string',
             'route_controller' => 'required|string',
             'controller_method' => 'required|string',
-            'role_code' => 'required|int',
+            'role_code' => 'required|numeric',
             'route_name' => 'required|string',
             'route_method' => 'required|string',
-            'is_menu' => 'required|int',
-            'route_text' => 'required|string',
-            'btnForm' => 'required|int'
+            'is_menu' => 'required|numeric',
+            'btnForm' => 'required|numeric'
         ];
 
         $validatorUnityId = Validator::make($request->all(), $unityIdRules);
@@ -110,7 +149,7 @@ class RoutesController extends Controller
                     $convertedArray = collect($routes);
                     Session::put($this->sessionStorageName, $convertedArray->unique()->values()->all());
                 }
-            } else if($request->input('btnForm') == 1) {
+            } else if($request->input('btnForm') == 1) { // Modalità singola aggiunta
                 $key['unity_id'] = $request->input('unity_id');
                 $key['route_code'] = $request->input('route_code');
                 $key['route_text'] = $request->input('route_text');
@@ -179,7 +218,9 @@ class RoutesController extends Controller
                 'route_method' => $route['route_method'],
                 'route_controller' => $route['route_controller'],
                 'controller_method' => $route['controller_method'],
-                'route_middleware' => ('role:' . $middlewareRole->role_code)
+                'route_middleware' => ('role:' . $middlewareRole->role_code),
+                'route_text' => $route['route_text'],
+                'is_menu' => $route['is_menu']
             ];
 
             RoutesConf::create($row);
@@ -187,5 +228,17 @@ class RoutesController extends Controller
 
         Session::flash('success', 'Route create con successo');
         return redirect(getRouteUri(Auth::id(), 'ROUTE_CREATE'));
+    }
+
+    public function edit($routeId) {
+        $route = RoutesConf::where('id', $routeId)->first();
+        $roles = Roles::all();
+        $unities = Unities::all();
+
+        return view('routes.edit', [
+            'unities' => $unities,
+            'roles' => $roles,
+            'routeDetails' => $route
+        ]);
     }
 }

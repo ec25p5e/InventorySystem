@@ -16,7 +16,7 @@ class LogRouteMiddleware
             'method' => $request->method(),
             'uri' => $request->url(),
             'message' => '',
-            'user_id' => Auth::id(),
+            'user_id' => Auth::id() ?? 0,
             'app_mode' => env('APP_ENV')
         ]);
 

@@ -15,6 +15,7 @@ class RoutesConf extends Model
         'role_id',
         'unity_id',
         'route_code',
+        'route_text',
         'route_name',
         'route_uri',
         'route_method',
@@ -22,6 +23,5 @@ class RoutesConf extends Model
         'controller_method',
         'route_middleware',
         'is_menu',
-        'route_text'
     ];
 }
