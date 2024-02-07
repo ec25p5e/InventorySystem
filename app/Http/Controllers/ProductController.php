@@ -29,10 +29,10 @@ class ProductController extends Controller
                     $query->select('ut.unity_code')
                         ->from('unities_tree as ut')
                         ->where('ut.user_id', $userId)
-                        ->whereExists(function ($query) {
+                        ->whereIn('ut.unity_id', function ($query) use ($userId) {
                             $query->select('u.unity_id')
                                 ->from('users as u')
-                                ->whereColumn('u.id', 'ut.user_id');
+                                ->where('u.id', $userId);
                         });
                 })
                 ->paginate(getSettings('MAX_ROW_PER_PAR'));
@@ -42,30 +42,29 @@ class ProductController extends Controller
                     $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
                         ->where('ut.user_id', $userId)
-                        ->whereExists(function ($query) {
+                        ->whereIn('ut.unity_id', function ($query) use ($userId) {
                             $query->select('u.unity_id')
                                 ->from('users as u')
-                                ->whereColumn('u.id', 'ut.user_id');
+                                ->where('u.id', $userId);
                         });
                 })
                 ->paginate(getSettings('MAX_ROW_PER_PAR'));
         } else {
             $products = DB::table('products as p')
                 ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
-                ->where('pa.attribute_code', '=', $attributeCode)
-                ->where(function($query) use ($productEnd) {
-                    $query->whereNull('p.product_end')
-                        ->orWhere('p.product_end', '=', $productEnd);
+                ->where('pa.attribute_code', $attributeCode)
+                ->where(function ($query) use ($productEnd) {
+                    $query->whereNull('pa.attribute_date_end')
+                        ->orWhere('pa.attribute_date_end', $productEnd);
                 })
-                ->whereNull('pa.attribute_date_end')
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
                     $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
-                        ->where('ut.user_id', '=', $userId)
-                        ->whereExists(function ($query) {
+                        ->where('ut.user_id', $userId)
+                        ->whereIn('ut.unity_id', function ($query) use ($userId) {
                             $query->select('u.unity_id')
                                 ->from('users as u')
-                                ->whereColumn('u.id', '=', 'ut.user_id');
+                                ->where('u.id', $userId);
                         });
                 })
                 ->select('p.*')
@@ -118,7 +117,6 @@ class ProductController extends Controller
     public function store(Request $request) {
         $request->validate([
             'product_name' => 'required|string|',
-            'unity_ref' => 'required|int|min:0',
             'product_start' => [
                 'required',
                 'date'
@@ -141,7 +139,7 @@ class ProductController extends Controller
             $product->fill($productData);
             $product->save();
 
-            $message = 'Prodotto aggiornato con successo!';
+            $message = 'Articolo aggiornato con successo!';
         } else {
             $product = Products::create($productData);
 
@@ -161,7 +159,7 @@ class ProductController extends Controller
             ];
 
             ProductAttributes::create($attributeDataQty);
-            $message = 'Prodotto creato con successo!';
+            $message = 'Articolo creato con successo!';
         }
 
         $unities = Unities::all();
@@ -246,7 +244,12 @@ class ProductController extends Controller
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
                     $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
-                        ->where('ut.user_id', $userId);
+                        ->where('ut.user_id', $userId)
+                        ->whereIn('ut.unity_id', function ($query) use ($userId) {
+                            $query->select('u.unity_id')
+                                ->from('users as u')
+                                ->where('u.id', $userId);
+                        });
                 })
                 ->select("p.*")
                 ->paginate(getSettings('PAGINATE_TABLE_PRODUCTS_IN_MOVEMENTS'));
@@ -300,7 +303,7 @@ class ProductController extends Controller
             $newId = $duplicatedRow->id;
         }
 
-        // Controlla se esiste il nuovo ID prodotto.
+        // Controlla se esiste il nuovo ID Articolo.
         // Se esiste clona tutti gli attributi copiabili
         if($newId != '0') {
             foreach ($productAttrs as $attribute) {

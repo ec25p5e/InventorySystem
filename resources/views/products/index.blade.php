@@ -41,7 +41,7 @@
                             @if($showTerminateProducts == 1)
                                     <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=0']) }}">Mostra tutti i prodotti</a>
                                 @else
-                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti non più utilizzati</a>
+                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti fuori stock</a>
                             @endif
 
                             <div class="dropdown-divider"></div>
@@ -80,7 +80,7 @@
                                 <td id="ccTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'C&C_NUM', $('#ccTd-{{ $product->id }}'))</script></td>
                                 <td>{{ $product->product_num_intern }}</td>
                                 <td>{{ $product->product_name }}</td>
-                                <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
+                                <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Fuori stock" }}</td>
                                 <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
                                 <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
                                 @if($showLess == 1)
@@ -103,6 +103,7 @@
 
             <div class="col-md-12">
                 <div class="pagination justify-content-center">
+                    {{ $products->links() }}
                 </div>
             </div>
         </div>

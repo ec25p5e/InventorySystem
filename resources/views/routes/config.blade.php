@@ -152,10 +152,6 @@
         function generateRouteUri(routeName, element) {
             $(element).append('/' + routeName.replace(/\./g, "/"))
         }
-
-        function deleteRouteInCreation() {
-
-        }
     </script>
 @endsection
 
@@ -245,6 +241,7 @@
                                             <div class="form-group has-feedback @error('role_code') has-error @enderror">
                                                 <label for="unity_code">Ruolo primario di riferimento</label>
                                                 <select class="form-control" id="role_code" name="role_code">
+                                                    <option value="" selected>Seleziona un ruolo</option>
                                                     @foreach($roles as $role)
                                                         <option value="{{ $role->id }}">{{ $role->role_name }} ({{ $role->role_code }})</option>
                                                     @endforeach
@@ -299,11 +296,9 @@
                                     <th>Ruolo</th>
                                     <th>Sede scolastica</th>
                                     <th>Nome della route</th>
-                                    <th>URI della route</th>
                                     <th>Metodo d'accesso</th>
                                     <th>Controller</th>
                                     <th>Metodo del controller</th>
-                                    <th style="width: 16%">Azioni</th>
                                 </tr>
 
                                 @isset($routes)
@@ -312,17 +307,11 @@
                                             <td>{{ $route['auto_id'] }}</td>
                                             <td>{{ $route['route_code'] }}</td>
                                             <td>{{ getRoleName($route['role_code']) }}</td>
-                                            <td>{{ getUnityName($route['unity_id']) }}</td>
+                                            <td>{{ getUnityCode($route['unity_id']) }}</td>
                                             <td>{{ $route['route_name'] }}</td>
-                                            <td id=`routeUri-`><script type="text/javascript">generateRouteUri('{{ $route['route_name'] }}', $('#routeUri-'))</script></td>
                                             <td>{{ $route['route_method'] }}</td>
                                             <td>{{ $route['route_controller'] }}</td>
                                             <td>{{ $route['controller_method'] }}</td>
-                                            <td>
-                                                <button class="btn btn-danger" onClick="deleteRouteInCreation({{ $route['auto_id'] }})">
-                                                    <i class="fas fa-trash"></i>Elimina</a>
-                                                </button>
-                                            </td>
                                         </tr>
                                     @endforeach
                                 @endisset
@@ -337,7 +326,23 @@
             <div class="col-md-12">
                 <div class="box">
                     <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <div class="mb-3 mr-3">
+                                    <form method="post" action="{{ route(getRoute(Auth::id(), 'SAVE_NEW_ROUTE')) }}">
+                                        @csrf
 
+                                        <button type="submit" class="btn btn-primary">Crea route</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-md-1">
+                                <div class="mb-3 mr-3">
+                                    <button type="button" class="btn btn-danger"><a style="text-decoration:none; color: white;" href="{{ route(getRoute(Auth::id(), 'ROUTE_CREATE')) }}">Ripristina vista</a></button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

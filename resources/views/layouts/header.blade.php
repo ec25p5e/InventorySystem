@@ -1,8 +1,8 @@
-<div class="modal fade" id="changeUnityRefModal" tabindex="-1" role="dialog" aria-labelledby="Cambia unità" aria-hidden="true">
+<div class="modal fade" id="changeUnityRefModal" tabindex="-1" role="dialog" aria-labelledby="Cambia scuola" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel">Da unità: <span style="color: red;">{{ getCurrentUnityForUser(Auth::id()) }}</span> a...</h4><p></p>
+                <h4 class="modal-title" id="myModalLabel">Dalla scuola: <span style="color: red;">{{ getCurrentUnityForUser(Auth::id()) }}</span> a...</h4><p></p>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
@@ -10,7 +10,7 @@
                     @csrf
 
                     <div class="form-group">
-                        <label for="unity_ref" class="form-label">Seleziona un'unità</label>
+                        <label for="unity_ref" class="form-label">Seleziona una scuola</label>
                         <select class="form-control" id="unity_ref" name="unity_ref">
                             @foreach(getUserUnities(Auth::id()) as $unity)
                                 <option value="{{ $unity->id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
@@ -74,7 +74,7 @@
                 </a>
 
                 <button class="dropdown-item" data-toggle="modal" data-target="#changeUnityRefModal">
-                    <i class="fas fa-solid fa-building"></i> Cambia unità
+                    <i class="fas fa-solid fa-building"></i> Cambia scuola
                 </button>
 
                 <div class="dropdown-divider"></div>

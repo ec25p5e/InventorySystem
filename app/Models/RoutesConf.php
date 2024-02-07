@@ -19,5 +19,7 @@ class RoutesConf extends Model
         'route_uri',
         'route_method',
         'route_controller',
+        'controller_method',
+        'route_middleware'
     ];
 }

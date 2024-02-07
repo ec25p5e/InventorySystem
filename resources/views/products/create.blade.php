@@ -5,7 +5,7 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Creazione prodotto</h1>
+                    <h1 class="m-0">Creazione articolo</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -23,7 +23,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Duplica prodotto: @isset($productDetails) {{ $productDetails->product_name }} @endisset</h4>
+                    <h4 class="modal-title" id="myModalLabel">Duplica articolo: @isset($productDetails) {{ $productDetails->product_name }} @endisset</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 </div>
                 <div class="modal-body">
@@ -31,7 +31,7 @@
                         @csrf
 
                         <div class="form-group">
-                            <label for="unity_ref" class="form-label">Scuola di riferimento per il nuovo prodotto</label>
+                            <label for="unity_ref" class="form-label">Scuola di riferimento per il nuovo articolo</label>
                             <select class="form-control" id="unity_ref" name="unity_ref">
                                 @isset($unities)
                                     @foreach($unities as $unity)
@@ -66,7 +66,7 @@
                 <h3 class="box-title">Form per la creazione del prodotto</h3>
                 <h5 style="color: red;">I campi contrassegnati con * sono obbligatori.</h5>
                 @isset($productDetails->id)
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica prodotto</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica articolo</button>
                 @endisset
             </div>
             <div class="box-body">
