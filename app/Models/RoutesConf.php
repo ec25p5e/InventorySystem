@@ -20,6 +20,8 @@ class RoutesConf extends Model
         'route_method',
         'route_controller',
         'controller_method',
-        'route_middleware'
+        'route_middleware',
+        'is_menu',
+        'route_text'
     ];
 }

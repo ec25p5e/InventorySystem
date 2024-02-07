@@ -20,155 +20,19 @@
                 </div>
             </div>
 
-            @if(checkPrimaryRole(Auth::id(), 'ADMIN') > 0)
+            @foreach(getSidebarMenu(Auth::id()) as $menu)
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column @if($current_route == $menu->route_name) active @endif" data-widget="treeview" role="menu" data-accordion="false">
                         <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                            <a href="{{ route(getRoute(Auth::id(), $menu->route_code)) }}" class="nav-link">
                                 <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Prodotti
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Movimenti
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_USERS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Utenti
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'ROLES')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Gestione di sistema > Ruoli
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_ROUTES')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Gestione di sistema > Elenco dei percorsi
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'ROUTE_CONF')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Gestione di sistema > Configurazione dei percorsi
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_JOBS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Gestione di sistema > Utilità di pianificazione
+                                    {{ $menu->route_text }}
                                 </p>
                             </a>
                         </li>
                     </ul>
                 </nav>
-            @elseif(checkPrimaryRole(Auth::id(), 'CUSTODE_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'CUSTODE_SSMT') > 0)
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Prodotti
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Movimenti
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            @elseif(checkPrimaryRole(Auth::id(), 'SEG_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'SEG_SSMT') > 0)
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Prodotti
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Movimenti
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            @elseif(checkPrimaryRole(Auth::id(), 'TEACHER_SPAI') > 0 || checkPrimaryRole(Auth::id(), 'TEACHER_SSMT') > 0)
-                <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <li class="nav-item">
-                            <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Dashboard
-                                </p>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="" class="nav-link">
-                                <i class="nav-icon fas fa-tachometer-alt"></i>
-                                <p>
-                                    Le mie comande
-                                </p>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
-            @endif
+            @endforeach
         </div>
     </aside>
 

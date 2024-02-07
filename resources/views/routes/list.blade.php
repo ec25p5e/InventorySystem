@@ -20,122 +20,70 @@
 
 @section('body')
     <section class="content">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Filtri di ricerca</h3>
-            </div>
-            <div class="box-body">
-                <form method="get" action="{{ route(getRoute(Auth::id(), 'LIST_ROUTES')) }}">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <div class="form-group has-feedback ">
-                                    <label for="unity_code">Unità di riferimento: <span style="color: red">@isset($formFields['unity_code']) {{ getUnityName($formFields['unity_code']) }} @endisset</span></label>
-                                    <select class="form-control" id="unity_code" name="unity_code">
-                                        <option value="" selected>Seleziona un'unità</option>
-                                        @foreach($unities as $unity)
-                                            <option value="{{ $unity->id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <div class="form-group has-feedback ">
-                                    <label for="role_code">Ruolo di riferimento: <span style="color: red">@isset($formFields['unity_code']) {{ getRoleName($formFields['role_code']) }} @endisset</span></label>
-                                    <select class="form-control" id="role_code" name="role_code">
-                                        <option value="" selected>Seleziona un ruolo</option>
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role->id }}">{{ $role->role_name }} ({{ $role->role_code }})</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="mb-3">
-                                <div class="form-group has-feedback ">
-                                    <label for="route_code">Codice univoco del percorso: <span style="color: red">@isset($formFields['route_code']) {{ $formFields['route_code'] }} @endisset</span></label>
-                                    <select class="form-control" id="route_code" name="route_code">
-                                        <option value="" selected>Seleziona un percorso</option>
-                                        @foreach($routes as $routeCode)
-                                            <option value="{{ $routeCode }}">{{ $routeCode }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Selezionare le unità</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="treeview js-treeview">
+                            <ul>
+                                @isset($unities)
+                                    @foreach($unities as $unity)
+                                        @include('partials.treeChild', ['unity' => $unity, 'route' => 'ROUTE_CONF'])
+                                    @endforeach
+                                @endisset
+                            </ul>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div class="col-md-3">
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Cerca</button>
-                        </div>
+            <div class="col-md-9">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Elenco dei percorsi per unità</h3>
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Elenco dei percorsi secondo la ricerca...</h3>
-            </div>
-            <div class="box-body">
-                <table class="table table-bordered">
-                    <tr>
-                        <th style="width: 10px">#</th>
-                        <th>Codice univoco</th>
-                        <th>Ruolo</th>
-                        <th>Unità</th>
-                        <th>Nome laravel</th>
-                        <th>URL</th>
-                        <th>Metodo</th>
-                        <th>Controller</th>
-                        <th>Metodo del controller</th>
-                        <th>Middleware</th>
-                        <th style="width: 16%">Azioni</th>
-                    </tr>
-
-                    @isset($results)
-                        @foreach($results as $result)
+                    <div class="box-body">
+                        <table class="table table-bordered">
                             <tr>
-                                <td>{{ $result->id }}</td>
-                                <td>{{ $result->route_code }}</td>
-                                <td>{{ $result->route_role }}</td>
-                                <td>{{ $result->route_unity }}</td>
-                                <td>{{ $result->route_name }}</td>
-                                <td>{{ $result->route_uri }}</td>
-                                <td>{{ $result->route_method }}</td>
-                                <td>{{ $result->route_controller }}</td>
-                                <td>{{ $result->controller_method }}</td>
-                                <td>{{ $result->route_middleware }}</td>
-                                <td>
-                                    <button class="btn btn-warning">
-                                        <i class="fas fa-edit"></i> <a href="{{ route(getRoute(Auth::id(), 'ROUTE_UPDATE'), ['route_id' => $result->id]) }}" style="text-decoration:none; color: white;">Modifica</a>
-                                    </button>
-                                </td>
+                                <th style="width: 10px">#</th>
+                                <th>Codice univoco</th>
+                                <th>Ruolo</th>
+                                <th>Unità</th>
+                                <th>Nome laravel</th>
+                                <th>URL</th>
+                                <th>Metodo</th>
+                                <th>Controller</th>
+                                <th>Metodo del controller</th>
+                                <th>Middleware</th>
+                                <th style="width: 16%">Azioni</th>
                             </tr>
-                        @endforeach
-                    @endisset
-                </table>
 
-                <div class="pagination pagination-sm">
-                    @isset($results)
-                        @if ($results->currentPage() > 1)
-                            <a href="{{ $results->previousPageUrl() }}" class="page-link">Previous</a>
-                        @endif
+                            @isset($results)
+                                @foreach($results as $result)
 
-                        @for ($i = 1; $i <= $results->lastPage(); $i++)
-                            <a href="{{ $results->url($i) }}" class="page-link {{ $results->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
-                        @endfor
+                                @endforeach
+                            @endisset
+                        </table>
 
-                        @if ($results->currentPage() < $results->lastPage())
-                            <a href="{{ $results->nextPageUrl() }}" class="page-link">Next</a>
-                        @endif
-                    @endisset
+                        <div class="pagination pagination-sm">
+                            @isset($results)
+                                @if ($results->currentPage() > 1)
+                                    <a href="{{ $results->previousPageUrl() }}" class="page-link">Previous</a>
+                                @endif
+
+                                @for ($i = 1; $i <= $results->lastPage(); $i++)
+                                    <a href="{{ $results->url($i) }}" class="page-link {{ $results->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
+                                @endfor
+
+                                @if ($results->currentPage() < $results->lastPage())
+                                    <a href="{{ $results->nextPageUrl() }}" class="page-link">Next</a>
+                                @endif
+                            @endisset
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

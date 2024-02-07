@@ -1,6 +1,6 @@
-<li data-node-id="{{ $unity->id }}">
+<li data-node-id="{{ $unity->id }}" data-node-link="{{ $route }}">
     <div class="treeview__level" data-level="{{ $unity->unity_code }}">
-        <span class="level-title"><a href="{{ route(getRoute(Auth::id(), 'ROUTE_CREATE'), ['unity_id' => $unity->id]) }}">{{ $unity->unity_name }}</a></span>
+        <span class="level-title"><a href="{{ route(getRoute(Auth::id(), $route), ['unity_id' => $unity->id]) }}">{{ $unity->unity_name }}</a></span>
     </div>
     @if($unity->childrenRecursive)
         <ul>

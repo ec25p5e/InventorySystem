@@ -250,3 +250,24 @@ if(!function_exists('getAttributeIdByCode')) {
         return $attributeDef ? $attributeDef->id : null;
     }
 }
+
+if(!function_exists('getSidebarMenu')) {
+    function getSidebarMenu($userId) {
+        $routes = DB::table('routes_conf as rc')
+            ->where('rc.unity_id', function ($query) use ($userId) {
+                $query->select('u.unity_id')
+                    ->from('users as u')
+                    ->where('u.id', $userId);
+            })
+            ->whereIn('rc.role_id', function ($query) use ($userId) {
+                $query->select('ur.role_id')
+                    ->from('user_roles as ur')
+                    ->where('ur.user_id', $userId);
+            })
+            ->where('rc.is_menu', 1)
+            ->orderBy('rc.route_text')
+            ->get();
+
+        return $routes;
+    }
+}
