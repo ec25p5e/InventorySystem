@@ -4,25 +4,27 @@ namespace App\Console\Commands;
 
 use App\Models\Logs;
 use App\Models\ProductAttributes;
+use App\Models\Unities;
 use Illuminate\Http\Request;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Auth;
+use function MongoDB\BSON\toJSON;
 
-class get_product_qty extends Command
+class get_school_ref_for_product extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'variables:get_product_qty {product_id}';
+    protected $signature = 'variables:get_school_ref_for_product {product_id}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Ritorna la quantità del prodotto alla data corrente';
+    protected $description = 'Command description';
 
     /**
      * Execute the console command.
@@ -31,15 +33,15 @@ class get_product_qty extends Command
      */
     public function handle(Request $request)
     {
-        $productId = $this->argument('product_id');
+        $arguments = $this->argument('product_id');
 
-        $quantity = ProductAttributes::where('product_ref_id', $productId)
-            ->where('attribute_code', getAttributeIdByCode('QTY'))
+        $quantity = ProductAttributes::where('product_ref_id', $arguments)
+            ->where('attribute_code', getAttributeIdByCode('UNITY'))
             ->whereNull('attribute_date_end')
             ->first();
 
         Logs::create([
-            'log_type' => 'LOG_EXECUTION_OF_VARIABLE:' . $this->signature . '_' . $productId,
+            'log_type' => 'LOG_EXECUTION_OF_VARIABLE:' . $this->signature . '_' . $arguments,
             'method' => $request->method(),
             'uri' => $request->url(),
             'message' => $quantity,
@@ -47,7 +49,7 @@ class get_product_qty extends Command
             'app_mode' => env('APP_ENV')
         ]);
 
-        if($quantity === null) {
+        if($quantity->attribute_value === null) {
             return null;
         } else {
             return $quantity->attribute_value;

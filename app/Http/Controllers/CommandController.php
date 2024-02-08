@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Logs;
+use App\Models\User;
 use App\Models\Vars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -54,5 +55,26 @@ class CommandController extends Controller
         $result = Artisan::call('variables:get_product_qty', [
             'product_id' => 5048
         ]);
+    }
+
+    public function searchVar(Request $request) {
+        $request->validate([
+            'query' => 'required|string'
+        ]);
+
+        $userId = Auth::id();
+        $userRow = User::find($userId)->first();
+        $queryString = $request->input('query');
+
+        $results = Vars::where(function($query) use ($queryString) {
+            $query->whereRaw('LOWER(command_code) LIKE ?', ['%' . $queryString . '%'])
+                ->orWhereRaw('LOWER(command_name) LIKE ?', ['%' . $queryString . '%']);
+        })->where(function($query) use ($userId, $userRow) {
+            $query->where('command_unity_ref', $userRow->unity_id)
+                ->orWhere('command_user_ref', $userId);
+        })
+            ->get();
+
+        return response()->json($results);
     }
 }

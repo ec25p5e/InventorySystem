@@ -202,7 +202,7 @@ if(!function_exists('getUnityCode')) {
     function getUnityCode($unityId) {
         $unity = Unities::find($unityId);
 
-        return ($unity) ? $unity->unity_code : null;
+        return ($unity) ? $unity->unity_code : $unityId;
     }
 }
 
@@ -269,5 +269,12 @@ if(!function_exists('getSidebarMenu')) {
             ->get();
 
         return $routes;
+    }
+}
+
+if(!function_exists('getUserActualUnity')) {
+    function getUserActualUnity($userId) {
+        $user = User::find($userId)->first();
+        return $user->unity_id;
     }
 }
