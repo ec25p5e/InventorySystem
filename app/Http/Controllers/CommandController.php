@@ -23,8 +23,11 @@ class CommandController extends Controller
         $request->validate([
             'command_code' => 'required|string',
             'command_name' => 'required|string',
-            'command_signature' => 'required|string'
+            'command_signature' => 'required|string',
+            'editor' => 'required|string'
         ]);
+
+        dd($request->all());
 
         $data = [
             'command_code' => $request->input('command_code'),

@@ -17,18 +17,33 @@
     <script src="{{ asset('admin-assets/plugins/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
     <script src="{{ asset('js/quagga.min.js') }}"></script>
+    <script src="{{ asset('js/var-editor.js') }}"></script>
     <script src="{{ asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.24.0/min/vs/loader.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/editor/editor.main.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
-    <script src="{{ asset('admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
 
     <style>@yield('css')</style>
     @yield('start_js')
 
     <script>
+        function loadFileFromFolder(folderUrl, type) {
+            $.ajax({
+                url: folderUrl,
+                success: function (data) {
+                    $(data).find("a[href$='.js']").each(function () {
+                        var scriptUrl = $(this).attr("href");
+                        $.ajax({
+                            url: folderUrl + scriptUrl,
+                            dataType: type,
+                            cache: true
+                        });
+                    });
+                }
+            });
+        }
+
         function loadUnityInformation(product_id, entity, attribute, element, isTable = true) {
             let apiUrl = '/api/loadProductColInfo';
 
@@ -78,6 +93,13 @@
                 }
             }
         }
+
+        $(document).ready(function () {
+            const loader = document.getElementById('loader');
+            setTimeout(function () {
+                loader.classList.add('fadeOut');
+            }, 50);
+        });
     </script>
 </head>
 <body class="hold-transition sidebar-mini skin-blue">
@@ -100,18 +122,7 @@
         </section>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.24.0/min/vs/loader.js"></script>
-
     @yield('js')
-
-    <script>
-        $(document).ready(function () {
-            const loader = document.getElementById('loader');
-            setTimeout(function() {
-                loader.classList.add('fadeOut');
-            }, 50);
-        });
-    </script>
 </div>
 </body>
 </html>

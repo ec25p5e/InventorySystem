@@ -70,6 +70,7 @@ class ReportsController extends Controller
             $key['unity_id'] = $request->input('unity_id');
             $key['population_id'] = $request->input('population_id');
 
+            $populations = Populations::where('id', $key['population_id'])->get();
             $reports = ReportModels::where('unity_id', $key['unity_id'])->get();
         }
 

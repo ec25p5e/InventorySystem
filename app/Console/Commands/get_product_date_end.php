@@ -8,11 +8,10 @@ use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class get_product_name extends Command
+class get_product_date_end extends Command
 {
-
-    protected $signature = 'variables:get_product_name {product_id}';
-    protected $description = 'Ritorna il nome del prodotto';
+    protected $signature = 'variables:get_product_date_end {product_id}';
+    protected $description = 'Ritorna la data di fine del prodotto';
 
     public function handle(Request $request)
     {
@@ -29,7 +28,7 @@ class get_product_name extends Command
             'app_mode' => env('APP_ENV')
         ]);
 
-        $this->line($decoded?->product_name);
+        $this->info(formatDateTime($decoded?->product_end));
         return self::SUCCESS;
     }
 }

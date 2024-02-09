@@ -1,11 +1,7 @@
 let mix = require('laravel-mix');
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/create_product.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .version();
-
-mix.js('resources/js/app.js', 'public/js')
+    .js('resources/js/var-editor.js', 'public/js')
     .version();
 
 mix.setPublicPath('public')

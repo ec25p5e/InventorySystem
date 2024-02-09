@@ -18,22 +18,6 @@
     </div>
 @endsection
 
-@section('start_js')
-    @parent
-
-    <script>
-        require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.24.0/min/vs' }});
-        require(['vs/editor/editor.main'], function() {
-            // Inizializzazione dell'editor
-            monaco.editor.create(document.getElementById('monaco_editor_textarea'), {
-                value: `<?php echo htmlentities($varCode); ?>`,
-                language: 'php'
-            });
-        });
-    </script>
-@endsection
-
-
 @section('body')
     <section class="content">
         <div class="box">
@@ -98,8 +82,7 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="monaco-editor-container" style="height: 250px; border: 1px solid rgb(238, 238, 238);"></div>
-                            <textarea name="custom_script" id="monaco_editor_textarea" style="display: none; white-space: pre-line"></textarea>
+                            <div id="editor" name="editor" style="height: 500px"></div>
                         </div>
                     </div>
                     <br>
