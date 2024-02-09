@@ -79,7 +79,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'PACK_OF' as attribute_code, 'Imballaggio da...' as attribute_name, imballaggio_da as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'7' as attribute_code, 'Imballaggio da...' as attribute_name, imballaggio_da as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -91,7 +91,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'UNIT' as attribute_code, 'Unità di misura' as attribute_name, unita as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'3' as attribute_code, 'Unità di misura' as attribute_name, unita as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -103,7 +103,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'QTY' as attribute_code, 'Quantità' as attribute_name, stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'1' as attribute_code, 'Quantità' as attribute_name, stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -115,7 +115,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'DATE_CTRL_STOCK' as attribute_code, 'Data controllo stock' as attribute_name, data_ctrl_stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'8' as attribute_code, 'Data controllo stock' as attribute_name, data_ctrl_stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -127,7 +127,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'DELETE_PRODUCT_END_OF_STOCK' as attribute_code, 'Eliminare articolo a fine stock' as attribute_name, delete_end_stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'9' as attribute_code, 'Eliminare articolo a fine stock' as attribute_name, delete_end_stock as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -139,7 +139,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'MIN_QTY' as attribute_code, 'Quantità minima' as attribute_name, min_qta as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'10' as attribute_code, 'Quantità minima' as attribute_name, min_qta as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -151,7 +151,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'OBSERVATIONS' as attribute_code, 'Osservazioni' as attribute_name, osservazioni as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'11' as attribute_code, 'Osservazioni' as attribute_name, osservazioni as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );
@@ -163,7 +163,7 @@ class ImportProducts extends Command
         DB::table('product_attributes')->insertUsing(
             ['attribute_code', 'attribute_name', 'attribute_value', 'attribute_hidden', 'attribute_unique', 'attribute_log', 'attribute_log_detail', 'attribute_date_start', 'attribute_date_end', 'product_ref_id', 'user_id', 'created_at', 'updated_at'],
             function ($query) {
-                $query->select(DB::raw("'UNITY' as attribute_code, 'Unità' as attribute_name, scuola as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
+                $query->select(DB::raw("'5' as attribute_code, 'Unità' as attribute_name, scuola as attribute_value, 1 as attribute_hidden, 0 as attribute_unique, 'CREATE' as attribute_log, ' ' as attribute_log_detail, now() as attribute_date_start, null as attribute_date_end, new_product_id as product_ref_id, 755 as user_id, now() as created_at, now() as updated_at"))
                     ->from('import_products');
             }
         );

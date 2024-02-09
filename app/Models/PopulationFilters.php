@@ -16,4 +16,9 @@ class PopulationFilters extends Model
         'filter_value',
         'user_mod'
     ];
+
+    public function population()
+    {
+        return $this->belongsTo(Populations::class, 'population_id', 'id');
+    }
 }

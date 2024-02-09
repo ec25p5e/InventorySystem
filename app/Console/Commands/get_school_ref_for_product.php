@@ -12,25 +12,9 @@ use function MongoDB\BSON\toJSON;
 
 class get_school_ref_for_product extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'variables:get_school_ref_for_product {product_id}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Command description';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle(Request $request)
     {
         $arguments = $this->argument('product_id');
@@ -50,9 +34,10 @@ class get_school_ref_for_product extends Command
         ]);
 
         if($quantity->attribute_value === null) {
-            return null;
+            return self::FAILURE;
         } else {
-            return $quantity->attribute_value;
+            $this->line(getUnityCode($quantity->attribute_value));
+            return self::SUCCESS;
         }
     }
 }

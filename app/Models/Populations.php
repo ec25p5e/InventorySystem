@@ -15,7 +15,12 @@ class Populations extends Model
         'population_code',
         'population_name',
         'user_id_ref',
-        'user_id_mod',
+        'user_mod',
         'unity_id'
     ];
+
+    public function populationFilters()
+    {
+        return $this->hasMany(PopulationFilters::class, 'population_id', 'id');
+    }
 }

@@ -10,25 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class get_product_qty extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
     protected $signature = 'variables:get_product_qty {product_id}';
-
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Ritorna la quantità del prodotto alla data corrente';
 
-    /**
-     * Execute the console command.
-     *
-     * @return int
-     */
     public function handle(Request $request)
     {
         $productId = $this->argument('product_id');
@@ -48,9 +32,10 @@ class get_product_qty extends Command
         ]);
 
         if($quantity === null) {
-            return null;
+            return self::FAILURE;
         } else {
-            return $quantity->attribute_value;
+            $this->info($quantity->attribute_value);
+            return self::SUCCESS;
         }
     }
 }

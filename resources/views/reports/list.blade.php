@@ -1,5 +1,50 @@
 @extends('layouts.app')
 
+@section('start_js')
+    @parent
+
+    <script>
+        function downloadFile(data, filename) {
+            var blobData = new Blob([data], { type: 'application/octet-stream' });
+
+            if (window.navigator.msSaveOrOpenBlob) {
+                // Internet Explorer
+                window.navigator.msSaveOrOpenBlob(blobData, filename);
+            } else {
+                // Altri browser
+                var link = document.createElement('a');
+
+                link.href = window.URL.createObjectURL(blobData);
+                link.setAttribute('download', filename);
+                document.body.appendChild(link);
+
+                link.click();
+
+                // Pulisce la risorsa utilizzata
+                setTimeout(function() {
+                    window.URL.revokeObjectURL(link.href);
+                    document.body.removeChild(link);
+                }, 0);
+            }
+        }
+
+        function exportToExcel(tableId) {
+            var wb = XLSX.utils.table_to_book(document.getElementById(tableId), {sheet: "Sheet 1"});
+            var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
+
+            function s2ab(s) {
+                var buf = new ArrayBuffer(s.length);
+                var view = new Uint8Array(buf);
+                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+                return buf;
+            }
+
+            downloadFile(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'reportGestionaleMagazzino.xlsx');
+        }
+
+    </script>
+@endsection
+
 @section('content-header')
     <div class="content-header">
         <div class="container-fluid">
@@ -26,8 +71,8 @@
                     <button type="button" class="btn btn-danger">
                         <i class="fas fa-trash"></i> <a href="{{ route(getRoute(Auth::id(), 'ANNUAL_REPORTS')) }}" style="text-decoration:none;color:white"> Ripristina vista</a>
                     </button>
-                    <button type="button" class="btn btn-success">
-                        <i class="fas fa-save"></i> <a href="{{ route(getRoute(Auth::id(), 'ANNUAL_REPORTS')) }}" style="text-decoration:none;color:white"> Esporta in Excel</a>
+                    <button type="button" class="btn btn-success" onclick="exportToExcel('previewTable')">
+                        <i class="fas fa-save"></i> Esporta in Excel
                     </button>
                 </div>
             </div>
@@ -57,11 +102,6 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">Popolazione di dati globale</h3>
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
                     </div>
                     <div class="card-body">
                         <table class="table">
@@ -129,7 +169,7 @@
                         <h3 class="card-title">Anteprima dell'esportazione</h3>
                     </div>
                     <div class="card-body">
-                        <table class="table">
+                        <table class="table" id="previewTable">
                             <tr>
                                 <th scope="col" style="width: 10px">#</th>
                                 @foreach($reportColumns as $column)
@@ -142,7 +182,7 @@
                                     <tr>
                                         <td>{{ $reportRow[$i]->id }}</td>
                                         @foreach($reportColumns as $column)
-                                            <td>{{ getUnityCode($columnsValue($column->command_code, $column->column_signature, ['product_id' => $reportRow[$i]['id']])) }}</td>
+                                            <td>{{ $columnsValue($column->command_code, $column->column_signature, ['product_id' => $reportRow[$i]['id']]) }}</td>
                                         @endforeach
                                     </tr>
                                 @endfor

@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ReportsController extends Controller
 {
@@ -50,7 +51,13 @@ class ReportsController extends Controller
             $key['unity_id'] = $request->input('unity_id');
 
             $unities = Unities::where('id', $key['unity_id'])->get();
-            $populations = Populations::where('unity_id', $key['unity_id'])->get();
+            $populations = Populations::where('unity_id', 1)
+                ->whereHas('populationFilters', function($query) {
+                    $query->selectRaw('population_id, count(id) as filter_count')
+                        ->groupBy('population_id', 'id')
+                        ->havingRaw('filter_count > 0');
+                })
+                ->get();
         }
 
         if(!$validatorPartial->fails()) {
@@ -69,6 +76,7 @@ class ReportsController extends Controller
             $reportColumns = ReportModelColumns::where('report_id', $key['report_id'])
                 ->join('vars', 'vars.id', '=', 'report_model_columns.command_id')
                 ->select('report_model_columns.*', 'vars.command_code')
+                ->orderBy('report_model_columns.column_position', 'asc')
                 ->get();
 
             /*
@@ -108,9 +116,14 @@ class ReportsController extends Controller
                 $arguments = array_combine($signature, $ref);
                 $commandName = getSettings('DEFAULT_VAR_PREFIX') . ':' . $commandName;
 
-                return Artisan::call($commandName, $arguments);
+                $exitCode = Artisan::call($commandName, $arguments);
+                return Artisan::output();
             };
         }
+
+        $results = $query
+            ->distinct()
+            ->paginate(getSettings('MAX_PREVIEW_FOR_REPORTS_ROW'));
 
         return view('reports.list', [
             'unities' => $unities,
@@ -118,7 +131,7 @@ class ReportsController extends Controller
             'populations' => $populations,
             'parameters' => $key,
             'reportColumns' => $reportColumns,
-            'reportRow' => $query->distinct()->get(),
+            'reportRow' => $results,
             'columnsValue' => $columnsValue
         ]);
     }
@@ -154,6 +167,7 @@ class ReportsController extends Controller
             $request->validate([
                 'report_name' => 'required|string',
                 'report_description' => 'required|string',
+                'unity_id' => 'required|int'
             ]);
 
             $reportName = $request->input('report_name');
@@ -216,4 +230,35 @@ class ReportsController extends Controller
         ReportModelColumns::create($row);
         return redirect()->back()->with('messageFormColumn', 'Colonna aggiunta con successo!');
     }
+
+    public function createPopulation() {
+        $unties = Unities::all();
+        $users = User::all();
+
+        return view('reports.createPopulation', [
+            'unities' => $unties,
+            'users' => $users
+        ]);
+    }
+
+    public function storePopulation(Request $request) {
+        $request->validate([
+            'population_name' => 'required|string',
+            'unity_id' => 'required'
+        ]);
+
+        $userId = Auth::id();
+
+        $data = [
+            'population_code' => strtoupper(Str::random(18)),
+            'population_name' => $request->input('population_name'),
+            'unity_id' => $request->input('unity_id'),
+            'user_id_ref' => $request->input('user_id') ?? $userId,
+            'user_mod' => $userId
+        ];
+
+        Populations::create($data);
+        return redirect(getRouteUri($userId, 'ANNUAL_REPORTS'));
+    }
 }
+

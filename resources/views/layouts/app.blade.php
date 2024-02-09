@@ -18,12 +18,10 @@
     <script src="{{ asset('js/quagga.min.js') }}"></script>
     <script src="{{ asset('admin-assets/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('admin-assets/dist/js/adminlte.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('admin-assets/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.24.0/min/vs/loader.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/editor/editor.main.min.css">
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.3/xlsx.full.min.js"></script>
 
     <style>@yield('css')</style>
     @yield('start_js')
@@ -57,7 +55,7 @@
         }
     </script>
 </head>
-<body class="hold-transition sidebar-mini layout-fixed skin-blue">
+<body class="hold-transition sidebar-mini skin-blue">
 <div class="wrapper">
     <div class="preloader flex-column justify-content-center align-items-center">
         <img class="" src="{{asset('https://www.sdk-csd.ch/admin/data/files/member/image/64/logo@3x_logo_big.png?lm=1572338395')}}" alt="AdminLTELogo" height="60" width="60">
@@ -83,21 +81,12 @@
 
     <script>
         $(document).ready(function () {
-            $.AdminLTE.layout.activate();
-            $.AdminLTE.layout.fix();
-        });
-    </script>
-
-    <script>
-        window.addEventListener('load', function load() {
             const loader = document.getElementById('loader');
             setTimeout(function() {
                 loader.classList.add('fadeOut');
             }, 50);
         });
     </script>
-
-
 </div>
 </body>
 </html>
