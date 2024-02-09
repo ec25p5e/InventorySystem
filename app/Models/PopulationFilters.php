@@ -13,8 +13,10 @@ class PopulationFilters extends Model
 
     protected $fillable = [
         'code_ref',
+        'filter_operator',
         'filter_value',
-        'user_mod'
+        'user_mod',
+        'population_id'
     ];
 
     public function population()

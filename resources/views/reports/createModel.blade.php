@@ -134,8 +134,6 @@
 
                                                 <td></td>
                                                 <td>
-
-
                                                     <div class="form-group has-feedback @error('command_name') has-error @enderror">
                                                         <input type="text" id="live-search" name="command_name" class="form-control" placeholder="Ricerca variabile" autofocus>
                                                         <table class="table table-hover" id="search-results"></table>

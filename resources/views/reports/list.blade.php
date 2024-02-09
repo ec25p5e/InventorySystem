@@ -8,10 +8,8 @@
             var blobData = new Blob([data], { type: 'application/octet-stream' });
 
             if (window.navigator.msSaveOrOpenBlob) {
-                // Internet Explorer
                 window.navigator.msSaveOrOpenBlob(blobData, filename);
             } else {
-                // Altri browser
                 var link = document.createElement('a');
 
                 link.href = window.URL.createObjectURL(blobData);
@@ -20,7 +18,6 @@
 
                 link.click();
 
-                // Pulisce la risorsa utilizzata
                 setTimeout(function() {
                     window.URL.revokeObjectURL(link.href);
                     document.body.removeChild(link);
@@ -124,9 +121,7 @@
                     </div>
                 </div>
             @endisset
-        </div>
 
-        <div class="col-md-9 col-md-offset-12">
             @if(isset($reports) && isset($populations))
                 <div class="card">
                     <div class="card-header">
@@ -142,8 +137,6 @@
                             <tr>
                                 <th scope="col"></th>
                                 <th scope="col">Nome</th>
-                                <th scope="col">Proprietario (persona)</th>
-                                <th scope="col">Proprietario (scuola)</th>
                                 <th scope="col">Aggiornato il</th>
                             </tr>
 
@@ -153,8 +146,6 @@
                                         <a href="{{ route(getRoute(Auth::id(), 'ANNUAL_REPORTS'), ['unity_id' => $parameters['unity_id'], 'population_id' => $parameters['population_id'], 'report_mod_id' => $report->id]) }}"><i class="fas fa-solid fa-check"></i></a>
                                     </td>
                                     <td>{{ $report->report_name }}</td>
-                                    <td>{{ getUserById($report->user_id) }}</td>
-                                    <td>{{ getUnityCode($report->unity_id) }}</td>
                                     <td>{{ formatDateTime($report->updated_at) }}</td>
                                 </tr>
                             @endforeach
@@ -162,7 +153,9 @@
                     </div>
                 </div>
             @endif
+        </div>
 
+        <div class="col-md-9">
             @if(isset($reportColumns))
                 <div class="card">
                     <div class="card-header">

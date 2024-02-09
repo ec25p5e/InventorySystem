@@ -14,13 +14,19 @@ use App\Models\Vars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class ReportsController extends Controller
 {
+
     public function index(Request $request) {
-        $unities = Unities::with('childrenRecursive')->whereNull('unity_ref_id')->get();
+        $userId = Auth::id();
+        $unities = Unities::with('childrenRecursive')
+            ->whereNull('unity_ref_id')
+            ->get();
+
         $populations = null;
         $reports = null;
         $reportColumns = null;
@@ -51,7 +57,7 @@ class ReportsController extends Controller
             $key['unity_id'] = $request->input('unity_id');
 
             $unities = Unities::where('id', $key['unity_id'])->get();
-            $populations = Populations::where('unity_id', 1)
+            $populations = Populations::where('unity_id', $key['unity_id'])
                 ->whereHas('populationFilters', function($query) {
                     $query->selectRaw('population_id, count(id) as filter_count')
                         ->groupBy('population_id', 'id')
@@ -161,9 +167,10 @@ class ReportsController extends Controller
     public function storeModel(Request $request) {
         $unities = Unities::all();
         $users = User::all();
+        $userId = Auth::id();
         $row[] = null;
 
-        if(hasRole(Auth::id(), 'ADMIN') > 0) {
+        if(hasRole($userId, 'ADMIN') > 0) {
             $request->validate([
                 'report_name' => 'required|string',
                 'report_description' => 'required|string',
@@ -178,7 +185,7 @@ class ReportsController extends Controller
             $row = [
                 'report_name' => $reportName,
                 'report_description' => $reportDescription,
-                'unity_id' => getUserActualUnity(Auth::id()),
+                'unity_id' => getUserActualUnity($userId),
                 'user_id' => $reportUser
             ];
         } else {
@@ -193,8 +200,8 @@ class ReportsController extends Controller
             $row = [
                 'report_name' => $reportName,
                 'report_description' => $reportDescription,
-                'unity_id' => getUserActualUnity(Auth::id()),
-                'user_id' => Auth::id()
+                'unity_id' => getUserActualUnity($userId),
+                'user_id' => $userId
             ];
         }
 
@@ -231,13 +238,25 @@ class ReportsController extends Controller
         return redirect()->back()->with('messageFormColumn', 'Colonna aggiunta con successo!');
     }
 
-    public function createPopulation() {
+    public function managePopulations($populationId = null) {
         $unties = Unities::all();
         $users = User::all();
+        $populations = Populations::all();
+        $populationDetails = null;
+        $populationFilters = null;
 
-        return view('reports.createPopulation', [
+        if(isset($populationId)) {
+            $populations = Populations::where('id', $populationId)->get();
+            $populationDetails = $populations->first();
+            $populationFilters = PopulationFilters::where('population_id', $populationId)->get();
+        }
+
+        return view('reports.managePopulations', [
             'unities' => $unties,
-            'users' => $users
+            'users' => $users,
+            'populations' => $populations,
+            'populationDetails' => $populationDetails,
+            'populationFilters' => $populationFilters,
         ]);
     }
 
@@ -259,6 +278,27 @@ class ReportsController extends Controller
 
         Populations::create($data);
         return redirect(getRouteUri($userId, 'ANNUAL_REPORTS'));
+    }
+
+    public function storePopulationFilter(Request $request) {
+        $request->validate([
+            'population_id' => 'required|int|min:0',
+            'code_ref' => 'required|string',
+            'filter_operator' => 'required|string',
+            'filter_value' => 'required|string'
+        ]);
+        $userId = Auth::id();
+
+        $data = [
+            'code_ref' => $request->input('code_ref'),
+            'filter_operator' => $request->input('filter_operator'),
+            'filter_value' => $request->input('filter_value'),
+            'population_id' => $request->input('population_id'),
+            'user_mod' => $userId,
+        ];
+
+        PopulationFilters::create($data);
+        return redirect()->back()->with('messageFilterAdd', 'Filtro aggiunto');
     }
 }
 
