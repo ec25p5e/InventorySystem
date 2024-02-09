@@ -22,7 +22,8 @@ class Products extends Model
     ];
 
     // Relazioni
-    public function product_attributes() {
-        return $this->hasMany(ProductAttributes::class);
+    public function productAttributes()
+    {
+        return $this->hasMany(ProductAttributes::class, 'product_ref_id', 'id');
     }
 }

@@ -89,11 +89,11 @@ class ReportsController extends Controller
 
                 switch($tableRef) {
                     case 'product_attributes':
-                        $query = ProductAttributes::query();
-
-                        $query->where('attribute_code', $filter->filter_operator, getAttributeIdByCode($codeRef))
-                            ->where('attribute_value', $filter->filter_operator, $compilationId)
-                            ->where('attribute_date_end', '=', null);
+                        $query = Products::whereHas('productAttributes', function($nested) use ($compilationId, $codeRef) {
+                            $nested->where('attribute_date_end', null)
+                                ->where('attribute_code', getAttributeIdByCode($codeRef))
+                                ->where('attribute_value', $compilationId);
+                        });
                         break;
                     case 'products':
                         $query = Products::query();

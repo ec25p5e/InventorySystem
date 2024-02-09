@@ -28,8 +28,8 @@ class ProductAttributes extends Model
         'user_mod',
     ];
 
-    // Relazione tra attributo e prodotto
-    public function product(){
-        return $this->belongsTo(Products::class);
+    public function product()
+    {
+        return $this->belongsTo(Products::class, 'product_ref_id', 'id');
     }
 }
