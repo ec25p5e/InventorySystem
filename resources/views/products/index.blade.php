@@ -43,12 +43,6 @@
                                 @else
                                     <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showTerminateProducts=1']) }}">Mostra prodotti fuori stock</a>
                             @endif
-
-                            <div class="dropdown-divider"></div>
-                            @if(hasRole(Auth::id(), 'EXPORTER') > 0)
-                                <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esportazione completa (con attributi)</a>
-                                    <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'PRODUCT_EXPORT_EXCEL')) }}">Esportazione parziale</a>
-                            @endif
                         </div>
                     </div>
                 </div>
