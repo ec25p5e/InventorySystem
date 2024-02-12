@@ -1,47 +1,5 @@
 @extends('layouts.app')
 
-@section('start_js')
-    @parent
-
-    <script>
-        function downloadFile(data, filename) {
-            var blobData = new Blob([data], { type: 'application/octet-stream' });
-
-            if (window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveOrOpenBlob(blobData, filename);
-            } else {
-                var link = document.createElement('a');
-
-                link.href = window.URL.createObjectURL(blobData);
-                link.setAttribute('download', filename);
-                document.body.appendChild(link);
-
-                link.click();
-
-                setTimeout(function() {
-                    window.URL.revokeObjectURL(link.href);
-                    document.body.removeChild(link);
-                }, 0);
-            }
-        }
-
-        function exportToExcel(tableId) {
-            var wb = XLSX.utils.table_to_book(document.getElementById(tableId), {sheet: "Sheet 1"});
-            var wbout = XLSX.write(wb, {bookType: 'xlsx', type: 'binary'});
-
-            function s2ab(s) {
-                var buf = new ArrayBuffer(s.length);
-                var view = new Uint8Array(buf);
-                for (var i = 0; i < s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
-                return buf;
-            }
-
-            downloadFile(new Blob([s2ab(wbout)], {type: "application/octet-stream"}), 'reportGestionaleMagazzino.xlsx');
-        }
-
-    </script>
-@endsection
-
 @section('content-header')
     <div class="content-header">
         <div class="container-fluid">
@@ -67,9 +25,6 @@
                 <div class="card-body">
                     <button type="button" class="btn btn-danger">
                         <i class="fas fa-trash"></i> <a href="{{ route(getRoute(Auth::id(), 'ANNUAL_REPORTS')) }}" style="text-decoration:none;color:white"> Ripristina vista</a>
-                    </button>
-                    <button type="button" class="btn btn-success" onclick="exportToExcel('previewTable')">
-                        <i class="fas fa-save"></i> Esporta in Excel
                     </button>
                 </div>
             </div>
@@ -161,29 +116,46 @@
                     <div class="card-header">
                         <h3 class="card-title">Anteprima dell'esportazione</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" id="previewCard">
                         <table class="table" id="previewTable">
-                            <tr>
-                                <th scope="col" style="width: 10px">#</th>
-                                @foreach($reportColumns as $column)
-                                    <th scope="col">{{ $column->column_name }}</th>
-                                @endforeach
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th scope="col" style="width: 10px">#</th>
+                                    @foreach($reportColumns as $column)
+                                        <th scope="col">{{ $column->column_name }}</th>
+                                    @endforeach
+                                </tr>
+                            </thead>
 
-                            @isset($reportRow)
-                                @for($i = 0; $i < sizeof($reportRow); $i++)
-                                    <tr>
-                                        <td>{{ $reportRow[$i]->id }}</td>
-                                        @foreach($reportColumns as $column)
-                                            <td>{{ $columnsValue($column->command_code, $column->column_signature, ['product_id' => $reportRow[$i]['id']]) }}</td>
-                                        @endforeach
-                                    </tr>
-                                @endfor
-                            @endisset
+                            <tbody>
+                                @isset($reportRow)
+                                    @for($i = 0; $i < sizeof($reportRow); $i++)
+                                        <tr>
+                                            <td>{{ $reportRow[$i]->id }}</td>
+                                            @foreach($reportColumns as $column)
+                                                <td>{{ $columnsValue($column->command_code, $column->column_signature, ['product_id' => $reportRow[$i]['id']]) }}</td>
+                                            @endforeach
+                                        </tr>
+                                    @endfor
+                                @endisset
+                            </tbody>
                         </table>
                     </div>
                 </div>
             @endif
         </div>
     </div>
+@endsection
+
+@section('js')
+    @parent
+
+    <script>
+        $(function () {
+            $("#previewTable").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["csv", "excel", "pdf"]
+            }).buttons().container().appendTo('#previewCard .col-md-6:eq(0)');
+        });
+    </script>
 @endsection

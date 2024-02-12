@@ -130,7 +130,7 @@ class ReportsController extends Controller
 
         $results = $query
             ->distinct()
-            ->paginate(getSettings('MAX_PREVIEW_FOR_REPORTS_ROW'));
+            ->get();
 
         return view('reports.list', [
             'unities' => $unities,

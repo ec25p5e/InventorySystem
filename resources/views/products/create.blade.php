@@ -78,15 +78,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <div class="form-group">
-                                    <label for="liveSearch">Numero CEAP</label>
+                                <label for="liveSearch">Numero CEAP</label>
+                                <div class="form-group @error('product_num_ceap') has-error @enderror">
                                     <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($productDetails->product_num_ceap) value="{{ $productDetails->product_num_ceap }}" @endisset  />
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="product_num_intern" class="form-label">Numero interno:</label>
-                                <div class="input-group">
+                                <div class="input-group @error('product_num_intern') has-error @enderror">
                                     <input type="text" class="form-control" @isset($productDetails->product_num_intern) value="{{ $productDetails->product_num_intern }}" @endisset name="product_num_intern">
                                 </div>
                             </div>
@@ -102,14 +102,14 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="product_start" class="form-label">Data di INIZIO validità:</label>
-                                <div class="input-group">
+                                <div class="input-group @error('product_start') has-error @enderror ">
                                     <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @else value="{{ formatDate(now()) }}" @endisset name="product_start">
                                 </div>
                             </div>
 
                             <div class="mb-3">
                                 <label for="product_end" class="form-label">Data di FINE validità:</label>
-                                <div class="input-group">
+                                <div class="input-group @error('product_end') has-error @enderror ">
                                     <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @else value="3001-01-01" @endisset name="product_end">
                                 </div>
                             </div>
@@ -256,10 +256,6 @@
                     console.error('Errore API:', status, error);
                 }
             });
-        }
-
-        function checkIfCeapExists(queryString) {
-            console.log(queryString)
         }
 
         function deleteProductAttribute(productAttrId, productId) {

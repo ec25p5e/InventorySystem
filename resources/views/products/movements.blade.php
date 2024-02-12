@@ -75,66 +75,67 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Dettagli del prodotto</h3>
-                </div>
-                <div class="box-body">
-                    <table class="table table-bordered">
-                        <tr>
-                            <th style="width: 10px">#</th>
-                            <th>Numero CEAP</th>
-                            <th>Numero C&C</th>
-                            <th>Numero interno</th>
-                            <th>Nome</th>
-                            <th>Stato</th>
-                            <th class="bg-secondary">Scuola</th>
-                            <th class="bg-secondary">Quantità </th>
-                            <th style="width: 16%">Azioni</th>
-                        </tr>
-
-                         @isset($listOfProducts)
-                            @foreach($listOfProducts as $product)
+    @isset($listOfProducts)
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Dettagli del prodotto</h3>
+                    </div>
+                    <div class="box-body">
+                        <table class="table table-bordered" id="dataTablesStandard">
+                            <thead>
                                 <tr>
-                                    <td>{{ $product->id }}</td>
-                                    <td>{{ $product->product_num_ceap }}</td>
-                                    <td id="ccTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'C&C_NUM', $('#ccTd-{{ $product->id }}'))</script></td>
-                                    <td>{{ $product->product_num_intern }}</td>
-                                    <td>{{ $product->product_name }}</td>
-                                    <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
-                                    <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
-                                    <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
-                                    <td>
-                                        <button class="btn btn-success">
-                                            <i class="fas fa-check"></i>
-                                            <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS'), [
+                                    <th style="width: 10px">#</th>
+                                    <th>Numero CEAP</th>
+                                    <th>Numero C&C</th>
+                                    <th>Numero interno</th>
+                                    <th>Nome</th>
+                                    <th>Stato</th>
+                                    <th class="bg-secondary">Scuola</th>
+                                    <th class="bg-secondary">Quantità </th>
+                                    <th style="width: 16%">Azioni</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach($listOfProducts as $product)
+                                    <tr>
+                                        <td>{{ $product->id }}</td>
+                                        <td>{{ $product->product_num_ceap }}</td>
+                                        <td id="ccTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'C&C_NUM', $('#ccTd-{{ $product->id }}'))</script></td>
+                                        <td>{{ $product->product_num_intern }}</td>
+                                        <td>{{ $product->product_name }}</td>
+                                        <td>{{ (($product->product_end == getSettings('DEFAULT_DATE_END')) || $product->product_end == null) ? "Attivo" : "Inutilizzato" }}</td>
+                                        <td id="unityRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'UNITY', $('#unityRefTd-{{ $product->id }}'))</script></td>
+                                        <td id="qtyRefTd-{{ $product->id }}"><script>loadUnityInformation({{ $product->id }}, 'product_attributes', 'QTY', $('#qtyRefTd-{{ $product->id }}'))</script></td>
+                                        <td>
+                                            <button class="btn btn-success">
+                                                <i class="fas fa-check"></i>
+                                                <a href="{{ route(getRoute(Auth::id(), 'LIST_OF_MOVEMENTS'), [
                                                 'product_id' => $product->id,
                                                 'product_num_ceap' => isset($formFields['product_num_ceap']) > 0 ? $formFields['product_num_ceap'] : "",
                                                 'product_name' => isset($formFields['product_name']) > 0 ? $formFields['product_name'] : ""
                                             ]) }}" style="text-decoration:none; color: white;"> Seleziona</a>
-                                        </button>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @endisset
-
-                    </table>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Timeline della quantità</h3>
-                </div>
-                <div class="box-body">
-                    <div class="timeline timeline-inverse">
-                        @isset($timelineDates)
+        <div class="row">
+            <div class="col-md-6">
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Timeline della quantità</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="timeline timeline-inverse">
                             @foreach($timelineDates as $date)
                                 <div class="time-label">
                                     <span class="bg-green">{{ formatDatePortal($date->attribute_date) }}</span>
@@ -158,81 +159,92 @@
                                     <p></p>
                                 @endforeach
                             @endforeach
-                        @endisset
-                        <div>
-                            <i class="fas fa-clock bg-gray"></i>
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Registra nuovo movimento</h3>
+            @isset($timelineDates)
+                <div class="col-md-6">
+                    <div class="box">
+                        <div class="box-header">
+                            <h3 class="box-title">Registra nuovo movimento</h3>
+                        </div>
+                        <div class="box-body">
+                            <form action="{{ route(getRoute(Auth::id(), 'EDIT_PRODUCT_ATTR_QTY')) }}" method="post" name="form-product">
+                                @csrf
+                                <input type="hidden" name="attribute_code" value="QTY" />
+                                <input type="hidden" name="product_ref_id" value="{{ $productId }}" />
+                                <input type="hidden" name="attribute_hidden" value="1" />
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <label for="attribute_log">Movimento</label>
+                                                <select class="form-control" id="attribute_log" name="attribute_log">
+                                                    <option value="" selected>Seleziona un'opzione...</option>
+                                                    <option value="INCREMENT">Incremento (entrata)</option>
+                                                    <option value="DECREMENT">Decremento (uscita)</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <label for="attribute_value">Differenza di materiale (incremento o decremento)</label>
+                                                <input type="text" class="form-control" name="attribute_value" id="attribute_value" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <div class="form-group">
+                                                <label for="user_id">Per conto di...</label>
+                                                <select class="form-control" id="user_id" name="user_id">
+                                                    <option value="" selected>Seleziona un'opzione...</option>
+                                                    @isset($teachers)
+                                                        @foreach($teachers as $teacher)
+                                                            <option value="{{ $teacher->id }}">{{ $teacher->username }}</option>
+                                                        @endforeach
+                                                    @endisset
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <button type="submit" class="btn btn-primary">Registra</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="box-body">
-                    <form action="{{ route(getRoute(Auth::id(), 'EDIT_PRODUCT_ATTR_QTY')) }}" method="post" name="form-product">
-                        @csrf
-                        <input type="hidden" name="attribute_code" value="QTY" />
-                        <input type="hidden" name="product_ref_id" value="{{ $productId }}" />
-                        <input type="hidden" name="attribute_hidden" value="1" />
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label for="attribute_log">Movimento</label>
-                                        <select class="form-control" id="attribute_log" name="attribute_log">
-                                            <option value="" selected>Seleziona un'opzione...</option>
-                                            <option value="INCREMENT">Incremento (entrata)</option>
-                                            <option value="DECREMENT">Decremento (uscita)</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label for="attribute_value">Differenza di materiale (incremento o decremento)</label>
-                                        <input type="text" class="form-control" name="attribute_value" id="attribute_value" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label for="user_id">Per conto di...</label>
-                                        <select class="form-control" id="user_id" name="user_id">
-                                            <option value="" selected>Seleziona un'opzione...</option>
-                                            @isset($teachers)
-                                                @foreach($teachers as $teacher)
-                                                    <option value="{{ $teacher->id }}">{{ $teacher->username }}</option>
-                                                @endforeach
-                                            @endisset
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <button type="submit" class="btn btn-primary">Registra</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            @endisset
         </div>
-    </div>
+    @endisset
 @endsection
 
 @section('js')
+    @parent
+
     <script>
+        $(function () {
+            $("#dataTablesStandard").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+            });
+        });
+
+
         Quagga.init({
             inputStream: {
                 name: "Live",

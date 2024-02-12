@@ -35,7 +35,7 @@ class ProductController extends Controller
                                 ->where('u.id', $userId);
                         });
                 })
-                ->paginate(getSettings('MAX_ROW_PER_PAR'));
+                ->get();
         } else if($showTerminateProducts == 1) {
             $products = DB::table('expired_products as ep')
                 ->whereIn('ep.unity', function ($query) use ($userId) {
@@ -48,7 +48,7 @@ class ProductController extends Controller
                                 ->where('u.id', $userId);
                         });
                 })
-                ->paginate(getSettings('MAX_ROW_PER_PAR'));
+                ->get();
         } else {
             $products = DB::table('products as p')
                 ->join('product_attributes as pa', 'pa.product_ref_id', '=', 'p.id')
@@ -68,7 +68,7 @@ class ProductController extends Controller
                         });
                 })
                 ->select('p.*')
-                ->paginate(getSettings('MAX_ROW_PER_PAR'));
+                ->get();
         }
 
         return view('products.index', [
@@ -116,8 +116,14 @@ class ProductController extends Controller
 
     public function store(Request $request) {
         $request->validate([
+            'product_num_ceap' => 'int',
+            'product_num_intern' => 'string',
             'product_name' => 'required|string|',
             'product_start' => [
+                'required',
+                'date'
+            ],
+            'product_end' => [
                 'required',
                 'date'
             ],
@@ -159,17 +165,11 @@ class ProductController extends Controller
             ];
 
             ProductAttributes::create($attributeDataQty);
-            $message = 'Articolo creato con successo!';
+            $message = 'Articolo creato con successo! Il codice progressivo è: ' . $product->id;
         }
-
-        $unities = Unities::all();
         Session::flash('success', $message);
 
-        return view('products.create', [
-            'productDetails' => $product,
-            'unities' => $unities,
-            'attributeDefinitions' => ProductAttributesDef::all()
-        ]);
+        return redirect(getRouteUri(Auth::id(), 'LIST_OF_PRODUCTS'));
     }
 
     public function movements(Request $request)
@@ -252,7 +252,7 @@ class ProductController extends Controller
                         });
                 })
                 ->select("p.*")
-                ->paginate(getSettings('PAGINATE_TABLE_PRODUCTS_IN_MOVEMENTS'));
+                ->get();
 
 
             $dates = ProductAttributes::selectRaw('cast(attribute_date_start AS DATE) AS attribute_date')
