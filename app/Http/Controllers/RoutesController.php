@@ -42,7 +42,7 @@ class RoutesController extends Controller
 
             $routes = RoutesConf::where('unity_id', $key['unity_id'])
                 ->orderBy('route_code')
-                ->paginate(getSettings('PAGINATE_TABLE_ROUTING_CONF'));
+                ->get();
         }
 
         if(!$validatorBiFilterRule->fails()) {
@@ -53,7 +53,7 @@ class RoutesController extends Controller
             $routes = RoutesConf::where('unity_id', $key['unity_id'])
                 ->where('role_id', $key['role_id'])
                 ->orderBy('route_code')
-                ->paginate(getSettings('PAGINATE_TABLE_ROUTING_CONF'));
+                ->get();
         }
 
         if($validatorBiFilterRule->fails() && $validatorUnityId->fails()){

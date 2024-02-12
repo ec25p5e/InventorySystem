@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
         "\n" +
         "use Illuminate\\Console\\Command;\n" +
         "\n" +
-        "class get_unit_of_measure extends Command\n" +
+        "class <<classname>> extends Command\n" +
         "{\n" +
         "    protected $signature = 'command:name';\n" +
         "    protected $description = 'Command description';\n" +

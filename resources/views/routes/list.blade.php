@@ -107,74 +107,75 @@
                             <h3 class="box-title">Elenco dei percorsi per unità</h3>
                         </div>
                         <div class="box-body">
-                            <table class="table table-bordered">
-                                <tr>
-                                    <th style="width: 10px">#</th>
-                                    <th>Codice univoco</th>
-                                    <th>Nome da visualizzare</th>
-                                    <th>Ruolo</th>
-                                    <th>Unità</th>
-                                    <th>Nome laravel</th>
-                                    <th>URL</th>
-                                    <th>Metodo</th>
-                                    <th>Controller</th>
-                                    <th>Metodo del controller</th>
-                                    <th>Middleware</th>
-                                    <th>Visibile nel menu?</th>
-                                    <th style="width: 16%">Azioni</th>
-                                </tr>
+                            <table class="table table-bordered" id="dataTablesStandard">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px">#</th>
+                                        <th>Codice univoco</th>
+                                        <th>Nome da visualizzare</th>
+                                        <th>Ruolo</th>
+                                        <th>Unità</th>
+                                        <th>Nome laravel</th>
+                                        <th>URL</th>
+                                        <th>Metodo</th>
+                                        <th>Controller</th>
+                                        <th>Metodo del controller</th>
+                                        <th>Middleware</th>
+                                        <th>Visibile nel menu?</th>
+                                        <th style="width: 16%">Azioni</th>
+                                    </tr>
+                                </thead>
 
-                                @isset($routes)
-                                    @foreach($routes as $route)
-                                        <tr>
-                                            <td>{{ $route->id }}</td>
-                                            <td>{{ $route->route_code }}</td>
-                                            <td>{{ $route->route_text }}</td>
-                                            <td>{{ getRoleName($route->role_id) }}</td>
-                                            <td>{{ getUnityName($route->unity_id) }}</td>
-                                            <td>{{ $route->route_name }}</td>
-                                            <td>{{ $route->route_uri }}</td>
-                                            <td>{{ $route->route_method }}</td>
-                                            <td>{{ $route->route_controller }}</td>
-                                            <td>{{ $route->controller_method }}</td>
-                                            <td>{{ $route->route_middleware }}</td>
-                                            <td>{{ ($route->is_menu == 0) ? "No" : "Si" }}</td>
-                                            <td>
-                                                <button type="button" class="btn btn-warning">
-                                                    <i class="fas fa-edit"></i>
-                                                    <a style="text-decoration:none; color:white" href="{{ route(getRoute(Auth::id(), 'EDIT_ROUTE'), ['route_id' => $route->id]) }}">
-                                                        Modifica
-                                                    </a>
-                                                </button>
+                                <tbody>
+                                    @isset($routes)
+                                        @foreach($routes as $route)
+                                            <tr>
+                                                <td>{{ $route->id }}</td>
+                                                <td>{{ $route->route_code }}</td>
+                                                <td>{{ $route->route_text }}</td>
+                                                <td>{{ getRoleName($route->role_id) }}</td>
+                                                <td>{{ getUnityName($route->unity_id) }}</td>
+                                                <td>{{ $route->route_name }}</td>
+                                                <td>{{ $route->route_uri }}</td>
+                                                <td>{{ $route->route_method }}</td>
+                                                <td>{{ $route->route_controller }}</td>
+                                                <td>{{ $route->controller_method }}</td>
+                                                <td>{{ $route->route_middleware }}</td>
+                                                <td>{{ ($route->is_menu == 0) ? "No" : "Si" }}</td>
+                                                <td>
+                                                    <button type="button" class="btn btn-warning">
+                                                        <i class="fas fa-edit"></i>
+                                                        <a style="text-decoration:none; color:white" href="{{ route(getRoute(Auth::id(), 'EDIT_ROUTE'), ['route_id' => $route->id]) }}">
+                                                            Modifica
+                                                        </a>
+                                                    </button>
 
-                                                <button type="button" class="btn btn-danger">
-                                                    <i class="fas fa-trash"></i>Seleziona</a>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                @endisset
+                                                    <button type="button" class="btn btn-danger">
+                                                        <i class="fas fa-trash"></i>Seleziona</a>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @endisset
+                                </tbody>
                             </table>
-
-                            <div class="pagination pagination-sm">
-                                @isset($results)
-                                    @if ($results->currentPage() > 1)
-                                        <a href="{{ $results->previousPageUrl() }}" class="page-link">Previous</a>
-                                    @endif
-
-                                    @for ($i = 1; $i <= $results->lastPage(); $i++)
-                                        <a href="{{ $results->url($i) }}" class="page-link {{ $results->currentPage() == $i ? 'active' : '' }}">{{ $i }}</a>
-                                    @endfor
-
-                                    @if ($results->currentPage() < $results->lastPage())
-                                        <a href="{{ $results->nextPageUrl() }}" class="page-link">Next</a>
-                                    @endif
-                                @endisset
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         @endif
     </section>
+@endsection
+
+
+@section('js')
+    @parent
+
+    <script>
+        $(function () {
+            $("#dataTablesStandard").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+            });
+        });
+    </script>
 @endsection

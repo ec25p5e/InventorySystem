@@ -2,20 +2,49 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Logs;
+use App\Models\Unities;
 use App\Models\User;
 use App\Models\Vars;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Validator;
 
 class CommandController extends Controller
 {
     public function create() {
-        $varCode = Vars::find(6)->get();
+        return view('vars.create');
+    }
 
+    public function update($variableId) {
+        $var = Vars::where('id', $variableId)->first();
         return view('vars.create', [
-            'varCode' => htmlspecialchars($varCode)
+            'variableDetails' => $var
+        ]);
+    }
+
+    public function list(Request $request) {
+        $vars = null;
+        $unities = Unities::with('childrenRecursive')
+            ->whereNull('unity_ref_id')
+            ->get();
+        $key[] = null;
+
+        $unityRules = [
+            'unity_id' => 'required|int'
+        ];
+        $validatorUnity = Validator::make($request->all(), $unityRules);
+
+        if(!$validatorUnity->fails()) {
+            $key['unity_id'] = $request->input('unity_id');
+            $unities = Unities::where('id', $key['unity_id'])->get();
+            $vars = Vars::where('command_unity_ref', $key['unity_id'])->get();
+        }
+
+        return view('vars.list', [
+            'unities' => $unities,
+            'variables' => $vars,
         ]);
     }
 
@@ -26,8 +55,9 @@ class CommandController extends Controller
             'command_signature' => 'required|string',
             'editor' => 'required|string'
         ]);
-
-        dd($request->all());
+        $userId = Auth::id();
+        $userRow = User::where('id', $userId)->first();
+        $directory = app_path('Console/Commands');
 
         $data = [
             'command_code' => $request->input('command_code'),
@@ -35,20 +65,22 @@ class CommandController extends Controller
             'command_description' => $request->input('command_description'),
             'command_signature' => $request->input('command_signature'),
             'command_options' => $request->input('command_options'),
-            'command_body' => $request->input('command_body') ?? ' ',
-            'command_unity_ref' => 0,
-            'command_user_ref' => 0,
+            'command_body' => $request->input('editor') ?? ' ',
+            'command_unity_ref' => $userRow->unity_id,
+            'command_user_ref' => $userId,
             'command_date_start' => now(),
-            'command_date_end' => now()
+            'command_date_end' => null,
         ];
+
+        if (!File::exists($directory)) {
+            File::makeDirectory($directory, 0755, true, true);
+        }
+
+        $filePath = $directory . '/' . $data['command_code'] . '.php';
 
         // Registra la variabile nel db
         Vars::create($data);
-
-        Artisan::call('make:command', [
-            'name' => $data['command_code'],
-            '--command' => $data['command_signature']
-        ]);
+        File::put($filePath, $data['command_body']);
 
         // Ritorna alla schermata di creazione
         return redirect()->back();

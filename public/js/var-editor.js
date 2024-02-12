@@ -35098,7 +35098,7 @@ document.addEventListener("DOMContentLoaded", function () {
     enableSnippets: true,
     enableLiveAutocompletion: true
   });
-  var baseText = "<?php\n" + "\n" + "namespace App\\Console\\Commands;\n" + "\n" + "use Illuminate\\Console\\Command;\n" + "\n" + "class get_unit_of_measure extends Command\n" + "{\n" + "    protected $signature = 'command:name';\n" + "    protected $description = 'Command description';\n" + "\n" + "    public function handle()\n" + "    {\n" + "        return Command::SUCCESS;\n" + "    }\n" + "}\n";
+  var baseText = "<?php\n" + "\n" + "namespace App\\Console\\Commands;\n" + "\n" + "use Illuminate\\Console\\Command;\n" + "\n" + "class <<classname>> extends Command\n" + "{\n" + "    protected $signature = 'command:name';\n" + "    protected $description = 'Command description';\n" + "\n" + "    public function handle()\n" + "    {\n" + "        return Command::SUCCESS;\n" + "    }\n" + "}\n";
   editor.setValue(baseText);
 });
 })();
