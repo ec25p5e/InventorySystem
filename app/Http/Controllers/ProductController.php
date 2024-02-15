@@ -254,9 +254,10 @@ class ProductController extends Controller
                 ->whereNull('pa.attribute_date_end')
                 ->where('pa.attribute_code', getAttributeIdByCode('UNITY'))
                 ->orWhere(function($query) use ($safeKey) {
-                    $query->where('pa.attribute_code', getAttributeIdByCode('BARCODE'))
-                        ->whereNull('pa.attribute_date_end')
-                        ->where('pa.attribute_value', $safeKey);
+                    $query = ProductAttributes::where('attribute_code', getAttributeIdByCode('BARCODE'))
+                        ->whereNull('attribute_date_end')
+                        ->where('attribute_value', $safeKey)
+                        ->get();
                 })
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
                     $query->select('ut.unity_id')
@@ -331,5 +332,30 @@ class ProductController extends Controller
         }
 
         return view('products.update', ['product_id' => $product_id]);
+    }
+
+    public function bulkMovements(Request $request) {
+        $teachers = User::where('id', '!=', Auth::id())->get();
+        $key['user_register'] = Auth::id();
+        $key['type_of_movements'] = null;
+
+        $settingsRules = [
+            '_token' => 'required|string',
+            'type_of_movements' => 'required|string',
+            'user_register' => 'required|int|min:0'
+        ];
+
+        $settingsValidator = Validator::make($request->all(), $settingsRules);
+
+        if(!$settingsValidator->fails()) {
+            $key['type_of_movements'] = $request->input('type_of_movements');
+            $key['user_register'] = $request->input('user_register');
+            $teachers = User::where('id', '!=', $key['user_register'])->get();
+        }
+
+        return view('products.bulkMovements', [
+            'users_register' => $teachers,
+            'key' => $key
+        ]);
     }
 }

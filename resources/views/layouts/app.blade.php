@@ -22,6 +22,34 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app.css') }}"/>
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script>
+        function loadUnityInformation(product_id, entity, attribute, element, isTable = true) {
+            let apiUrl = '/api/loadProductColInfo';
+
+            $.ajax({
+                url: apiUrl,
+                type: 'POST',
+                headers: {
+                    'X-CSRF-Token': '{{ csrf_token() }}',
+                },
+                data: {
+                    'product_id': product_id,
+                    'entity': entity,
+                    'product_attribute': attribute
+                },
+                success: function (data) {
+                    if(isTable) {
+                        $(element).append(data['value'])
+                    } else {
+                        $(element).val(data['value'])
+                    }
+                },
+                error: function (xhr, status, error) {
+                    $(element).append(error)
+                }
+            });
+        }
+    </script>
 
     @livewireStyles
 
@@ -39,7 +67,7 @@
         <div class="percent" id="percent1">0%</div>
         <div class="loading-text">Loading...</div>
     </div>
-</div> -->
+</div>-->
 
 @include('partials.navbar')
 @include('partials.right-sidebar')
