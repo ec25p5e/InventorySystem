@@ -1,58 +1,55 @@
 @extends('layouts.app')
+@section('title', 'Notifiche')
 
-@section('content-header')
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Notifiche</h1>
+@section('body')
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="title">
+                            <h4>Notifiche per te</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}">Home</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Notifiche
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Elenco delle notifiche</li>
-                    </ol>
+            </div>
+            <div class="container pd-0">
+                <div class="timeline mb-30">
+                    @isset($dates)
+                        <ul>
+                            @foreach($dates as $date)
+                                <li>
+                                    <div class="timeline-date">{{ formatDatePortal($date->notification_date) }}</div>
+
+                                    @foreach($notificationsForDate($date->created_at) as $notification)
+                                        <div class="timeline-desc card-box">
+                                            <div class="pd-20">
+                                                <h4 class="mb-10 h4">
+                                                    {{ $notification->notification_title }}
+                                                </h4>
+                                                <p>
+                                                    {{ $notification->notification_message }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <p></p>
+                                    @endforeach
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endisset
                 </div>
             </div>
         </div>
     </div>
-@endsection
-
-@section('body')
-    <section class="content">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Elenco delle notifiche</h3>
-            </div>
-            <div class="box-body">
-                <div class="timeline timeline-inverse">
-                    @isset($dates)
-                        @foreach($dates as $date)
-                            <div class="time-label">
-                                <span class="bg-green">{{ formatDatePortal($date->notification_date) }}</span>
-                            </div>
-
-                            @foreach($notificationsForDate($date->created_at) as $notification)
-                                <p></p>
-                                <div>
-                                    <i class="fas fa-solid fa-bell bg-info"></i>
-                                    <div class="timeline-item">
-                                        <span class="time"><i class="fas fa-solid fa-clock"></i> {{ formatDateTime($notification->created_at) }}</span>
-                                        <h3 class="timeline-header">{{ $notification->notification_title }}</h3>
-                                        <div class="timeline-body">
-                                            {{ $notification->notification_message }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <p></p>
-                            @endforeach
-                        @endforeach
-                    @endisset
-                    <div>
-                        <i class="fas fa-clock bg-gray"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 @endsection

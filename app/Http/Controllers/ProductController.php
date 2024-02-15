@@ -194,8 +194,13 @@ class ProductController extends Controller
             'product_name' => 'required|string'
         ];
 
+        $prodBarcodeRules = [
+            'product_barcode' => 'required|int|min:0'
+        ];
+
         $productCompleteRules = [
             'product_id' => 'required|int|min:0',
+            'product_barcode' => 'required|int|min:0',
             'product_num_ceap' => 'required|int|min:0',
             'product_name' => 'required|string'
         ];
@@ -203,6 +208,7 @@ class ProductController extends Controller
         $validatorIdRules = Validator::make($request->all(), $productIdRules);
         $validatorProdName = Validator::make($request->all(), $prodNameRules);
         $validatorNumCeap = Validator::make($request->all(), $numCeapRules);
+        $validatorBarcode = Validator::make($request->all(), $prodBarcodeRules);
         $validatorComplete = Validator::make($request->all(), $productCompleteRules);
 
         if (!$validatorIdRules->fails()) {
@@ -217,6 +223,10 @@ class ProductController extends Controller
             $key['product_name'] = $request->input('product_name');
         }
 
+        if(!$validatorBarcode->fails()) {
+            $key['product_barcode'] = $request->input('product_barcode');
+        }
+
         if (!$validatorComplete->fails()) {
             $productId = $request->input('product_id');
             $key['product_num_ceap'] = $request->input('product_num_ceap');
@@ -226,6 +236,8 @@ class ProductController extends Controller
             $safeKey = $key['product_num_ceap'];
         } else if(isset($key['product_name'])) {
             $safeKey = $key['product_name'];
+        } else if(isset($key['product_barcode'])) {
+            $safeKey = $key['product_barcode'];
         } else {
             $safeKey = null;
         }
@@ -241,6 +253,11 @@ class ProductController extends Controller
                 })
                 ->whereNull('pa.attribute_date_end')
                 ->where('pa.attribute_code', getAttributeIdByCode('UNITY'))
+                ->orWhere(function($query) use ($safeKey) {
+                    $query->where('pa.attribute_code', getAttributeIdByCode('BARCODE'))
+                        ->whereNull('pa.attribute_date_end')
+                        ->where('pa.attribute_value', $safeKey);
+                })
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
                     $query->select('ut.unity_id')
                         ->from('unities_tree as ut')

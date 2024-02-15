@@ -168,10 +168,10 @@ if(!function_exists('getUserUnities')) {
             ->join('unities as u', 'u.id', '=', 'ur.unity_id')
             ->where('ur.user_id', $userId)
             ->where('ur.is_primary', 1)
-            ->whereNotIn('ur.unity_id', function ($query) {
+            ->whereNotIn('ur.unity_id', function ($query) use ($userId) {
                 $query->select('u.unity_id')
                     ->from('users as u')
-                    ->where('u.id', 1);
+                    ->where('u.id', $userId);
             })
             ->get();
 
@@ -192,8 +192,7 @@ if(!function_exists('getCurrentUnityForUser')) {
 
 if(!function_exists('getUnityName')) {
     function getUnityName($unityId) {
-        $unity = Unities::find($unityId);
-
+        $unity = Unities::find($unityId)->first();
         return ($unity) ? $unity->unity_name : null;
     }
 }
@@ -252,22 +251,30 @@ if(!function_exists('getAttributeIdByCode')) {
 }
 
 if(!function_exists('getSidebarMenu')) {
+
     function getSidebarMenu($userId) {
-        $routes = DB::table('routes_conf as rc')
-            ->where('rc.unity_id', function ($query) use ($userId) {
-                $query->select('u.unity_id')
-                    ->from('users as u')
-                    ->where('u.id', $userId);
+        function loadMenuItems($items) {
+            foreach ($items as $item) {
+                $item->children = $item->children()->orderBy('order', 'asc')->get();
+                loadMenuItems($item->children);
+            }
+        }
+
+        $routes = RoutesConf::where('unity_id', function ($query) use ($userId) {
+            $query->select('unity_id')
+                ->from('users')
+                ->where('id', $userId);
             })
-            ->whereIn('rc.role_id', function ($query) use ($userId) {
-                $query->select('ur.role_id')
-                    ->from('user_roles as ur')
-                    ->where('ur.user_id', $userId);
+            ->whereIn('role_id', function ($query) use ($userId) {
+                $query->select('role_id')
+                    ->from('user_roles')
+                    ->where('user_id', $userId);
             })
-            ->where('rc.is_menu', 1)
-            ->orderBy('rc.route_text')
+            ->where('is_menu', 1)
+            ->orderBy('order', 'asc')
             ->get();
 
+        loadMenuItems($routes);
         return $routes;
     }
 }

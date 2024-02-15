@@ -23,5 +23,17 @@ class RoutesConf extends Model
         'controller_method',
         'route_middleware',
         'is_menu',
+        'route_parent_id',
+        'order',
     ];
+
+    public function parent()
+    {
+        return $this->belongsTo(RoutesConf::class, 'route_parent_id');
+    }
+
+    public function children()
+    {
+        return $this->hasMany(RoutesConf::class, 'route_parent_id')->with('children');
+    }
 }

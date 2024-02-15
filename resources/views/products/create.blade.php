@@ -51,92 +51,125 @@
         </div>
     </div>
 
-    @if(Session::has('success'))
-        <div class="alert alert-success">
-            {{ Session::get('success') }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    @endif
-
-    <section class="content">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Form per la creazione del prodotto</h3>
-                <h5 style="color: red;">I campi contrassegnati con * sono obbligatori.</h5>
-                @isset($productDetails->id)
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#duplicateProductModal">Duplica articolo</button>
-                @endisset
-            </div>
-            <div class="box-body">
-                <form action="{{ route(getRoute(Auth::id(), 'STORE_PRODUCT')) }}" method="post" name="form-product">
-                    @csrf
-
-                    <input name="productIdHidden" type="hidden" @isset($productDetails->id) value="{{ $productDetails->id }}" @endisset />
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="liveSearch">Numero CEAP</label>
-                                <div class="form-group @error('product_num_ceap') has-error @enderror">
-                                    <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($productDetails->product_num_ceap) value="{{ $productDetails->product_num_ceap }}" @endisset  />
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="product_num_intern" class="form-label">Numero interno:</label>
-                                <div class="input-group @error('product_num_intern') has-error @enderror">
-                                    <input type="text" class="form-control" @isset($productDetails->product_num_intern) value="{{ $productDetails->product_num_intern }}" @endisset name="product_num_intern">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="product_name" class="form-label">Nome (*):</label>
-                                <div class="input-group has-feedback @error('product_name') has-error @enderror">
-                                    <input type="text" class="form-control" @isset($productDetails->product_name) value="{{ $productDetails->product_name }}" @endisset name="product_name">
-                                </div>
-                            </div>
+    <div class="pd-ltr-20 xs-pd-20-10">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Economato</h4>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="mb-3">
-                                <label for="product_start" class="form-label">Data di INIZIO validità:</label>
-                                <div class="input-group @error('product_start') has-error @enderror ">
-                                    <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @else value="{{ formatDate(now()) }}" @endisset name="product_start">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="product_end" class="form-label">Data di FINE validità:</label>
-                                <div class="input-group @error('product_end') has-error @enderror ">
-                                    <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @else value="3001-01-01" @endisset name="product_end">
-                                </div>
-                            </div>
-
-                            @if(!isset($productDetails))
-                                <div class="mb-3">
-                                    <label for="unity_ref" class="form-label">Unità scolastica (*):</label>
-                                    <select class="form-control" id="unity_ref" name="unity_ref">
-                                        @isset($unities)
-                                            @foreach($unities as $unity)
-                                                <option value="{{ $unity->unity_id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
-                                            @endforeach
-                                        @endisset
-                                    </select>
-                                </div>
-                            @endif
-                        </div>
-
-                        <div class="mb-3 ml-3">
-                            <button type="submit" class="btn btn-primary">Invia dati</button>
-                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a href="{{ route(getRoute(Auth::id(), 'DASHBOARD')) }}">{{ getUnityName(getUserActualUnity(Auth::id())) }}</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Creazione/modifica articolo
+                                </li>
+                            </ol>
+                        </nav>
                     </div>
-                </form>
 
-                <div class="container box">
-                    <div class="box-header">
-                        <h3 class="box-title">Tabella degli attributi</h3>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <a
+                            class="btn btn-primary"
+                            href="#"
+                            role="button"
+                        >
+                            Duplica articolo
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box mb-30">
+                <div class="pd-20">
+                    <h4 class="text-blue h4">
+                        Formulario creazione/modifica prodotto
+                    </h4>
+                </div>
+
+                @if(Session::has('success'))
+                    <div class="alert alert-success">
+                        {{ Session::get('success') }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                @endif
+
+                <div class="pd-20 card-box mb-30">
+                    <form action="{{ route(getRoute(Auth::id(), 'STORE_PRODUCT')) }}" method="post" name="form-product">
+                        @csrf
+
+                        <input name="productIdHidden" type="hidden" @isset($productDetails->id) value="{{ $productDetails->id }}" @endisset />
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="liveSearch">Numero CEAP</label>
+                                    <div class="form-group @error('product_num_ceap') has-error @enderror">
+                                        <input type="text" class="form-control" name="product_num_ceap" id="liveSearch product_num_ceap" @isset($productDetails->product_num_ceap) value="{{ $productDetails->product_num_ceap }}" @endisset  />
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="product_num_intern" class="form-label">Numero interno:</label>
+                                    <div class="input-group @error('product_num_intern') has-error @enderror">
+                                        <input type="text" class="form-control" @isset($productDetails->product_num_intern) value="{{ $productDetails->product_num_intern }}" @endisset name="product_num_intern">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="product_name" class="form-label">Nome (*):</label>
+                                    <div class="input-group has-feedback @error('product_name') has-error @enderror">
+                                        <input type="text" class="form-control" @isset($productDetails->product_name) value="{{ $productDetails->product_name }}" @endisset name="product_name">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="product_start" class="form-label">Data di INIZIO validità:</label>
+                                    <div class="input-group @error('product_start') has-error @enderror ">
+                                        <input type="date" class="form-control" @isset($productDetails->product_start) value="{{ formatDate($productDetails->product_start) }}" @else value="{{ formatDate(now()) }}" @endisset name="product_start">
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label for="product_end" class="form-label">Data di FINE validità:</label>
+                                    <div class="input-group @error('product_end') has-error @enderror ">
+                                        <input type="date" class="form-control" @isset($productDetails->product_end) value="{{ formatDate($productDetails->product_end) }}" @else value="3001-01-01" @endisset name="product_end">
+                                    </div>
+                                </div>
+
+                                @if(!isset($productDetails))
+                                    <div class="mb-3">
+                                        <label for="unity_ref" class="form-label">Unità scolastica (*):</label>
+                                        <select class="form-control" id="unity_ref" name="unity_ref">
+                                            @isset($unities)
+                                                @foreach($unities as $unity)
+                                                    <option value="{{ $unity->unity_id }}">{{ $unity->unity_name }} ({{ $unity->unity_code }})</option>
+                                                @endforeach
+                                            @endisset
+                                        </select>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <div class="mb-3 ml-3">
+                                <button type="submit" class="btn btn-primary">Invia dati</button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <div class="card-box mb-30">
+                        <div class="pd-20">
+                            <h4 class="text-blue h4">
+                                Tabella degli attributi
+                            </h4>
+                        </div>
 
                         @if(Session::has('success'))
                             <div class="alert alert-success">
@@ -146,19 +179,18 @@
                                 </button>
                             </div>
                         @endif
-                    </div>
-                    <div class="box-body">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">Codice attributo</th>
-                                <th scope="col">Valore</th>
-                                <th scope="col">Copiabile?</th>
-                                <th scope="col">Aggiornato il</th>
-                                <th scope="col">Azioni</th>
-                            </tr>
-                            </thead>
-                            <tbody>
+                        <div class="pd-20 card-box mb-30">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Codice attributo</th>
+                                    <th scope="col">Valore</th>
+                                    <th scope="col">Copiabile?</th>
+                                    <th scope="col">Aggiornato il</th>
+                                    <th scope="col">Azioni</th>
+                                </tr>
+                                </thead>
+                                <tbody>
                                 <tr id="insertingRow">
                                     <form action="{{ route(getRoute(Auth::id(), 'STORE_PRODUCT_ATTR')) }}" method="POST" class="form-control" name="form-product-attributes">
                                         @csrf
@@ -214,13 +246,14 @@
                                         </tr>
                                     @endforeach
                                 @endisset
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 @endsection
 
 @section('js')
