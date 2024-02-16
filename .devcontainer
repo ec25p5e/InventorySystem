@@ -1,0 +1,25 @@
+// File: .devcontainer/devcontainer.json
+{
+  "name": "Laravel with MySQL and Node",
+  "dockerComposeFile": "../docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+
+  "extensions": [
+    "felixfbecker.php-debug",
+    "bmewburn.vscode-intelephense-client",
+    "dbaeumer.vscode-eslint",
+    "editorconfig.editorconfig",
+    "felixfbecker.php-intellisense",
+    "github.vscode-pull-request-github",
+    "onecentlin.laravel-blade",
+    "PKief.material-icon-theme",
+    "ritwickdey.LiveServer",
+    "vuetifyjs.vuetify-vscode",
+    "wakatime.vscode-wakatime"
+  ]
+}
