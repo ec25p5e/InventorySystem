@@ -180,14 +180,14 @@ class ProductController extends Controller
         $key[] = null;
         $dates = null;
         $movementForDate = null;
-        $listOfProducts = null;
+        $mergedProducts = null;
 
         $productIdRules = [
             'product_id' => 'required|int|min:0'
         ];
 
         $numCeapRules = [
-            'product_num_ceap' => 'required|int|min:0'
+            'product_num_ceap' => 'required|int'
         ];
 
         $prodNameRules = [
@@ -195,7 +195,7 @@ class ProductController extends Controller
         ];
 
         $prodBarcodeRules = [
-            'product_barcode' => 'required|int|min:0'
+            'product_barcode' => 'required|int'
         ];
 
         $productCompleteRules = [
@@ -253,12 +253,6 @@ class ProductController extends Controller
                 })
                 ->whereNull('pa.attribute_date_end')
                 ->where('pa.attribute_code', getAttributeIdByCode('UNITY'))
-                ->orWhere(function($query) use ($safeKey) {
-                    $query = ProductAttributes::where('attribute_code', getAttributeIdByCode('BARCODE'))
-                        ->whereNull('attribute_date_end')
-                        ->where('attribute_value', $safeKey)
-                        ->get();
-                })
                 ->whereIn('pa.attribute_value', function ($query) use ($userId) {
                     $query->select('ut.unity_id')
                         ->from('unities_tree as ut')
@@ -272,6 +266,16 @@ class ProductController extends Controller
                 ->select("p.*")
                 ->get();
 
+            $barcodeResults = ProductAttributes::where('attribute_code', getAttributeIdByCode('BARCODE'))
+                ->whereNull('attribute_date_end')
+                ->where('attribute_value', $key['barcode'])
+                ->get();
+
+            $listOfProducts = collect($listOfProducts);
+            $barcodeResults = collect($barcodeResults);
+            $mergedProducts = $barcodeResults->merge($listOfProducts);
+
+            dd($mergedProducts);
 
             $dates = ProductAttributes::selectRaw('cast(attribute_date_start AS DATE) AS attribute_date')
                 ->where('attribute_code', $quantityCode)
@@ -296,7 +300,7 @@ class ProductController extends Controller
         return view('products.movements', [
             'timelineDates' => $dates,
             'moveForDate' => $movementForDate,
-            'listOfProducts' => $listOfProducts,
+            'listOfProducts' => $mergedProducts,
             'productId' => $productId,
             'formFields' => $key,
             'teachers' => $teachers
