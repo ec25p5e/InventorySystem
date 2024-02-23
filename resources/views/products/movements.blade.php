@@ -20,16 +20,34 @@
                             </ol>
                         </nav>
                     </div>
+                    <div class="col-md-6 col-sm-12 text-right">
+                        <div class="dropdown">
+                            <a
+                                class="btn btn-primary dropdown-toggle"
+                                href="#"
+                                role="button"
+                                data-toggle="dropdown"
+                            >
+                                Opzioni
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a id="startHelp" class="dropdown-item" href="javascript:;">Aiuto</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="card-box mb-30">
                 <div class="pd-20">
-                    <div class="row">
+                    <div class="row" id="helpSearchMovements">
                         <div class="col-md-6 col-sm-12">
                             <div class="title">
-                                <h4 class="text-blue h4">Ricerca articolo</h4>
+                                <h4 class="text-blue h4" >Ricerca articolo</h4>
                             </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12 d-flex justify-content-end align-items-center">
+                            <a href="#" class="help-icon"><i onclick="startHelpSequence()" class="dw dw-help"></i></a>
                         </div>
                     </div>
                 </div>
@@ -249,4 +267,35 @@
             @endisset
         </div>
     </div>
+@endsection
+
+@section('js')
+    <script>
+        var intro = introJs();
+
+        intro.setOptions({
+            steps: [
+                {
+                    element: '#helpSearchMovements',
+                    intro: 'Primo passaggio',
+                    bottom: 'left'
+                },
+                {
+                    element: '#step2',
+                    intro: 'Secondo passaggio',
+                    position: 'top'
+                }
+            ],
+            // Personalizza lo stile delle sequenze di aiuto
+            tooltipClass: 'custom-tooltip-class', // Aggiungi una classe CSS personalizzata
+            highlightClass: 'custom-highlight-class', // Aggiungi una classe CSS per evidenziare gli elementi
+            showStepNumbers: true, // Nascondi i numeri dei passaggi
+            overlayOpacity: 0.8, // Opacità dell'overlay
+            // Altre opzioni di stile...
+        });
+
+        const startHelpSequence = () => {
+            intro.start()
+        };
+    </script>
 @endsection

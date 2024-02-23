@@ -17,6 +17,10 @@ mix.copy('node_modules/deskapp/vendors/fonts', 'public/template/fonts')
     .copy('node_modules/deskapp/src/plugins', 'public/template/plugins')
     .version();
 
+mix.copy('node_modules/intro.js/minified/intro.min.js', 'public/template/scripts')
+    .copy('node_modules/intro.js/minified/introjs.min.css', 'public/template/styles')
+    .version();
+
 mix.copy('resources/images/*', 'public/assets/images')
     .version();
 

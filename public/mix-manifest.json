@@ -125,6 +125,7 @@
     "/template/scripts/dashboard3.js": "/template/scripts/dashboard3.js?id=d2529b20f737dd1ae8f4b64a25a43eba",
     "/template/scripts/datatable-setting.js": "/template/scripts/datatable-setting.js?id=3cd2cad1a9edbb4e0709d03624551732",
     "/template/scripts/highchart-setting.js": "/template/scripts/highchart-setting.js?id=584082cf81effe68f6d75359547f213c",
+    "/template/scripts/intro.min.js": "/template/scripts/intro.min.js?id=a8dbbd3cffdf7f107fc0f154498c278a",
     "/template/scripts/jvectormap-setting.js": "/template/scripts/jvectormap-setting.js?id=9f9a4c9fe622a8c3ff743c0e899c0009",
     "/template/scripts/knob-chart-setting.js": "/template/scripts/knob-chart-setting.js?id=897d98929c2e807fb93aba52e589b798",
     "/template/scripts/layout-settings.js": "/template/scripts/layout-settings.js?id=ed8a60c4d0d5a6880674739fecc16253",
@@ -483,5 +484,6 @@
     "/template/plugins/timedropper/timedropper.min.css": "/template/plugins/timedropper/timedropper.min.css?id=d6eeb7c33a54145be5b892d29134fe6d",
     "/template/plugins/timedropper/timedropper.min.js": "/template/plugins/timedropper/timedropper.min.js?id=3a25f38dc516d7670801b2543f707a00",
     "/template/plugins/wysihtml5-master/dist/wysihtml5-0.3.0.js": "/template/plugins/wysihtml5-master/dist/wysihtml5-0.3.0.js?id=e38e8fa7ac26f3c6fd276428842c055e",
+    "/template/styles/introjs.min.css": "/template/styles/introjs.min.css?id=886dfdd2d3fa21f631ac43edc8a7410b",
     "/assets/images/images.jpg": "/assets/images/images.jpg?id=8b2bc32c1acf23ef5287862fc7666af9"
 }

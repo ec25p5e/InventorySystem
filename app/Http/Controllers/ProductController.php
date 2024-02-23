@@ -268,14 +268,12 @@ class ProductController extends Controller
 
             $barcodeResults = ProductAttributes::where('attribute_code', getAttributeIdByCode('BARCODE'))
                 ->whereNull('attribute_date_end')
-                ->where('attribute_value', $key['barcode'])
+                ->where('attribute_value', $key['product_barcode'])
                 ->get();
 
             $listOfProducts = collect($listOfProducts);
             $barcodeResults = collect($barcodeResults);
             $mergedProducts = $barcodeResults->merge($listOfProducts);
-
-            dd($mergedProducts);
 
             $dates = ProductAttributes::selectRaw('cast(attribute_date_start AS DATE) AS attribute_date')
                 ->where('attribute_code', $quantityCode)

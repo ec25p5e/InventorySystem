@@ -20,8 +20,11 @@
           href="{{ asset('template/plugins/datatables/css/responsive.bootstrap4.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('template/styles/icon-font.min.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/app.css') }}"/>
+    <link href="{{ asset('template/styles/introjs.min.css') }}" rel="stylesheet">
 
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script src="{{ asset('template/scripts/intro.min.js') }}"></script>
+
     <script>
         function loadUnityInformation(product_id, entity, attribute, element, isTable = true) {
             let apiUrl = '/api/loadProductColInfo';
@@ -56,10 +59,10 @@
     <style>@yield('css')</style>
 </head>
 <body>
-<!-- <div class="pre-loader">
+<div class="pre-loader">
     <div class="pre-loader-box">
         <div class="loader-logo">
-            <img src="" alt="" />
+            <img src="{{ asset('assets/images/images.jpg') }}" alt="" />
         </div>
         <div class="loader-progress" id="progress_div">
             <div class="bar" id="bar1"></div>
@@ -67,7 +70,7 @@
         <div class="percent" id="percent1">0%</div>
         <div class="loading-text">Loading...</div>
     </div>
-</div>-->
+</div>
 
 @include('partials.navbar')
 @include('partials.right-sidebar')
