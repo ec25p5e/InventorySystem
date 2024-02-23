@@ -6,9 +6,9 @@
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="index.html">
-            <img src="{{ asset('template/images/deskapp-logo.svg') }}" alt="" class="dark-logo" />
+            <img src="{{ asset('assets/images/images.jpg') }}" style="width: 60px" alt="" class="dark-logo" />
             <img
-                src="vendors/images/deskapp-logo-white.svg"
+                src="{{ asset('assets/images/images.jpg') }}" style="width: 60px"
                 alt=""
                 class="light-logo"
             />
@@ -58,10 +58,7 @@
                         <a href="javascript:;" class="dropdown-toggle"><span class="mtext">Documentazione tecnica</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="">Introduction</a></li>
-                            <li><a href="">Getting Started</a></li>
-                            <li><a href="">Color Settings</a></li>
-                            <li><a href="">Third Party Plugins</a></li>
+                            <li><a href="{{ route('docs') }}">Utilizzo del portale</a></li>
                         </ul>
                     </li>
                 @endif

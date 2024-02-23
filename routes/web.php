@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommandController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocsController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\FormsController;
 use App\Http\Controllers\JobsController;
@@ -26,6 +27,9 @@ $routeConfigurations = RoutesConf::all();
 Route::get('/', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/login', [AuthController::class, 'authenticate'])->name('login');
+
+// DOCS
+Route::get('/docs', [DocsController::class, 'index'])->name('docs');
 
 foreach($routeConfigurations as $route) {
     switch($route->route_controller) {
@@ -77,13 +81,4 @@ foreach($routeConfigurations as $route) {
         default:
             break;
     }
-
 }
-
-$middlewareName = 'throttle:60,1';
-
-$routes = collect(Route::getRoutes())->filter(function ($route) use ($middlewareName) {
-    return collect($route->middleware())->contains($middlewareName);
-})->map(function ($route) {
-    return $route->uri();
-})->values();
