@@ -90,66 +90,23 @@
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="notification-list mx-h-350 customscroll">
                         <ul>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/img.jpg') }}" alt="" />
-                                    <h3>John Doe</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/photo1.jpg') }}" alt="" />
-                                    <h3>Lea R. Frith</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/photo2.jpg') }}" alt="" />
-                                    <h3>Erik L. Richards</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/photo3.jpg') }}" alt="" />
-                                    <h3>John Doe</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/photo4.jpg') }}" alt="" />
-                                    <h3>Renee I. Hansen</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <img src="{{ asset('template/images/img.jpg') }}" alt="" />
-                                    <h3>Vicki M. Coleman</h3>
-                                    <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                                        elit, sed...
-                                    </p>
-                                </a>
-                            </li>
+                            @if(getNotifications(Auth::id())->count() > 0)
+                                @foreach(getNotifications(Auth::id()) as $notify)
+                                    <li>
+                                        <a href="" class="dropdown-item">
+                                            <div class="media">
+                                                <div class="media-body">
+                                                    <h3 class="dropdown-item-title">
+                                                        {{ $notify->notification_title }}
+                                                    </h3>
+                                                    <p class="text-sm">{{ $notify->notification_message }}</p>
+                                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> {{ formatDateTime($notify->created_at) }}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
                         </ul>
                     </div>
                 </div>
