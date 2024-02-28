@@ -23,16 +23,20 @@
                 @foreach(getSidebarMenu(Auth::id()) as $menu)
                     @if($menu->route_parent_id == null)
                         <li class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle"><span class="micon bi bi-house"></span><span class="mtext">{{ $menu->route_text }}</span></a>
+                            @if($menu->route_code == 'DASHBOARD')
+                                <a href="{{ route($menu->route_name) }}" class="dropdown-toggle"><span class="micon bi bi-house"></span><span class="mtext">{{ $menu->route_text }}</span></a>
+                            @else
+                                <a href="javascript:;" class="dropdown-toggle"><span class="micon bi bi-house"></span><span class="mtext">{{ $menu->route_text }}</span></a>
 
-                            @if($menu->children->isNotEmpty())
-                                <ul class="submenu">
-                                    @foreach ($menu->children as $child)
-                                        <li>
-                                            <a href="{{ route($child->route_name) }}">{{ $child->route_text }}</a>
-                                        </li>
-                                    @endforeach
-                                </ul>
+                                @if($menu->children->isNotEmpty())
+                                    <ul class="submenu">
+                                        @foreach ($menu->children as $child)
+                                            <li>
+                                                <a href="{{ route($child->route_name) }}">{{ $child->route_text }}</a>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                @endif
                             @endif
                         </li>
                     @endif
@@ -47,10 +51,7 @@
                         <a href="javascript:;" class="dropdown-toggle"><span class="mtext">Serve aiuto?</span>
                         </a>
                         <ul class="submenu">
-                            <li><a href="">Introduction</a></li>
-                            <li><a href="">Getting Started</a></li>
-                            <li><a href="">Color Settings</a></li>
-                            <li><a href="">Third Party Plugins</a></li>
+                            <li><a href="http://172.16.8.8:3000/docs/doc_user/intro_doc_user">Documentazione</a></li>
                         </ul>
                     </li>
                 @else

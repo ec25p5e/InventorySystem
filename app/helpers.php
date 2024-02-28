@@ -255,7 +255,7 @@ if(!function_exists('getSidebarMenu')) {
     function getSidebarMenu($userId) {
         function loadMenuItems($items) {
             foreach ($items as $item) {
-                $item->children = $item->children()->orderBy('order', 'asc')->get();
+                $item->children = $item->children()->where('is_menu', 1)->orderBy('order', 'asc')->get();
                 loadMenuItems($item->children);
             }
         }

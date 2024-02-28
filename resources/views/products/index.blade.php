@@ -29,9 +29,11 @@
                                 role="button"
                                 data-toggle="dropdown"
                             >
-                                Opzioni
+                                Altre azioni
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'NEW_PRODUCTS_FORM')) }}">Nuovo prodotto</a>
+
                                 @if($showLess == 1)
                                     <a class="dropdown-item" href="{{ route(getRoute(Auth::id(), 'LIST_OF_PRODUCTS'), ['filters' => '?showLess=0']) }}">Mostra tutti i prodotti</a>
                                 @else
